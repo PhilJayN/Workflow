@@ -4,22 +4,21 @@ import time
 import webbrowser
 import subprocess
 
-# import subprocess
-#
-# def openFolders():
-#     subprocess.Popen(r'explorer "C:\Users\asus270\Desktop\Python2020"')
-#     subprocess.Popen(r'explorer "C:\Users\asus270"')
-#
-# openFolders()
+def maxWindow():
+    window = gw.getActiveWindow()
+    window.maximize()
 
-# Cross platform open folders
-# def openDirXPlatform():
-#     import webbrowser
-#     path = r'C:\Users\asus270\Evernote'
-#     webbrowser.open('file:///' + path)
-#
-# openDirXPlatform()
+def minWindow():
+    window = gw.getActiveWindow()
+    window.minimize()
 
+def closeTabs():
+    # temp close tabs
+    pyautogui.hotkey('ctrl', 'w')
+    time.sleep(.3)
+    pyautogui.hotkey('ctrl', 'w')
+    time.sleep(1)
+    minWindow()
 
 def exitPrompt():
     askToExit = input('Type x and press ENTER key to exit and CLOSE all programs and folders you opened: ')
@@ -31,17 +30,29 @@ def exitPrompt():
         time.sleep(.5)
 
 
+requestedSites = ['https://www.udemy.com/course/automate/learn/lecture/3465864#questions/11019006',
+                'https://automatetheboringstuff.com/2e/'
+                ]
+
+def openSites():
+    for i in range(len(requestedSites)):
+        print(i)
+        webbrowser.open(requestedSites[i], new=1)
+        time.sleep(.3)
+        maxWindow()
+        time.sleep(1)
+    closeTabs()
+
+openSites()
 
 requestedFolders = ['D:\\tcg', 'C:\\Users\\asus270', 'C:\\Dropbox\\~Programming\\projects']
 
 def openFolders(folders):
-
     for i in range(len(requestedFolders)):
         subprocess.Popen(r'explorer ' + requestedFolders[i])
         print('req. folders:', requestedFolders[i])
 
 openFolders(requestedFolders)
-
 
 def closePrograms():
     subprocess.call([r'C:\Program Files\Mozilla Firefox\\firefox.exe'])
@@ -57,24 +68,31 @@ def closePrograms():
         time.sleep(.5)
 
 
-def maxWindow():
-    window = gw.getActiveWindow()
-    window.maximize()
-
-def openSites():
-    webbrowser.open('https://my.bluehost.com/web-hosting/cplogin', new=1)
-    time.sleep(.3)
-    maxWindow()
-
-openSites()
-
-loginBtn = [1707, 682]
-wpBtn = [2700, 248]
 
 def click(btnPos):
+    loginBtn = [1707, 682]
+    wpBtn = [2700, 248]
+
     pyautogui.click(btnPos[0], btnPos[1], duration=.3)
 
-time.sleep(2)
-click(loginBtn)
-time.sleep(25)
-click(wpBtn)
+# time.sleep(2)
+# click(loginBtn)
+# time.sleep(25)
+# click(wpBtn)
+
+
+
+
+
+
+
+
+
+
+# Cross platform open folders
+# def openDirXPlatform():
+#     import webbrowser
+#     path = r'C:\Users\asus270\Evernote'
+#     webbrowser.open('file:///' + path)
+#
+# openDirXPlatform()
