@@ -13,14 +13,12 @@ import subprocess
 # openFolders()
 
 # Cross platform open folders
-def openDirXPlatform():
-    import webbrowser
-    path = r'C:\Users\asus270\Evernote'
-    webbrowser.open('file:///' + path)
-
-openDirXPlatform()
-
-
+# def openDirXPlatform():
+#     import webbrowser
+#     path = r'C:\Users\asus270\Evernote'
+#     webbrowser.open('file:///' + path)
+#
+# openDirXPlatform()
 
 
 
@@ -33,13 +31,11 @@ print(requestedFolders)
 
 def openFolders(folders):
 
-    # currentFolders = []
-    subprocess.Popen(r'explorer ' + requestedFolders[0])
-
-    print('req. folders:', requestedFolders[0])
 
     for i in range(len(requestedFolders)):
-        print('ted:', requestedFolders[i])
+        subprocess.Popen(r'explorer ' + requestedFolders[i])
+        print('req. folders:', requestedFolders[i])
+        # print('ted:', requestedFolders[i])
 
     # subprocess.Popen(r'explorer "C:\Users\asus270"')
 
