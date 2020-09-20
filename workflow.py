@@ -25,6 +25,37 @@ openDirXPlatform()
 
 
 
+requestedFolders = ['D:\\tcg', 'C:\\Users\\asus270', 'C:\\Dropbox\\~Programming\\projects']
+
+print(requestedFolders)
+
+# subprocess.Popen(r'explorer "C:\Users\asus270\Desktop\Python2020"')
+
+def openFolders(folders):
+
+    # currentFolders = []
+    subprocess.Popen(r'explorer ' + requestedFolders[0])
+
+    print('req. folders:', requestedFolders[0])
+
+    for i in range(len(requestedFolders)):
+        print('ted:', requestedFolders[i])
+
+    # subprocess.Popen(r'explorer "C:\Users\asus270"')
+
+    askToExit = input('Type x and press ENTER key to exit and CLOSE all programs and folders you opened: ')
+
+    if askToExit == 'x':
+        subprocess.call(["taskkill","/F","/IM","firefox.exe"])
+
+        print('Exiting')
+        time.sleep(.5)
+
+openFolders(requestedFolders)
+
+
+
+
 
 
 
