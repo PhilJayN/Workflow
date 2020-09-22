@@ -8,12 +8,11 @@ import json
 
 with open('db.json', 'r+') as f:
     data = json.load(f)
-    data["color"] = "red" # <--- add `id` value.
+    # print(data["people"][0]["name"])
+    data["people"][0]["name"] = "Patchy" # <--- add `id` value.
     f.seek(0)        # <--- should reset file position to the beginning.
-    json.dump(data, f, indent=4)
+    json.dump(data, f, indent=2)
     f.truncate()     # remove remaining part
-
-
 
 def maxWindow():
     window = gw.getActiveWindow()

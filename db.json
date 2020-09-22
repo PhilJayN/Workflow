@@ -1,5 +1,33 @@
 {
-    "name": "TTed",
-    "id": 4534,
-    "color": "red"
+  "people": [
+    {
+      "name": "Patchy",
+      "age": "32",
+      "type": "Bear"
+    },
+    {
+      "name": "Fudge",
+      "age": "30",
+      "type": "Grey Bear"
+    }
+  ],
+  "sites": [
+    {
+      "url": "https://www.udemy.com/course/automate/learn/lecture/3465864#questions/11019006"
+    },
+    {
+      "url": "https://automatetheboringstuff.com/2e/"
+    }
+  ],
+  "folders": [
+    {
+      "path": "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32"
+    },
+    {
+      "path": "C:\\Users\\asus270\\Desktop\\Python2020"
+    },
+    {
+      "path": "C:\\Dropbox\\~Programming\\projects"
+    }
+  ]
 }
