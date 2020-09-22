@@ -3,13 +3,31 @@ import pygetwindow as gw
 import time
 import webbrowser
 import subprocess
-
 import json
+import PySimpleGUI as sg
+
+sg.theme('DarkAmber')
+layout = [  [sg.Text('Add your sites:')],
+            [sg.Text('Web sites'), sg.InputText('', key='web_sites')],
+            # [sg.Text('Folders'), sg.InputText()],
+            [sg.Button('Ok'), sg.Button('Cancel')] ]
+
+window = sg.Window('Window Title', layout)
+# Event Loop, gets values of inputs
+while True:
+    event, values = window.read()
+    webSites = values['web_sites']
+    print('value from user:' + webSites)
+    if event == sg.WIN_CLOSED or event == 'Cancel':
+        break
+
+window.close()
+# db only updates when user closes the GUI??
 
 with open('db.json', 'r+') as f:
     data = json.load(f)
     # print(data["people"][0]["name"])
-    data["people"][0]["name"] = "Patchy" # <--- add `id` value.
+    data["people"][0]["name"] = "Eagle" # <--- add `id` value.
     f.seek(0)        # <--- should reset file position to the beginning.
     json.dump(data, f, indent=2)
     f.truncate()     # remove remaining part
