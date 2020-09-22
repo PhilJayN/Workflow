@@ -8,10 +8,11 @@ import json
 
 with open('db.json', 'r+') as f:
     data = json.load(f)
-    data["id"] = 999 # <--- add `id` value.
+    data["color"] = "red" # <--- add `id` value.
     f.seek(0)        # <--- should reset file position to the beginning.
     json.dump(data, f, indent=4)
     f.truncate()     # remove remaining part
+
 
 
 def maxWindow():
@@ -53,7 +54,6 @@ def openSites():
         time.sleep(1)
     closeTabs()
 
-openSites()
 
 requestedFolders = ['D:\\tcg', 'C:\\Users\\asus270', 'C:\\Dropbox\\~Programming\\projects']
 
@@ -62,7 +62,6 @@ def openFolders(folders):
         subprocess.Popen(r'explorer ' + requestedFolders[i])
         print('req. folders:', requestedFolders[i])
 
-openFolders(requestedFolders)
 
 def closePrograms():
     subprocess.call([r'C:\Program Files\Mozilla Firefox\\firefox.exe'])
@@ -91,9 +90,11 @@ def click(btnPos):
 # click(wpBtn)
 
 
-
-
-
+# TEMPORARY FUNCTION CALLERS
+def functionHandlers():
+    openSites()
+    openFolders(requestedFolders)
+# functionHandlers()
 
 
 
