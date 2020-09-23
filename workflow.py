@@ -7,33 +7,39 @@ import json
 import PySimpleGUI as sg
 
 
-def writeDb(userValue):
-    print('you called writeDb with userValue', userValue["web_sites"])
+def writeToDb(userValue):
+    print('you called writeToDb with userValue', userValue["web_sites"])
     with open('db.json', 'r+') as f:
         data = json.load(f)
         # print(data["people"][0]["name"])
-        data["sites"][0]["url"] = userValue["web_sites"]
-        f.seek(0)        # <--- should reset file position to the beginning.
-        json.dump(data, f, indent=2)
-        f.truncate()     # remove remaining part
+        for iii in range(0,2):
+
+            data["sites"][iii]["url"] = userValue["web_sites"]
+            f.seek(0)        # <--- should reset file position to the beginning.
+            json.dump(data, f, indent=2)
+            f.truncate()     # remove remaining part
 
 def startGUI():
     sg.theme('DarkAmber')
-    layout = [  [sg.Text('Add your sites:')],
-    [sg.Text('Web sites'), sg.InputText('', key='web_sites')],
+    layout = [  [sg.Text('Your Sites')],
+    [sg.Text('1'), sg.InputText('', key='web_sites')],
+    [sg.Text('2'), sg.InputText('', key='web_sites2')],
     # [sg.Text('Folders'), sg.InputText()],
-    [sg.Button('Ok'), sg.Button('Cancel')] ]
+    [sg.Button('Save'), sg.Button('Cancel')] ]
 
-    window = sg.Window('Window Title', layout)
+    window = sg.Window('Workflow', layout)
     # Event Loop, gets values of inputs
     while True:
         event, values = window.read()
         webSites = values['web_sites']
+        print('even loop value dict:', values)
         print('value from user:' + webSites)
-        print('data stuff:', type(values), values, 'len:', len(values))
-        print('askldf', values["web_sites"])
 
-        writeDb(values)
+        # print('value from user:' + webSites)
+        print('data stuff:', type(values), values, 'len:', len(values))
+        # print('askldf', values["web_sites"])
+
+        writeToDb(values)
 
         if event == sg.WIN_CLOSED or event == 'Cancel':
             break
