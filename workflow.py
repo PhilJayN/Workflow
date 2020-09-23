@@ -26,17 +26,7 @@ def saveSettings(dictValues):
 def loadSettings():
     with open('db.json', 'r') as f:
         data = json.load(f)
-        # print(data["people"][0]["name"])
-        print('asdjkl;f;jklerat', data)
-        for index in range(0,2):
-            # go through .json file structure:
-            print(data["sites"][index]["url"])
-            # f.seek(0)        # <--- should reset file position to the beginning.
-            # json.dump(data, f, indent=2)
     return data
-
-            # f.truncate()     # remove remaining part
-loadSettings()
 
 def startGUI():
     sg.theme('DarkAmber')
@@ -46,21 +36,13 @@ def startGUI():
     # [sg.Text('Folders'), sg.InputText()],
     [sg.Button('Save'), sg.Button('Cancel')] ]
 
-
-
     window = sg.Window('Workflow', layout, finalize=True)
-
 
     print('loadSettings return val is the json db:', loadSettings())
     db = loadSettings()
     # read that json db, and use window.update on where you want the data to render
     for index in range(0,2):
         window['web_sites' + str(index)].update(db["sites"][index]["url"])
-        # data["sites"][index]["url"] = dictValues['web_sites' + str(index)]
-        # go through .json file structure:
-        # f.seek(0)        # <--- should reset file position to the beginning.
-        # json.dump(data, f, indent=2)
-        # f.truncate()     # remove remaining part
 
 
     # Event Loop, gets values of inputs
@@ -159,10 +141,9 @@ def functionHandlers():
     openSites()
     openFolders(requestedFolders)
 
+loadSettings()
+
 # functionHandlers()
-
-
-
 
 # Cross platform open folders
 # def openDirXPlatform():
