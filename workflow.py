@@ -33,7 +33,7 @@ def loadSettings():
             print(data["sites"][index]["url"])
             # f.seek(0)        # <--- should reset file position to the beginning.
             # json.dump(data, f, indent=2)
-
+    return data
 
             # f.truncate()     # remove remaining part
 loadSettings()
@@ -46,7 +46,23 @@ def startGUI():
     # [sg.Text('Folders'), sg.InputText()],
     [sg.Button('Save'), sg.Button('Cancel')] ]
 
-    window = sg.Window('Workflow', layout)
+
+
+    window = sg.Window('Workflow', layout, finalize=True)
+
+
+    print('loadSettings return val is the json db:', loadSettings())
+    db = loadSettings()
+    # read that json db, and use window.update on where you want the data to render
+    for index in range(0,2):
+        window['web_sites' + str(index)].update(db["sites"][index]["url"])
+        # data["sites"][index]["url"] = dictValues['web_sites' + str(index)]
+        # go through .json file structure:
+        # f.seek(0)        # <--- should reset file position to the beginning.
+        # json.dump(data, f, indent=2)
+        # f.truncate()     # remove remaining part
+
+
     # Event Loop, gets values of inputs
     while True:
         event, values = window.read()
