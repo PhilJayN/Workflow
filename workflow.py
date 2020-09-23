@@ -6,9 +6,8 @@ import subprocess
 import json
 import PySimpleGUI as sg
 
-
-def writeToDb(dictValues):
-    # print('you called writeToDb with dictValues', dictValues["web_sites"])
+def saveSettings(dictValues):
+    # print('you called saveSettings with dictValues', dictValues["web_sites"])
     #dictValues looks like: {'web_sites': 'a', 'web_sites0': 'b'}, access using dictValues['web_sites0'], NOT index num
     print('dictValues full:', dictValues)
     print('dictValues accessing w/ key set in PySimpleGUI layout code:', dictValues['web_sites0'])
@@ -16,12 +15,28 @@ def writeToDb(dictValues):
     with open('db.json', 'r+') as f:
         data = json.load(f)
         # print(data["people"][0]["name"])
-        for iii in range(0,2):
+        for index in range(0,2):
             # go through .json file structure:
-            data["sites"][iii]["url"] = dictValues['web_sites' + str(iii)]
+            data["sites"][index]["url"] = dictValues['web_sites' + str(index)]
             f.seek(0)        # <--- should reset file position to the beginning.
             json.dump(data, f, indent=2)
             f.truncate()     # remove remaining part
+    # sg.popup('Saved!')
+
+def loadSettings():
+    with open('db.json', 'r') as f:
+        data = json.load(f)
+        # print(data["people"][0]["name"])
+        print('asdjkl;f;jklerat', data)
+        for index in range(0,2):
+            # go through .json file structure:
+            print(data["sites"][index]["url"])
+            # f.seek(0)        # <--- should reset file position to the beginning.
+            # json.dump(data, f, indent=2)
+
+
+            # f.truncate()     # remove remaining part
+loadSettings()
 
 def startGUI():
     sg.theme('DarkAmber')
@@ -39,7 +54,7 @@ def startGUI():
         # print('data stuff:', type(values), values, 'len:', len(values))
         print('values:', values)
 
-        writeToDb(values)
+        saveSettings(values)
 
         if event == sg.WIN_CLOSED or event == 'Cancel':
             break
