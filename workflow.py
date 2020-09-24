@@ -30,14 +30,12 @@ def saveSettings(dictValues):
 
 def parseUserInput(input):
     print('input looks like:', input['textbox'], type(input))
-    # access text
     with open('db.json', 'r+') as f:
         data = json.load(f)
-        # print(data["people"][0]["name"])
         for index in range(0,3):
-            # go through .json file structure:
             arr = input['textbox'].split()
             data["sites"][index]["url"] = arr[index]
+
             f.seek(0)        # <--- should reset file position to the beginning.
             json.dump(data, f, indent=2)
             f.truncate()     # remove remaining part
@@ -65,6 +63,24 @@ def startGUI():
     # read that json db, and use window.update on where you want the data to render
     for index in range(0,3):
         window['web_sites' + str(index)].update(db["sites"][index]["url"])
+
+
+        print('asdjklf;asjkl', db["sites"][index]["url"])
+
+
+
+    def render():
+        db = loadSettings()
+        string = ""
+        for index in range(0,3):
+            string = string + db["sites"][index]["url"] + '\n'
+
+        window['textbox'].update(string)
+
+    render()
+
+
+
     # Event Loop, gets values of inputs
     while True:
         event, values = window.read()
