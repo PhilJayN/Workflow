@@ -20,7 +20,7 @@ def saveSettings(dictValues):
     with open('db.json', 'r+') as f:
         data = json.load(f)
         # print(data["people"][0]["name"])
-        for index in range(0,2):
+        for index in range(0,3):
             # go through .json file structure:
             data["sites"][index]["url"] = dictValues['web_sites' + str(index)]
             f.seek(0)        # <--- should reset file position to the beginning.
@@ -31,9 +31,15 @@ def saveSettings(dictValues):
 ########################### GUI ###########################
 def startGUI():
     sg.theme('DarkAmber')
+    testInput = [sg.Text('3'), sg.InputText('', key='web_sites3')]
     layout = [  [sg.Text('Your Sites')],
-    [sg.Text('0'), sg.InputText('', key='web_sites0')],
+    [sg.Text('0'), sg.InputText('', key='web_sites0', size=(20,45) )],
     [sg.Text('1'), sg.InputText('', key='web_sites1')],
+    # [sg.Text('2'), sg.InputText('', key='web_sites2')],
+
+    [sg.Text('2'), sg.InputText('', key='web_sites2'), sg.Multiline(size=(30, 5), key='textbox')],
+
+    testInput,
     # [sg.Text('Folders'), sg.InputText()],
     [sg.Button('Save'), sg.Button('Cancel')] ]
 
@@ -41,7 +47,7 @@ def startGUI():
     print('loadSettings return val is the json db:', loadSettings())
     db = loadSettings()
     # read that json db, and use window.update on where you want the data to render
-    for index in range(0,2):
+    for index in range(0,3):
         window['web_sites' + str(index)].update(db["sites"][index]["url"])
     # Event Loop, gets values of inputs
     while True:
