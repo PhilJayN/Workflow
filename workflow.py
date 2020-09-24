@@ -28,6 +28,22 @@ def saveSettings(dictValues):
             f.truncate()     # remove remaining part
     # sg.popup('Saved!')
 
+def parseUserInput(input):
+    print('input looks like:', input['textbox'], type(input))
+    # access text
+    with open('db.json', 'r+') as f:
+        data = json.load(f)
+        # print(data["people"][0]["name"])
+        for index in range(0,3):
+            # go through .json file structure:
+            arr = input['textbox'].split()
+            data["sites"][index]["url"] = arr[index]
+            f.seek(0)        # <--- should reset file position to the beginning.
+            json.dump(data, f, indent=2)
+            f.truncate()     # remove remaining part
+    # sg.popup('Saved!')
+
+
 ########################### GUI ###########################
 def startGUI():
     sg.theme('DarkAmber')
@@ -37,7 +53,7 @@ def startGUI():
     [sg.Text('1'), sg.InputText('', key='web_sites1')],
     # [sg.Text('2'), sg.InputText('', key='web_sites2')],
 
-    [sg.Text('2'), sg.InputText('', key='web_sites2'), sg.Multiline(size=(30, 5), key='textbox')],
+    [sg.Text('2'), sg.InputText('', key='web_sites2'), sg.Multiline(size=(30, 5), key='textbox', font='Any 25')],
 
     testInput,
     # [sg.Text('Folders'), sg.InputText()],
@@ -53,9 +69,11 @@ def startGUI():
     while True:
         event, values = window.read()
         print('even loop value dict:', values)
-        print('values:', values)
+        # print('values from user:', values)
+        print('values from user:', values['textbox'])
 
-        saveSettings(values)
+        # saveSettings(values)
+        parseUserInput(values)
 
         if event == sg.WIN_CLOSED or event == 'Cancel':
             break
