@@ -13,15 +13,14 @@ def loadSettings():
         # Return db.json to use in other fxns
     return data
 
+# access DB, them dump to it
 def saveSettings(dictValues):
-    # print('you called saveSettings with dictValues', dictValues["web_sites"])
     #dictValues looks like: {'web_sites': 'a', 'web_sites0': 'b'}, access using dictValues['web_sites0'], NOT index num
-    print('dictValues accessing w/ key set in PySimpleGUI layout code:', dictValues['web_sites0'])
+    # print('dictValues accessing w/ key set in PySimpleGUI layout code:', dictValues['web_sites0'])
     with open('db.json', 'r+') as f:
         data = json.load(f)
-        # print(data["people"][0]["name"])
+        # go through .json file structure:
         for index in range(0,3):
-            # go through .json file structure:
             data["sites"][index]["url"] = dictValues['web_sites' + str(index)]
             f.seek(0)        # <--- should reset file position to the beginning.
             json.dump(data, f, indent=2)
@@ -49,23 +48,26 @@ def parseUserInput(input):
 ########################### GUI ###########################
 def startGUI():
     sg.theme('DarkAmber')
-    testInput = [sg.Text('3'), sg.InputText('', key='web_sites3')]
-    layout = [  [sg.Text('Your Sites')],
-    [sg.Text('0'), sg.InputText('', key='web_sites0', size=(20,45) )],
+    # testInput = [sg.Text('3'), sg.InputText('', key='web_sites3')]
+    # testInput,
+    layout = [
+    # [sg.Text('0'), sg.InputText('', key='web_sites0', size=(20,45) )],
     # [sg.Text('1'), sg.InputText('', key='web_sites1')],
-    [sg.Text('2'), sg.InputText('', key='web_sites2'), sg.Multiline(size=(20, 5), key='-SITES TEXTBOX-', font='Any 20')],
+    # [sg.Text('2'), sg.InputText('', key='web_sites2'), sg.Multiline(size=(20, 5), key='-SITES TEXTBOX-', font='Any 20')],
+    [sg.Text('Apps')],
+    [sg.Multiline(size=(40, 5), key='-APPS TEXTBOX-', font='Any 14')],
+    [sg.Text('Folders')],
     [sg.Multiline(size=(40, 5), key='-FOLDERS TEXTBOX-', font='Any 14')],
-    testInput,
-    [sg.Button('Save'), sg.Button('Cancel')] ]
+    [sg.Text('Sites')],
+    [sg.Multiline(size=(20, 5), key='-SITES TEXTBOX-', font='Any 20')],
+    [sg.Button('Save'), sg.Button('Exit')] ]
 
     window = sg.Window('Workflow', layout, finalize=True)
     print('loadSettings return val is the json db:', loadSettings())
     db = loadSettings()
-    # read that json db, and use window.update on where you want the data to render
-    # for index in range(0,3):
-    #     window['web_sites' + str(index)].update(db["sites"][index]["url"])
 
     def render():
+        # repeated variable, requires is render fxn is outside in its own scope
         db = loadSettings()
         sitesStr = ""
         foldersStr = ""
@@ -89,10 +91,15 @@ def startGUI():
         # saveSettings(values)
         parseUserInput(values)
 
-        if event == sg.WIN_CLOSED or event == 'Cancel':
+        if event == sg.WIN_CLOSED or event == 'Exit':
             break
             window.close()
-            # db only updates when user closes the GUI??
+
+
+
+
+
+
 
 
 ########################### TEMP FXN ###########################
@@ -163,6 +170,15 @@ def functionHandlers():
 
 startGUI()
 loadSettings()
+
+
+
+
+
+
+
+
+
 
 # Cross platform open folders
 # def openDirXPlatform():
