@@ -7,7 +7,7 @@ import json
 import PySimpleGUI as sg
 
 ########################### Load / Save Settings ###########################
-def loadSettings():
+def loadDB():
     with open('db.json', 'r') as f:
         data = json.load(f)
         # Return db.json to use in other fxns
@@ -27,6 +27,8 @@ def saveSettings(dictValues):
             f.truncate()     # remove remaining part
     # sg.popup('Saved!')
 
+
+# responsible for cleaning (remove commas, put str into array) user input and prep to put into DB, and in future, verifying it
 def parseUserInput(input):
     print('input looks like:', input['-SITES TEXTBOX-'], type(input))
     with open('db.json', 'r+') as f:
@@ -39,14 +41,20 @@ def parseUserInput(input):
             foldersArr = input['-FOLDERS TEXTBOX-'].split()
             data["folders"][index]["path"] = foldersArr[index]
 
-            f.seek(0)        # <--- should reset file position to the beginning.
-            json.dump(data, f, indent=2)
-            f.truncate()     # remove remaining part
+            def writeToDB():
+                f.seek(0)        # <--- should reset file position to the beginning.
+                json.dump(data, f, indent=2)
+                f.truncate()     # remove remaining part
+
+            writeToDB()
+            # f.seek(0)        # <--- should reset file position to the beginning.
+            # json.dump(data, f, indent=2)
+            # f.truncate()     # remove remaining part
     # sg.popup('Saved!')
 
 
 ########################### GUI ###########################
-def startGUI():
+def createMainWindow():
     sg.theme('DarkAmber')
     # testInput = [sg.Text('3'), sg.InputText('', key='web_sites3')]
     # testInput,
@@ -63,12 +71,12 @@ def startGUI():
     [sg.Button('Save'), sg.Button('Exit')] ]
 
     window = sg.Window('Workflow', layout, finalize=True)
-    print('loadSettings return val is the json db:', loadSettings())
-    db = loadSettings()
+    # db = loadDB()
 
+    # Needs access to window
     def render():
         # repeated variable, requires is render fxn is outside in its own scope
-        db = loadSettings()
+        db = loadDB()
         sitesStr = ""
         foldersStr = ""
         for index in range(0,3):
@@ -80,26 +88,17 @@ def startGUI():
 
     render()
 
-
     # Event Loop, gets values of inputs
     while True:
         event, values = window.read()
         print('even loop value dict:', values)
-        # print('values from user:', values)
         print('values from user:', values['-SITES TEXTBOX-'])
 
-        # saveSettings(values)
         parseUserInput(values)
 
         if event == sg.WIN_CLOSED or event == 'Exit':
             break
             window.close()
-
-
-
-
-
-
 
 
 ########################### TEMP FXN ###########################
@@ -168,8 +167,8 @@ def functionHandlers():
 
 # functionHandlers()
 
-startGUI()
-loadSettings()
+createMainWindow()
+loadDB()
 
 
 
