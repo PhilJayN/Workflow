@@ -29,12 +29,16 @@ def saveSettings(dictValues):
     # sg.popup('Saved!')
 
 def parseUserInput(input):
-    print('input looks like:', input['textbox'], type(input))
+    print('input looks like:', input['-SITES TEXTBOX-'], type(input))
     with open('db.json', 'r+') as f:
         data = json.load(f)
         for index in range(0,3):
-            arr = input['textbox'].split()
+
+            arr = input['-SITES TEXTBOX-'].split()
             data["sites"][index]["url"] = arr[index]
+
+            foldersArr = input['-FOLDERS TEXTBOX-'].split()
+            data["folders"][index]["path"] = foldersArr[index]
 
             f.seek(0)        # <--- should reset file position to the beginning.
             json.dump(data, f, indent=2)
@@ -48,37 +52,31 @@ def startGUI():
     testInput = [sg.Text('3'), sg.InputText('', key='web_sites3')]
     layout = [  [sg.Text('Your Sites')],
     [sg.Text('0'), sg.InputText('', key='web_sites0', size=(20,45) )],
-    [sg.Text('1'), sg.InputText('', key='web_sites1')],
-    # [sg.Text('2'), sg.InputText('', key='web_sites2')],
-
-    [sg.Text('2'), sg.InputText('', key='web_sites2'), sg.Multiline(size=(30, 5), key='textbox', font='Any 25')],
-
+    # [sg.Text('1'), sg.InputText('', key='web_sites1')],
+    [sg.Text('2'), sg.InputText('', key='web_sites2'), sg.Multiline(size=(20, 5), key='-SITES TEXTBOX-', font='Any 20')],
+    [sg.Multiline(size=(40, 5), key='-FOLDERS TEXTBOX-', font='Any 14')],
     testInput,
-    # [sg.Text('Folders'), sg.InputText()],
     [sg.Button('Save'), sg.Button('Cancel')] ]
 
     window = sg.Window('Workflow', layout, finalize=True)
     print('loadSettings return val is the json db:', loadSettings())
     db = loadSettings()
     # read that json db, and use window.update on where you want the data to render
-    for index in range(0,3):
-        window['web_sites' + str(index)].update(db["sites"][index]["url"])
-
-
-        print('asdjklf;asjkl', db["sites"][index]["url"])
-
-
+    # for index in range(0,3):
+    #     window['web_sites' + str(index)].update(db["sites"][index]["url"])
 
     def render():
         db = loadSettings()
-        string = ""
+        sitesStr = ""
+        foldersStr = ""
         for index in range(0,3):
-            string = string + db["sites"][index]["url"] + '\n'
+            sitesStr = sitesStr + db["sites"][index]["url"] + '\n\n'
+            foldersStr = foldersStr + db["folders"][index]["path"] + '\n\n'
 
-        window['textbox'].update(string)
+        window['-SITES TEXTBOX-'].update(sitesStr)
+        window['-FOLDERS TEXTBOX-'].update(foldersStr)
 
     render()
-
 
 
     # Event Loop, gets values of inputs
@@ -86,7 +84,7 @@ def startGUI():
         event, values = window.read()
         print('even loop value dict:', values)
         # print('values from user:', values)
-        print('values from user:', values['textbox'])
+        print('values from user:', values['-SITES TEXTBOX-'])
 
         # saveSettings(values)
         parseUserInput(values)
