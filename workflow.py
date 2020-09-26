@@ -12,13 +12,13 @@ def openDirXPlatform():
     path = r'C:\Users\asus270\Evernote'
     webbrowser.open('file:///' + path)
 
-
-
 def closeTabs():
     # temp close tabs
     for i in range(0,7):
         pyautogui.hotkey('ctrl', 'w')
         time.sleep(.5)
+
+
 
 ########################### Load / Save / Parse ###########################
 def loadDB():
@@ -27,13 +27,20 @@ def loadDB():
         # Return db.json to use in other fxns
     return data
 
-# responsible for cleaning (put str into array) user input and prep to put into DB, and in future, verifying it
+# def count():
+#     db = loadDB()
+#     a = len(db["apps"])
+#     f = len(db["folders"])
+#     s = len(db["sites"])
+#     print(a)
+# count()
+
+# cleans (put str into array) user input, puts into DB, and in future, verifying it
 def parseUserInput(input):
     print('input looks like:', input['-SITES TEXTBOX-'], type(input))
     with open('db.json', 'r+') as f:
         data = json.load(f)
         for index in range(0,3):
-
             # gets data from GUI, splits into an array, then write  to db.
             arr = input['-SITES TEXTBOX-'].split()
             data["sites"][index]["url"] = arr[index]
@@ -67,12 +74,29 @@ def createMainWindow():
 
     return sg.Window('App Title', layout, finalize=True)
 
+def count():
+    db = loadDB()
+    count = []
+    for item in db:
+        # print('len:', item, len(item))
+        count.append(len(item))
+    print('count arr:', count)
+    return count
+
+
+def fname():
+        db = loadDB()
+        count = []
+        for item in db:
+
+
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
     # Needs access to window, pulls data from db, changes to strings, then displays to UI
     def render():
         db = loadDB()
+        count = count()
         sitesStr = ""
         foldersStr = ""
         # gets data from DB, puts into a long string, then updates the GUI

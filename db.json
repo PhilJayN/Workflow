@@ -1,25 +1,10 @@
 {
-  "people": [
-    {
-      "name": "Eagle",
-      "age": "32",
-      "type": "Bear"
-    },
-    {
-      "name": "Fudge",
-      "age": "30",
-      "type": "Grey Bear"
-    }
-  ],
   "apps": [
     {
       "path": "www.three.com"
     },
     {
       "path": "asdfasdfsdafsdaf"
-    },
-    {
-      "path": "asdfsdafasdf"
     }
   ],
   "folders": [
@@ -41,7 +26,7 @@
       "url": "www.two.com"
     },
     {
-      "url": "www.three.com"
+      "url": "www.four.com"
     }
   ]
 }
