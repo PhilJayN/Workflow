@@ -48,22 +48,6 @@ def parseUserInput(input):
 
             writeToDB()
 
-
-# Needs access to window, pulls data from db, changes to strings, then displays to UI
-def render():
-    window = createMainWindow()
-    # repeated variable, requires is render fxn is outside in its own scope
-    db = loadDB()
-    sitesStr = ""
-    foldersStr = ""
-    for index in range(0,3):
-        sitesStr = sitesStr + db["sites"][index]["url"] + '\n\n'
-        foldersStr = foldersStr + db["folders"][index]["path"] + '\n\n'
-
-    window['-SITES TEXTBOX-'].update(sitesStr)
-    window['-FOLDERS TEXTBOX-'].update(foldersStr)
-
-
 ########################### GUI ###########################
 def createMainWindow():
     sg.theme('DarkAmber')
@@ -81,10 +65,31 @@ def createMainWindow():
 
 
 def main():
-    # this window object right now should have no user value, it's coming from createMainWindow fxn
-    window = createMainWindow()
-    # print('window obj:', window.read())
 
+
+    # this window object right now should have no user value
+    window = createMainWindow()
+
+
+    # Needs access to window, pulls data from db, changes to strings, then displays to UI
+    def render():
+        # window = createMainWindow()
+        # repeated variable, requires is render fxn is outside in its own scope
+        db = loadDB()
+        sitesStr = ""
+        foldersStr = ""
+        for index in range(0,3):
+            sitesStr = sitesStr + db["sites"][index]["url"] + '\n\n'
+            foldersStr = foldersStr + db["folders"][index]["path"] + '\n\n'
+
+        window['-SITES TEXTBOX-'].update(sitesStr)
+        window['-FOLDERS TEXTBOX-'].update(foldersStr)
+        print('render!')
+
+    # def testFxn():
+    #     print('you called a test fxn')
+    #
+    # testFxn()
 
     render()
     # Event Loop, gets values of inputs
@@ -102,7 +107,6 @@ def main():
 
 
 # parseUserInput(values)
-
 
 main()
 
