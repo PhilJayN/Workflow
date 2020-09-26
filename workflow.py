@@ -14,21 +14,21 @@ def loadDB():
     return data
 
 # access DB, them dump to it
-def saveSettings(dictValues):
-    #dictValues looks like: {'web_sites': 'a', 'web_sites0': 'b'}, access using dictValues['web_sites0'], NOT index num
-    # print('dictValues accessing w/ key set in PySimpleGUI layout code:', dictValues['web_sites0'])
-    with open('db.json', 'r+') as f:
-        data = json.load(f)
-        # go through .json file structure:
-        for index in range(0,3):
-            data["sites"][index]["url"] = dictValues['web_sites' + str(index)]
-            f.seek(0)        # <--- should reset file position to the beginning.
-            json.dump(data, f, indent=2)
-            f.truncate()     # remove remaining part
-    # sg.popup('Saved!')
+# def saveSettings(dictValues):
+#     #dictValues looks like: {'web_sites': 'a', 'web_sites0': 'b'}, access using dictValues['web_sites0'], NOT index num
+#     # print('dictValues accessing w/ key set in PySimpleGUI layout code:', dictValues['web_sites0'])
+#     with open('db.json', 'r+') as f:
+#         data = json.load(f)
+#         # go through .json file structure:
+#         for index in range(0,3):
+#             data["sites"][index]["url"] = dictValues['web_sites' + str(index)]
+#             f.seek(0)        # <--- should reset file position to the beginning.
+#             json.dump(data, f, indent=2)
+#             f.truncate()     # remove remaining part
+#     # sg.popup('Saved!')
 
 
-# responsible for cleaning (remove commas, put str into array) user input and prep to put into DB, and in future, verifying it
+# responsible for cleaning (put str into array) user input and prep to put into DB, and in future, verifying it
 def parseUserInput(input):
     print('input looks like:', input['-SITES TEXTBOX-'], type(input))
     with open('db.json', 'r+') as f:
@@ -47,11 +47,6 @@ def parseUserInput(input):
                 f.truncate()     # remove remaining part
 
             writeToDB()
-            # f.seek(0)        # <--- should reset file position to the beginning.
-            # json.dump(data, f, indent=2)
-            # f.truncate()     # remove remaining part
-    # sg.popup('Saved!')
-
 
 ########################### GUI ###########################
 def createMainWindow():
@@ -71,8 +66,7 @@ def createMainWindow():
     [sg.Button('Save'), sg.Button('Exit')] ]
 
     window = sg.Window('Workflow', layout, finalize=True)
-    # db = loadDB()
-
+    
     # Needs access to window
     def render():
         # repeated variable, requires is render fxn is outside in its own scope
@@ -91,8 +85,8 @@ def createMainWindow():
     # Event Loop, gets values of inputs
     while True:
         event, values = window.read()
-        print('even loop value dict:', values)
-        print('values from user:', values['-SITES TEXTBOX-'])
+        print('event loop value dict:', values)
+        # print('values from user:', values['-SITES TEXTBOX-'])
 
         parseUserInput(values)
 
