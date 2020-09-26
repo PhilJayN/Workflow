@@ -48,15 +48,27 @@ def parseUserInput(input):
 
             writeToDB()
 
+
+# Needs access to window, pulls data from db, changes to strings, then displays to UI
+def render():
+    window = createMainWindow()
+    # repeated variable, requires is render fxn is outside in its own scope
+    db = loadDB()
+    sitesStr = ""
+    foldersStr = ""
+    for index in range(0,3):
+        sitesStr = sitesStr + db["sites"][index]["url"] + '\n\n'
+        foldersStr = foldersStr + db["folders"][index]["path"] + '\n\n'
+
+    window['-SITES TEXTBOX-'].update(sitesStr)
+    window['-FOLDERS TEXTBOX-'].update(foldersStr)
+
+
 ########################### GUI ###########################
 def createMainWindow():
     sg.theme('DarkAmber')
-    # testInput = [sg.Text('3'), sg.InputText('', key='web_sites3')]
-    # testInput,
+
     layout = [
-    # [sg.Text('0'), sg.InputText('', key='web_sites0', size=(20,45) )],
-    # [sg.Text('1'), sg.InputText('', key='web_sites1')],
-    # [sg.Text('2'), sg.InputText('', key='web_sites2'), sg.Multiline(size=(20, 5), key='-SITES TEXTBOX-', font='Any 20')],
     [sg.Text('Apps')],
     [sg.Multiline(size=(40, 5), key='-APPS TEXTBOX-', font='Any 14')],
     [sg.Text('Folders')],
@@ -65,25 +77,19 @@ def createMainWindow():
     [sg.Multiline(size=(20, 5), key='-SITES TEXTBOX-', font='Any 20')],
     [sg.Button('Save'), sg.Button('Exit')] ]
 
-    window = sg.Window('Workflow', layout, finalize=True)
-    
-    # Needs access to window
-    def render():
-        # repeated variable, requires is render fxn is outside in its own scope
-        db = loadDB()
-        sitesStr = ""
-        foldersStr = ""
-        for index in range(0,3):
-            sitesStr = sitesStr + db["sites"][index]["url"] + '\n\n'
-            foldersStr = foldersStr + db["folders"][index]["path"] + '\n\n'
+    return sg.Window('App Title', layout, finalize=True)
 
-        window['-SITES TEXTBOX-'].update(sitesStr)
-        window['-FOLDERS TEXTBOX-'].update(foldersStr)
+
+def main():
+    # this window object right now should have no user value, it's coming from createMainWindow fxn
+    window = createMainWindow()
+    # print('window obj:', window.read())
+
 
     render()
-
     # Event Loop, gets values of inputs
     while True:
+        # reads the user input that you see in the GUI
         event, values = window.read()
         print('event loop value dict:', values)
         # print('values from user:', values['-SITES TEXTBOX-'])
@@ -93,6 +99,35 @@ def createMainWindow():
         if event == sg.WIN_CLOSED or event == 'Exit':
             break
             window.close()
+
+
+# parseUserInput(values)
+
+
+main()
+
+
+
+# TEMPORARY FUNCTION CALLERS 123
+def functionHandlers():
+    openSites()
+    openFolders(requestedFolders)
+
+# functionHandlers()
+
+# loadDB()
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ########################### TEMP FXN ###########################
@@ -154,15 +189,6 @@ def closePrograms():
         print('Exiting')
         time.sleep(.5)
 
-# TEMPORARY FUNCTION CALLERS 123
-def functionHandlers():
-    openSites()
-    openFolders(requestedFolders)
-
-# functionHandlers()
-
-createMainWindow()
-loadDB()
 
 
 
