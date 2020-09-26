@@ -6,27 +6,18 @@ import subprocess
 import json
 import PySimpleGUI as sg
 
-########################### Load / Save Settings ###########################
+########################### ACTIONS / EVENTS  ###########################
+# Cross platform open folders
+def openDirXPlatform():
+    path = r'C:\Users\asus270\Evernote'
+    webbrowser.open('file:///' + path)
+
+########################### Load / Save / Parse ###########################
 def loadDB():
     with open('db.json', 'r') as f:
         data = json.load(f)
         # Return db.json to use in other fxns
     return data
-
-# access DB, them dump to it
-# def saveSettings(dictValues):
-#     #dictValues looks like: {'web_sites': 'a', 'web_sites0': 'b'}, access using dictValues['web_sites0'], NOT index num
-#     # print('dictValues accessing w/ key set in PySimpleGUI layout code:', dictValues['web_sites0'])
-#     with open('db.json', 'r+') as f:
-#         data = json.load(f)
-#         # go through .json file structure:
-#         for index in range(0,3):
-#             data["sites"][index]["url"] = dictValues['web_sites' + str(index)]
-#             f.seek(0)        # <--- should reset file position to the beginning.
-#             json.dump(data, f, indent=2)
-#             f.truncate()     # remove remaining part
-#     # sg.popup('Saved!')
-
 
 # responsible for cleaning (put str into array) user input and prep to put into DB, and in future, verifying it
 def parseUserInput(input):
@@ -45,7 +36,6 @@ def parseUserInput(input):
                 f.seek(0)        # <--- should reset file position to the beginning.
                 json.dump(data, f, indent=2)
                 f.truncate()     # remove remaining part
-
             writeToDB()
 
 ########################### GUI ###########################
@@ -58,23 +48,21 @@ def createMainWindow():
     [sg.Text('Folders')],
     [sg.Multiline(size=(40, 5), key='-FOLDERS TEXTBOX-', font='Any 14')],
     [sg.Text('Sites')],
-    [sg.Multiline(size=(20, 5), key='-SITES TEXTBOX-', font='Any 20')],
-    [sg.Button('Save'), sg.Button('Exit')] ]
+    [sg.Multiline(size=(40, 5), key='-SITES TEXTBOX-', font='Any 20')],
+    [sg.Button('Open Apps')],
+    [sg.Button('Open Folders')],
+    [sg.Button('Open Sites')],
+    [sg.Button('Open Everything')],
+    [sg.Button('Save'), sg.Button('Exit')]
+    ]
 
     return sg.Window('App Title', layout, finalize=True)
 
-
 def main():
-
-
     # this window object right now should have no user value
     window = createMainWindow()
-
-
     # Needs access to window, pulls data from db, changes to strings, then displays to UI
     def render():
-        # window = createMainWindow()
-        # repeated variable, requires is render fxn is outside in its own scope
         db = loadDB()
         sitesStr = ""
         foldersStr = ""
@@ -84,30 +72,22 @@ def main():
 
         window['-SITES TEXTBOX-'].update(sitesStr)
         window['-FOLDERS TEXTBOX-'].update(foldersStr)
-        print('render!')
-
-    # def testFxn():
-    #     print('you called a test fxn')
-    #
-    # testFxn()
-
     render()
-    # Event Loop, gets values of inputs
+
     while True:
         # reads the user input that you see in the GUI
         event, values = window.read()
         print('event loop value dict:', values)
-        # print('values from user:', values['-SITES TEXTBOX-'])
 
         parseUserInput(values)
+
 
         if event == sg.WIN_CLOSED or event == 'Exit':
             break
             window.close()
 
-
-# parseUserInput(values)
-
+        if event == 'Open Folders':
+            openDirXPlatform()
 main()
 
 
@@ -120,13 +100,6 @@ def functionHandlers():
 # functionHandlers()
 
 # loadDB()
-
-
-
-
-
-
-
 
 
 
@@ -192,21 +165,3 @@ def closePrograms():
 
         print('Exiting')
         time.sleep(.5)
-
-
-
-
-
-
-
-
-
-
-
-# Cross platform open folders
-# def openDirXPlatform():
-#     import webbrowser
-#     path = r'C:\Users\asus270\Evernote'
-#     webbrowser.open('file:///' + path)
-#
-# openDirXPlatform()
