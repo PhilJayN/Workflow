@@ -12,6 +12,14 @@ def openDirXPlatform():
     path = r'C:\Users\asus270\Evernote'
     webbrowser.open('file:///' + path)
 
+
+
+def closeTabs():
+    # temp close tabs
+    for i in range(0,7):
+        pyautogui.hotkey('ctrl', 'w')
+        time.sleep(.5)
+
 ########################### Load / Save / Parse ###########################
 def loadDB():
     with open('db.json', 'r') as f:
@@ -26,6 +34,7 @@ def parseUserInput(input):
         data = json.load(f)
         for index in range(0,3):
 
+            # gets data from GUI, splits into an array, then write  to db.
             arr = input['-SITES TEXTBOX-'].split()
             data["sites"][index]["url"] = arr[index]
 
@@ -52,7 +61,7 @@ def createMainWindow():
     [sg.Button('Open Apps')],
     [sg.Button('Open Folders')],
     [sg.Button('Open Sites')],
-    [sg.Button('Open Everything')],
+    [sg.Button('Open All')],
     [sg.Button('Save'), sg.Button('Exit')]
     ]
 
@@ -66,6 +75,7 @@ def main():
         db = loadDB()
         sitesStr = ""
         foldersStr = ""
+        # gets data from DB, puts into a long string, then updates the GUI
         for index in range(0,3):
             sitesStr = sitesStr + db["sites"][index]["url"] + '\n\n'
             foldersStr = foldersStr + db["folders"][index]["path"] + '\n\n'
@@ -73,6 +83,40 @@ def main():
         window['-SITES TEXTBOX-'].update(sitesStr)
         window['-FOLDERS TEXTBOX-'].update(foldersStr)
     render()
+
+
+    # X can be apps, folders, or sites
+    def openX():
+        db = loadDB()
+        # Open apps
+        # for index in range(0,3):
+        #     path = db["apps"][index]["path"]
+        #     webbrowser.open('file:///' + path)
+
+        for index in range(0,3):
+            # Open folders
+            path = db["folders"][index]["path"]
+            # print('file:///' + path)
+            webbrowser.open('file:///' + path)
+
+            # # Open sites
+            url = db["sites"][index]["url"]
+            webbrowser.get('windows-default').open(url, new=1)
+
+        # closeTabs()
+
+#
+# def openDirXPlatform():
+#     path = r'C:\Users\asus270\Evernote'
+#     ted = 'file:///' + path
+#     webbrowser.open('file:///' + path)
+#     print('full', ted )
+#     # webbrowser.open('www.one.com')
+#
+# openDirXPlatform()
+
+
+
 
     while True:
         # reads the user input that you see in the GUI
@@ -86,8 +130,8 @@ def main():
             break
             window.close()
 
-        if event == 'Open Folders':
-            openDirXPlatform()
+        if event == 'Open All':
+            openX()
 main()
 
 
@@ -98,9 +142,7 @@ def functionHandlers():
     openFolders(requestedFolders)
 
 # functionHandlers()
-
 # loadDB()
-
 
 
 
@@ -116,14 +158,6 @@ def minWindow():
     window = gw.getActiveWindow()
     window.minimize()
 
-def closeTabs():
-    # temp close tabs
-    pyautogui.hotkey('ctrl', 'w')
-    time.sleep(.3)
-    pyautogui.hotkey('ctrl', 'w')
-    time.sleep(1)
-    minWindow()
-
 def exitPrompt():
     askToExit = input('Type x and press ENTER key to exit and CLOSE all programs and folders you opened: ')
 
@@ -132,6 +166,7 @@ def exitPrompt():
 
         print('Exiting')
         time.sleep(.5)
+
 
 requestedSites = ['https://www.udemy.com/course/automate/learn/lecture/3465864#questions/11019006',
                 'https://automatetheboringstuff.com/2e/'
