@@ -76,18 +76,33 @@ def createMainWindow():
 
 def count():
     db = loadDB()
+    print('db:', db, 'len of apps', len(db['apps']), 'len of db:', len(db))
     count = []
+    # item is "apps", or "folders", etc...
     for item in db:
-        # print('len:', item, len(item))
-        count.append(len(item))
-    print('count arr:', count)
+        print('item in db', item)
+        count.append(len(db[item]))
+    print('count array is:', count)
     return count
-
+count()
 
 def fname():
-        db = loadDB()
-        count = []
-        for item in db:
+    db = loadDB()
+    countArr = count()
+    item = ["apps", "folders", "sites"]
+    print('asdjlkfjkl;sdaf', db["apps"][1], 'len of db items', len )
+    # count how many keys in each item, where item is apps, folders, sites)
+    
+    # oi is outer index
+    for oi in range(0,3):
+        for index in range(0, countArr[oi]):
+            print('key:', db[item[index]])
+    # for item in db:
+    #     # print('len:', item, len(item))
+    #     count.append(len(item))
+    # print('count arr:', count)
+    # return count
+fname()
 
 
 def main():
@@ -96,7 +111,7 @@ def main():
     # Needs access to window, pulls data from db, changes to strings, then displays to UI
     def render():
         db = loadDB()
-        count = count()
+        # count = count()
         sitesStr = ""
         foldersStr = ""
         # gets data from DB, puts into a long string, then updates the GUI
