@@ -86,42 +86,60 @@ def count():
     return count
 count()
 
-def fname():
-    db = loadDB()
-    countArr = count()
-    item = ["apps", "folders", "sites"]
-    print('asdjlkfjkl;sdaf', db["apps"][1], 'len of db items', len )
-    # count how many keys in each item, where item is apps, folders, sites)
-    
-    # oi is outer index
-    for oi in range(0,3):
-        for index in range(0, countArr[oi]):
-            print('key:', db[item[index]])
-    # for item in db:
-    #     # print('len:', item, len(item))
-    #     count.append(len(item))
-    # print('count arr:', count)
-    # return count
-fname()
+
 
 
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
-    # Needs access to window, pulls data from db, changes to strings, then displays to UI
+    # Needs access to window obj
     def render():
+        # gets data from DB, puts into a long string, then displays to GUI
         db = loadDB()
-        # count = count()
         sitesStr = ""
         foldersStr = ""
-        # gets data from DB, puts into a long string, then updates the GUI
         for index in range(0,3):
-            sitesStr = sitesStr + db["sites"][index]["url"] + '\n\n'
-            foldersStr = foldersStr + db["folders"][index]["path"] + '\n\n'
+            sitesStr += db["sites"][index]["url"] + '\n\n'
+            foldersStr += db["folders"][index]["path"] + '\n\n'
 
         window['-SITES TEXTBOX-'].update(sitesStr)
         window['-FOLDERS TEXTBOX-'].update(foldersStr)
-    render()
+    # render()
+
+
+    def orgData():
+        db = loadDB()
+        countArr = count()
+        item = ["apps", "folders", "sites"]
+        print('asdjlkfjkl;sdaf', db["apps"][1], 'len of db items', len )
+        # count how many keys in each item, where item is apps, folders, sites)
+
+        window = createMainWindow()
+
+        # oi is outer index
+        for oi in range(0,3):
+            print('oi index', oi)
+            for index in range(0, countArr[oi]):
+                print('inner index:', index)
+                # print('key:', db[item[index]])
+                appsStr = ""
+                foldersStr = ""
+                sitesStr = ""
+                for index in range(0,3):
+                    appsStr += db["apps"][index]["path"] + '\n\n'
+                    foldersStr += db["folders"][index]["path"] + '\n\n'
+                    sitesStr += db["sites"][index]["url"] + '\n\n'
+
+                window['-APPS TEXTBOX-'].update(appsStr)
+                window['-FOLDERS TEXTBOX-'].update(foldersStr)
+                window['-SITES TEXTBOX-'].update(sitesStr)
+        # for item in db:
+        #     # print('len:', item, len(item))
+        #     count.append(len(item))
+        # print('count arr:', count)
+        # return count
+    orgData()
+
 
 
     # X can be apps, folders, or sites

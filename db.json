@@ -1,10 +1,13 @@
 {
   "apps": [
     {
-      "path": "www.three.com"
+      "path": "atom.exe"
     },
     {
-      "path": "firefox.exe"
+      "path": "firefox.exeee"
+    },
+    {
+      "path": "chrome.exeee"
     }
   ],
   "folders": [
