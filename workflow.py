@@ -27,6 +27,9 @@ def loadDB():
         # Return db.json to use in other fxns
     return data
 
+
+
+
 # def count():
 #     db = loadDB()
 #     a = len(db["apps"])
@@ -88,7 +91,6 @@ count()
 
 
 
-
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
@@ -109,30 +111,62 @@ def main():
 
     def orgData():
         db = loadDB()
+        temp = []
+
+        print('dskjafljkl;sadf', type(db.get("apps")) )
+        # # item is "apps", "folders"
+        # for item in db:
+        #     print("-....................ITEM", item)
+        #     # print('ITEM STUFF', item)
+        #     for key in db[item]:
+        #         print('jjjj', key)
+        #         # print('TEDDY', db[item][key])
+        #         print("-....................")
+
+        # key is "apps", "folders", which eval to a []
+        for key in db:
+            print('aaaaaaaaa', db[key][0])
+            db[key][0] = "shahahah"
+            # for x in key[0]:
+            #     print('bbbb', )
+
+            # temp.append('text')
+            # print("-....................ITEM", db["apps"][0])
+            # print('ITEM STUFF', item)
+            # for key in db["apps"]:
+            #     print('jjjj', key)
+            #     # print('TEDDY', db[item][key])
+            #     print("-....................")
+
+        # don't erase:
+        # db["apps"]) # --> a list []
+        # db["apps"][0]) # --> a dict {"path": "atom.exe"}
+        # db["apps"][0]["path"]) # --> a string, "atom.exe"
+
         countArr = count()
         item = ["apps", "folders", "sites"]
         print('asdjlkfjkl;sdaf', db["apps"][1], 'len of db items', len )
         # count how many keys in each item, where item is apps, folders, sites)
 
         window = createMainWindow()
+        appsStr = ""
+        foldersStr = ""
+        sitesStr = ""
+
 
         # oi is outer index
         for oi in range(0,3):
             print('oi index', oi)
-            for index in range(0, countArr[oi]):
+            for index in range(0, countArr[oi]): #arr: [3,3,2]
                 print('inner index:', index)
                 # print('key:', db[item[index]])
-                appsStr = ""
-                foldersStr = ""
-                sitesStr = ""
-                for index in range(0,3):
-                    appsStr += db["apps"][index]["path"] + '\n\n'
-                    foldersStr += db["folders"][index]["path"] + '\n\n'
-                    sitesStr += db["sites"][index]["url"] + '\n\n'
+                appsStr += db["apps"][index]["path"] + '\n\n'
+                # foldersStr += db["folders"][index]["path"] + '\n\n'
+                # sitesStr += db["sites"][index]["url"] + '\n\n'
 
-                window['-APPS TEXTBOX-'].update(appsStr)
-                window['-FOLDERS TEXTBOX-'].update(foldersStr)
-                window['-SITES TEXTBOX-'].update(sitesStr)
+        window['-APPS TEXTBOX-'].update(appsStr)
+        # window['-FOLDERS TEXTBOX-'].update(foldersStr)
+        # window['-SITES TEXTBOX-'].update(sitesStr)
         # for item in db:
         #     # print('len:', item, len(item))
         #     count.append(len(item))
