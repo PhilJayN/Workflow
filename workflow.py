@@ -40,25 +40,30 @@ def parseUserInput(input):
         # logging.info(type(count()))
         c = count()
 
-        def modifyData(num, key):
+        def modifyData(count, key, data):
             # print('modifyData running @: ', num)
             # Run loop depending on number of items in db list
-            for ii in range(0,num):
+
+            # print('foldersArr:', foldersArr)
+            for ii in range(0,count):
                 # db[key][ii]["path"] = "ffff"
                 # arr = input['-SITES TEXTBOX-'].split()
                 # db[key][ii]["path"] = arr[ii]
-
-                foldersArr = input['-FOLDERS TEXTBOX-'].split()
-                print('foldersArr:', foldersArr)
-                db[key][ii]["path"] = foldersArr[ii]
+                db[key][ii]["path"] = data[ii]
 
         def getParam():
             count = c # [3,3,2]
             # print('tak', count)
             key = ["apps", "folders", "sites"]
+            appsArr = input['-APPS TEXTBOX-'].split()
+            foldersArr = input['-FOLDERS TEXTBOX-'].split()
+            sitesArr = input['-SITES TEXTBOX-'].split()
+            dataArr = [appsArr, foldersArr, sitesArr]
+            print('dataArr', dataArr)
+
             # Run modifyData 3x there are 3 keys, which won't change
             for x in range(0,3):
-                modifyData(count[x], key[x])
+                modifyData(count[x], key[x], dataArr[x])
         getParam()
 
         def writeToDB():
