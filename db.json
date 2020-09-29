@@ -15,7 +15,7 @@
       "path": "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32"
     },
     {
-      "path": "C:\\"
+      "path": "D:\\"
     },
     {
       "path": "C:\\Dropbox\\~Programming\\projects"
@@ -23,10 +23,10 @@
   ],
   "sites": [
     {
-      "url": "threee"
+      "path": "threee"
     },
     {
-      "url": "www.four.com"
+      "path": "www.four.com"
     }
   ]
 }

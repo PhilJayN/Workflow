@@ -27,22 +27,45 @@ def loadDB():
 
 # cleans (put str into array) user input, puts into DB, and in future, verifying it
 def parseUserInput(input):
-    print('input looks like:', input['-SITES TEXTBOX-'], type(input))
     with open('db.json', 'r+') as f:
-        data = json.load(f)
-        for index in range(0,3):
-            # gets data from GUI, splits into an array, then write  to db.
-            arr = input['-SITES TEXTBOX-'].split()
-            data["sites"][index]["url"] = arr[index]
+        db = json.load(f)
+        # logging.info(db)
 
-            foldersArr = input['-FOLDERS TEXTBOX-'].split()
-            data["folders"][index]["path"] = foldersArr[index]
+        def count():
+            count = []
+            # item is "apps", or "folders", etc...
+            for item in db:
+                count.append(len(db[item]))
+            return count
+        # logging.info(type(count()))
+        c = count()
 
-            def writeToDB():
-                f.seek(0)        # <--- should reset file position to the beginning.
-                json.dump(data, f, indent=2)
-                f.truncate()     # remove remaining part
-            writeToDB()
+        def modifyData(num, key):
+            # print('modifyData running @: ', num)
+            # Run loop depending on number of items in db list
+            for ii in range(0,num):
+                # db[key][ii]["path"] = "ffff"
+                # arr = input['-SITES TEXTBOX-'].split()
+                # db[key][ii]["path"] = arr[ii]
+
+                foldersArr = input['-FOLDERS TEXTBOX-'].split()
+                print('foldersArr:', foldersArr)
+                db[key][ii]["path"] = foldersArr[ii]
+
+        def getParam():
+            count = c # [3,3,2]
+            # print('tak', count)
+            key = ["apps", "folders", "sites"]
+            # Run modifyData 3x there are 3 keys, which won't change
+            for x in range(0,3):
+                modifyData(count[x], key[x])
+        getParam()
+
+        def writeToDB():
+            f.seek(0)        # <--- should reset file position to the beginning.
+            json.dump(db, f, indent=2)
+            f.truncate()     # remove remaining part
+        writeToDB()
 
 ########################### GUI ###########################
 def createMainWindow():
@@ -64,17 +87,17 @@ def createMainWindow():
 
     return sg.Window('App Title', layout, finalize=True)
 
-def count():
-    db = loadDB()
-    print('db:', db, 'len of apps', len(db['apps']), 'len of db:', len(db))
-    count = []
-    # item is "apps", or "folders", etc...
-    for item in db:
-        print('item in db', item)
-        count.append(len(db[item]))
-    print('count array is:', count)
-    return count
-count()
+# def count():
+#     db = loadDB()
+#     print('db:', db, 'len of apps', len(db['apps']), 'len of db:', len(db))
+#     count = []
+#     # item is "apps", or "folders", etc...
+#     for item in db:
+#         print('item in db', item)
+#         count.append(len(db[item]))
+#     print('count array is:', count)
+#     return count
+# count()
 
 def main():
     # this window object right now should have no user value
