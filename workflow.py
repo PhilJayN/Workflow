@@ -86,55 +86,13 @@ def main():
         sitesStr = ""
         foldersStr = ""
         for index in range(0,3):
-            sitesStr += db["sites"][index]["url"] + '\n\n'
+            # sitesStr += db["sites"][index]["url"] + '\n\n'
             foldersStr += db["folders"][index]["path"] + '\n\n'
 
-        window['-SITES TEXTBOX-'].update(sitesStr)
-        window['-FOLDERS TEXTBOX-'].update(foldersStr)
-    # render()
-
-
-    def orgData():
-        db = loadDB()
-        temp = []
-        # key is "apps", "folders", which eval to a []
-        for key in db:
-            print('aaaaaaaaa', db[key][0])
-            db[key][0] = "shahahah"
-        # don't erase:
-        # db["apps"]) # --> a list []
-        # db["apps"][0]) # --> a dict {"path": "atom.exe"}
-        # db["apps"][0]["path"]) # --> a string, "atom.exe"
-
-        countArr = count()
-        item = ["apps", "folders", "sites"]
-        print('asdjlkfjkl;sdaf', db["apps"][1], 'len of db items', len )
-        # count how many keys in each item, where item is apps, folders, sites)
-
-        window = createMainWindow()
-        appsStr = ""
-        foldersStr = ""
-        sitesStr = ""
-
-        # oi is outer index
-        # for oi in range(0,3):
-        #     print('oi index', oi)
-        #     for index in range(0, countArr[oi]): #arr: [3,3,2]
-        #         print('inner index:', index)
-        #         # print('key:', db[item[index]])
-        #         appsStr += db["apps"][index]["path"] + '\n\n'
-        #         # foldersStr += db["folders"][index]["path"] + '\n\n'
-        #         # sitesStr += db["sites"][index]["url"] + '\n\n'
-
-        window['-APPS TEXTBOX-'].update(appsStr)
-        # window['-FOLDERS TEXTBOX-'].update(foldersStr)
         # window['-SITES TEXTBOX-'].update(sitesStr)
-        # for item in db:
-        #     # print('len:', item, len(item))
-        #     count.append(len(item))
-        # print('count arr:', count)
-        # return count
-    orgData()
+        window['-FOLDERS TEXTBOX-'].update(foldersStr)
+    render()
+
     # X can be apps, folders, or sites
     def openX():
         db = loadDB()
@@ -159,7 +117,6 @@ def main():
         print('event loop value dict:', values)
 
         parseUserInput(values)
-
 
         if event == sg.WIN_CLOSED or event == 'Exit':
             break
