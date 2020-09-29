@@ -111,13 +111,15 @@ def main():
     def render():
         # gets data from DB, puts into a long string, then displays to GUI
         db = loadDB()
+        appsStr = ""
         sitesStr = ""
         foldersStr = ""
         for index in range(0,3):
-            # sitesStr += db["sites"][index]["url"] + '\n\n'
+            appsStr += db["apps"][index]["path"] + '\n\n'
+            # sitesStr += db["sites"][index]["path"] + '\n\n'
             foldersStr += db["folders"][index]["path"] + '\n\n'
 
-        # window['-SITES TEXTBOX-'].update(sitesStr)
+        window['-APPS TEXTBOX-'].update(appsStr)
         window['-FOLDERS TEXTBOX-'].update(foldersStr)
     render()
 
