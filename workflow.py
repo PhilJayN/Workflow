@@ -18,25 +18,12 @@ def closeTabs():
         pyautogui.hotkey('ctrl', 'w')
         time.sleep(.5)
 
-
-
 ########################### Load / Save / Parse ###########################
 def loadDB():
     with open('db.json', 'r') as f:
         data = json.load(f)
         # Return db.json to use in other fxns
     return data
-
-
-
-
-# def count():
-#     db = loadDB()
-#     a = len(db["apps"])
-#     f = len(db["folders"])
-#     s = len(db["sites"])
-#     print(a)
-# count()
 
 # cleans (put str into array) user input, puts into DB, and in future, verifying it
 def parseUserInput(input):
@@ -89,8 +76,6 @@ def count():
     return count
 count()
 
-
-
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
@@ -112,32 +97,10 @@ def main():
     def orgData():
         db = loadDB()
         temp = []
-
-        print('dskjafljkl;sadf', type(db.get("apps")) )
-        # # item is "apps", "folders"
-        # for item in db:
-        #     print("-....................ITEM", item)
-        #     # print('ITEM STUFF', item)
-        #     for key in db[item]:
-        #         print('jjjj', key)
-        #         # print('TEDDY', db[item][key])
-        #         print("-....................")
-
         # key is "apps", "folders", which eval to a []
         for key in db:
             print('aaaaaaaaa', db[key][0])
             db[key][0] = "shahahah"
-            # for x in key[0]:
-            #     print('bbbb', )
-
-            # temp.append('text')
-            # print("-....................ITEM", db["apps"][0])
-            # print('ITEM STUFF', item)
-            # for key in db["apps"]:
-            #     print('jjjj', key)
-            #     # print('TEDDY', db[item][key])
-            #     print("-....................")
-
         # don't erase:
         # db["apps"]) # --> a list []
         # db["apps"][0]) # --> a dict {"path": "atom.exe"}
@@ -153,16 +116,15 @@ def main():
         foldersStr = ""
         sitesStr = ""
 
-
         # oi is outer index
-        for oi in range(0,3):
-            print('oi index', oi)
-            for index in range(0, countArr[oi]): #arr: [3,3,2]
-                print('inner index:', index)
-                # print('key:', db[item[index]])
-                appsStr += db["apps"][index]["path"] + '\n\n'
-                # foldersStr += db["folders"][index]["path"] + '\n\n'
-                # sitesStr += db["sites"][index]["url"] + '\n\n'
+        # for oi in range(0,3):
+        #     print('oi index', oi)
+        #     for index in range(0, countArr[oi]): #arr: [3,3,2]
+        #         print('inner index:', index)
+        #         # print('key:', db[item[index]])
+        #         appsStr += db["apps"][index]["path"] + '\n\n'
+        #         # foldersStr += db["folders"][index]["path"] + '\n\n'
+        #         # sitesStr += db["sites"][index]["url"] + '\n\n'
 
         window['-APPS TEXTBOX-'].update(appsStr)
         # window['-FOLDERS TEXTBOX-'].update(foldersStr)
@@ -173,9 +135,6 @@ def main():
         # print('count arr:', count)
         # return count
     orgData()
-
-
-
     # X can be apps, folders, or sites
     def openX():
         db = loadDB()
@@ -183,7 +142,6 @@ def main():
         # for index in range(0,3):
         #     path = db["apps"][index]["path"]
         #     webbrowser.open('file:///' + path)
-
         for index in range(0,3):
             # Open folders
             path = db["folders"][index]["path"]
@@ -195,20 +153,6 @@ def main():
             webbrowser.get('windows-default').open(url, new=1)
 
         # closeTabs()
-
-#
-# def openDirXPlatform():
-#     path = r'C:\Users\asus270\Evernote'
-#     ted = 'file:///' + path
-#     webbrowser.open('file:///' + path)
-#     print('full', ted )
-#     # webbrowser.open('www.one.com')
-#
-# openDirXPlatform()
-
-
-
-
     while True:
         # reads the user input that you see in the GUI
         event, values = window.read()
@@ -225,8 +169,6 @@ def main():
             openX()
 main()
 
-
-
 # TEMPORARY FUNCTION CALLERS 123
 def functionHandlers():
     openSites()
@@ -234,9 +176,6 @@ def functionHandlers():
 
 # functionHandlers()
 # loadDB()
-
-
-
 
 
 
@@ -291,3 +230,23 @@ def closePrograms():
 
         print('Exiting')
         time.sleep(.5)
+
+
+#
+# def openDirXPlatform():
+#     path = r'C:\Users\asus270\Evernote'
+#     ted = 'file:///' + path
+#     webbrowser.open('file:///' + path)
+#     print('full', ted )
+#     # webbrowser.open('www.one.com')
+#
+# openDirXPlatform()
+
+
+# def count():
+#     db = loadDB()
+#     a = len(db["apps"])
+#     f = len(db["folders"])
+#     s = len(db["sites"])
+#     print(a)
+# count()
