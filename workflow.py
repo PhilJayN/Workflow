@@ -116,12 +116,18 @@ def main():
         sitesStr = ""
         foldersStr = ""
         for index in range(0,3):
-            appsStr += db["apps"][index]["path"] + '\n\n'
-            # sitesStr += db["sites"][index]["path"] + '\n\n'
-            foldersStr += db["folders"][index]["path"] + '\n\n'
+            try:
+                print('current index:', index)
+                appsStr += db["apps"][index]["path"] + '\n\n'
+                foldersStr += db["folders"][index]["path"] + '\n\n'
+                sitesStr += db["sites"][index]["path"] + '\n\n'
+            except IndexError:
+                pass
+            continue
 
         window['-APPS TEXTBOX-'].update(appsStr)
         window['-FOLDERS TEXTBOX-'].update(foldersStr)
+        window['-SITES TEXTBOX-'].update(sitesStr)
     render()
 
     # X can be apps, folders, or sites
