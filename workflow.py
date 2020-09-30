@@ -40,34 +40,27 @@ def openFolders(folders):
 
 # def getPathStrInDb():
 
-
 # X can be apps, folders, or sites
 def openX():
     db = loadDB()
-    # Open apps
     key = ["apps", "folders", "sites"]
     # newData = ["one", "two", "three"]
     for index in range(0,3):
         # print('current key: ', key[index])
-        # # open apps
         for item in db[key[index]]:
+            # find path values:
+            # print('pathStr:', pathStr)
             pathStr = item["path"]
             if key[index] == "apps":
-                # works:
                 # subprocess.Popen(pathStr)
                 print('opening apps placeholder...')
+
             elif key[index] == "folders":
                 webbrowser.open('file:///' + pathStr)
             elif key[index] == "sites":
                 webbrowser.open(pathStr)
-            # find path values:
-            # print('pathStr:', pathStr)
+                # webbrowser.get('windows-default').open(url, new=1)
         time.sleep(.7)
-            # webbrowser.open('www.one.com')
-            # print('file:///' + path)
-        # # Open sites
-        # url = db["sites"][index]["url"]
-        # webbrowser.get('windows-default').open(url, new=1)
 ########################### Load / Save / Parse ###########################
 def loadDB():
     with open('db.json', 'r') as f:
@@ -108,7 +101,9 @@ def parseUserInput(input):
             # print('tak', count)
             key = ["apps", "folders", "sites"]
             appsArr = input['-APPS TEXTBOX-'].split()
+            print('splitted data:', appsArr)
             foldersArr = input['-FOLDERS TEXTBOX-'].split()
+            print('folders splitted data:', foldersArr)
             sitesArr = input['-SITES TEXTBOX-'].split()
             dataArr = [appsArr, foldersArr, sitesArr]
 
@@ -163,18 +158,24 @@ def main():
         # gets data from DB, puts into a long string, then displays to GUI
         db = loadDB()
         appsStr = ""
-        sitesStr = ""
         foldersStr = ""
+        sitesStr = ""
         for index in range(0,3):
             try:
                 print('current index:', index)
-                appsStr += db["apps"][index]["path"] + '\n\n'
+
+                appsStr = appsStr + db["apps"][index]["path"] + '\n\n'
+                print('appsStr @ index :', index, appsStr)
+
                 foldersStr += db["folders"][index]["path"] + '\n\n'
+                # print('foldersStr:', foldersStr)
+                print('foldersStr @ index :', index, foldersStr)
+
                 sitesStr += db["sites"][index]["path"] + '\n\n'
             except IndexError:
                 pass
             continue
-
+        print('final:', foldersStr)
         window['-APPS TEXTBOX-'].update(appsStr)
         window['-FOLDERS TEXTBOX-'].update(foldersStr)
         window['-SITES TEXTBOX-'].update(sitesStr)
@@ -200,6 +201,7 @@ def main():
             # elif event == 'Open Sites':
             elif event == 'Open All':
                 openX()
+                print('test')
         checkEvent()
 main()
 
