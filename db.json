@@ -23,10 +23,10 @@
   ],
   "sites": [
     {
-      "path": "threee"
+      "path": "www.one.com"
     },
     {
-      "path": "www.four.com"
+      "path": "www.two.com"
     }
   ]
 }

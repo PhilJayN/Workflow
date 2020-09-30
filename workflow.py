@@ -49,6 +49,8 @@ def parseUserInput(input):
                 # db[key][ii]["path"] = "ffff"
                 # arr = input['-SITES TEXTBOX-'].split()
                 # db[key][ii]["path"] = arr[ii]
+                print('data assigned:', data[ii])
+                # data[ii] will run into "index out of range", if GUI value is empty!!
                 db[key][ii]["path"] = data[ii]
 
         def getParam():
@@ -59,7 +61,6 @@ def parseUserInput(input):
             foldersArr = input['-FOLDERS TEXTBOX-'].split()
             sitesArr = input['-SITES TEXTBOX-'].split()
             dataArr = [appsArr, foldersArr, sitesArr]
-            print('dataArr', dataArr)
 
             # Run modifyData 3x there are 3 keys, which won't change
             for x in range(0,3):
@@ -144,7 +145,7 @@ def main():
     while True:
         # reads the user input that you see in the GUI
         event, values = window.read()
-        print('event loop value dict:', values)
+        # print('event loop value dict:', values)
 
         parseUserInput(values)
 
