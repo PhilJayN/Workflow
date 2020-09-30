@@ -18,6 +18,56 @@ def closeTabs():
         pyautogui.hotkey('ctrl', 'w')
         time.sleep(.5)
 
+requestedSites = ['https://www.udemy.com/course/automate/learn/lecture/3465864#questions/11019006',
+                'https://automatetheboringstuff.com/2e/'
+                ]
+
+def openSites():
+    for i in range(len(requestedSites)):
+        print(i)
+        webbrowser.open(requestedSites[i], new=1)
+        time.sleep(.3)
+        maxWindow()
+        time.sleep(1)
+    closeTabs()
+
+requestedFolders = ['D:\\tcg', 'C:\\Users\\asus270', 'C:\\Dropbox\\~Programming\\projects']
+
+def openFolders(folders):
+    for i in range(len(requestedFolders)):
+        subprocess.Popen(r'explorer ' + requestedFolders[i])
+        print('req. folders:', requestedFolders[i])
+
+# def getPathStrInDb():
+
+
+# X can be apps, folders, or sites
+def openX():
+    db = loadDB()
+    # Open apps
+    key = ["apps", "folders", "sites"]
+    # newData = ["one", "two", "three"]
+    for index in range(0,3):
+        # print('current key: ', key[index])
+        # # open apps
+        for item in db[key[index]]:
+            pathStr = item["path"]
+            if key[index] == "apps":
+                # works:
+                # subprocess.Popen(pathStr)
+                print('opening apps placeholder...')
+            elif key[index] == "folders":
+                webbrowser.open('file:///' + pathStr)
+            elif key[index] == "sites":
+                webbrowser.open(pathStr)
+            # find path values:
+            # print('pathStr:', pathStr)
+        time.sleep(.7)
+            # webbrowser.open('www.one.com')
+            # print('file:///' + path)
+        # # Open sites
+        # url = db["sites"][index]["url"]
+        # webbrowser.get('windows-default').open(url, new=1)
 ########################### Load / Save / Parse ###########################
 def loadDB():
     with open('db.json', 'r') as f:
@@ -130,28 +180,10 @@ def main():
         window['-SITES TEXTBOX-'].update(sitesStr)
     render()
 
-    # X can be apps, folders, or sites
-    def openX():
-        db = loadDB()
-        # Open apps
-        # for index in range(0,3):
-        #     path = db["apps"][index]["path"]
-        #     webbrowser.open('file:///' + path)
-        for index in range(0,3):
-            # Open folders
-            path = db["folders"][index]["path"]
-            # print('file:///' + path)
-            webbrowser.open('file:///' + path)
-
-            # # Open sites
-            url = db["sites"][index]["url"]
-            webbrowser.get('windows-default').open(url, new=1)
-
-        # closeTabs()
     while True:
         # reads the user input that you see in the GUI
         event, values = window.read()
-        # print('event loop value dict:', values)
+        print('event loop:', event)
 
         parseUserInput(values)
 
@@ -159,8 +191,16 @@ def main():
             break
             window.close()
 
-        if event == 'Open All':
-            openX()
+        ########## EVENTS #########
+        def checkEvent():
+            print('event clicked:', event)
+            if event == 'Open Apps':
+                print('open apps~!')
+            # elif event == 'Open Folders':
+            # elif event == 'Open Sites':
+            elif event == 'Open All':
+                openX()
+        checkEvent()
 main()
 
 # TEMPORARY FUNCTION CALLERS 123
@@ -192,25 +232,25 @@ def exitPrompt():
         time.sleep(.5)
 
 
-requestedSites = ['https://www.udemy.com/course/automate/learn/lecture/3465864#questions/11019006',
-                'https://automatetheboringstuff.com/2e/'
-                ]
-
-def openSites():
-    for i in range(len(requestedSites)):
-        print(i)
-        webbrowser.open(requestedSites[i], new=1)
-        time.sleep(.3)
-        maxWindow()
-        time.sleep(1)
-    closeTabs()
-
-requestedFolders = ['D:\\tcg', 'C:\\Users\\asus270', 'C:\\Dropbox\\~Programming\\projects']
-
-def openFolders(folders):
-    for i in range(len(requestedFolders)):
-        subprocess.Popen(r'explorer ' + requestedFolders[i])
-        print('req. folders:', requestedFolders[i])
+# requestedSites = ['https://www.udemy.com/course/automate/learn/lecture/3465864#questions/11019006',
+#                 'https://automatetheboringstuff.com/2e/'
+#                 ]
+#
+# def openSites():
+#     for i in range(len(requestedSites)):
+#         print(i)
+#         webbrowser.open(requestedSites[i], new=1)
+#         time.sleep(.3)
+#         maxWindow()
+#         time.sleep(1)
+#     closeTabs()
+#
+# requestedFolders = ['D:\\tcg', 'C:\\Users\\asus270', 'C:\\Dropbox\\~Programming\\projects']
+#
+# def openFolders(folders):
+#     for i in range(len(requestedFolders)):
+#         subprocess.Popen(r'explorer ' + requestedFolders[i])
+#         print('req. folders:', requestedFolders[i])
 
 def closePrograms():
     subprocess.call([r'C:\Program Files\Mozilla Firefox\\firefox.exe'])
