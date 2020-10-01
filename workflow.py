@@ -6,6 +6,10 @@ import subprocess
 import json
 import PySimpleGUI as sg
 
+########################### MISC ###########################
+def rmNewlines(string):
+    # removes newline at middle of string, as .strip() does not do that
+    return string.replace('\n',' ')
 ########################### ACTIONS / EVENTS  ###########################
 # Cross platform open folders
 def openDirXPlatform():
@@ -37,8 +41,6 @@ def openFolders(folders):
     for i in range(len(requestedFolders)):
         subprocess.Popen(r'explorer ' + requestedFolders[i])
         print('req. folders:', requestedFolders[i])
-
-# def getPathStrInDb():
 
 # X can be apps, folders, or sites
 def openX():
@@ -78,13 +80,10 @@ def parseUserInput(input):
             for item in db:
                 count.append(len(db[item]))
             return count
-        # logging.info(type(count()))
         c = count()
 
         def modifyData(count, key, data):
-            # print('modifyData running @: ', num)
             # Run loop depending on number of items in db list
-
             # print('foldersArr:', foldersArr)
             for ii in range(0,count):
                 # print('data assigned:', data[ii])
@@ -133,18 +132,6 @@ def createMainWindow():
 
     return sg.Window('App Title', layout, finalize=True)
 
-# def count():
-#     db = loadDB()
-#     print('db:', db, 'len of apps', len(db['apps']), 'len of db:', len(db))
-#     count = []
-#     # item is "apps", or "folders", etc...
-#     for item in db:
-#         print('item in db', item)
-#         count.append(len(db[item]))
-#     print('count array is:', count)
-#     return count
-# count()
-
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
@@ -158,10 +145,8 @@ def main():
         for index in range(0,3):
             try:
                 print('current index:', index)
-
                 appsStr = appsStr + db["apps"][index]["path"] + '\n\n'
-                # print('appsStr @ index :', index, appsStr)
-                print('temp', db["apps"][index]["path"])
+                # print('temp', db["apps"][index]["path"])
 
                 foldersStr += db["folders"][index]["path"] + '\n\n'
                 # print('foldersStr @ index :', index, foldersStr)
@@ -170,7 +155,8 @@ def main():
             except IndexError:
                 pass
             continue
-        print('final:', foldersStr)
+        print('appsStr final :', appsStr)
+        # print('final:', foldersStr)
         window['-APPS TEXTBOX-'].update(appsStr)
         window['-FOLDERS TEXTBOX-'].update(foldersStr)
         window['-SITES TEXTBOX-'].update(sitesStr)
@@ -179,7 +165,6 @@ def main():
     while True:
         # reads the user input that you see in the GUI
         event, values = window.read()
-        # print('event loop:', event)
 
         parseUserInput(values)
 
@@ -204,10 +189,7 @@ main()
 def functionHandlers():
     openSites()
     openFolders(requestedFolders)
-
 # functionHandlers()
-# loadDB()
-
 
 
 ########################### TEMP FXN ###########################
@@ -220,6 +202,19 @@ def minWindow():
     window.minimize()
 
 def exitPrompt():
+    askToExit = input('Type x and press ENTER key to exit and CLOSE all programs and folders you opened: ')
+
+    if askToExit == 'x':
+        subprocess.call(["taskkill","/F","/IM","firefox.exe"])
+
+        print('Exiting')
+        time.sleep(.5)
+
+def closePrograms():
+    subprocess.call([r'C:\Program Files\Mozilla Firefox\\firefox.exe'])
+    time.sleep(1)
+
+    # how to make sure all programs data saved, and not lose work? (ex word doc)
     askToExit = input('Type x and press ENTER key to exit and CLOSE all programs and folders you opened: ')
 
     if askToExit == 'x':
@@ -249,21 +244,8 @@ def exitPrompt():
 #         subprocess.Popen(r'explorer ' + requestedFolders[i])
 #         print('req. folders:', requestedFolders[i])
 
-def closePrograms():
-    subprocess.call([r'C:\Program Files\Mozilla Firefox\\firefox.exe'])
-    time.sleep(1)
-
-    # how to make sure all programs data saved, and not lose work? (ex word doc)
-    askToExit = input('Type x and press ENTER key to exit and CLOSE all programs and folders you opened: ')
-
-    if askToExit == 'x':
-        subprocess.call(["taskkill","/F","/IM","firefox.exe"])
-
-        print('Exiting')
-        time.sleep(.5)
 
 
-#
 # def openDirXPlatform():
 #     path = r'C:\Users\asus270\Evernote'
 #     ted = 'file:///' + path
@@ -280,4 +262,16 @@ def closePrograms():
 #     f = len(db["folders"])
 #     s = len(db["sites"])
 #     print(a)
+# count()
+
+# def count():
+#     db = loadDB()
+#     print('db:', db, 'len of apps', len(db['apps']), 'len of db:', len(db))
+#     count = []
+#     # item is "apps", or "folders", etc...
+#     for item in db:
+#         print('item in db', item)
+#         count.append(len(db[item]))
+#     print('count array is:', count)
+#     return count
 # count()
