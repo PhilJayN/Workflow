@@ -72,8 +72,6 @@ def loadDB():
 def parseUserInput(input):
     with open('db.json', 'r+') as f:
         db = json.load(f)
-        # logging.info(db)
-
         def count():
             count = []
             # item is "apps", or "folders", etc...
@@ -89,10 +87,7 @@ def parseUserInput(input):
 
             # print('foldersArr:', foldersArr)
             for ii in range(0,count):
-                # db[key][ii]["path"] = "ffff"
-                # arr = input['-SITES TEXTBOX-'].split()
-                # db[key][ii]["path"] = arr[ii]
-                print('data assigned:', data[ii])
+                # print('data assigned:', data[ii])
                 # data[ii] will run into "index out of range", if GUI value is empty!!
                 db[key][ii]["path"] = data[ii]
 
@@ -101,9 +96,9 @@ def parseUserInput(input):
             # print('tak', count)
             key = ["apps", "folders", "sites"]
             appsArr = input['-APPS TEXTBOX-'].split()
-            print('splitted data:', appsArr)
             foldersArr = input['-FOLDERS TEXTBOX-'].split()
-            print('folders splitted data:', foldersArr)
+            # print('apps input:', input['-APPS TEXTBOX-'], 'folders input: ', input['-FOLDERS TEXTBOX-'])
+            print(' data:', appsArr)
             sitesArr = input['-SITES TEXTBOX-'].split()
             dataArr = [appsArr, foldersArr, sitesArr]
 
@@ -165,11 +160,11 @@ def main():
                 print('current index:', index)
 
                 appsStr = appsStr + db["apps"][index]["path"] + '\n\n'
-                print('appsStr @ index :', index, appsStr)
+                # print('appsStr @ index :', index, appsStr)
+                print('temp', db["apps"][index]["path"])
 
                 foldersStr += db["folders"][index]["path"] + '\n\n'
-                # print('foldersStr:', foldersStr)
-                print('foldersStr @ index :', index, foldersStr)
+                # print('foldersStr @ index :', index, foldersStr)
 
                 sitesStr += db["sites"][index]["path"] + '\n\n'
             except IndexError:
@@ -184,7 +179,7 @@ def main():
     while True:
         # reads the user input that you see in the GUI
         event, values = window.read()
-        print('event loop:', event)
+        # print('event loop:', event)
 
         parseUserInput(values)
 
