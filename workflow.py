@@ -51,12 +51,10 @@ def openX():
         # print('current key: ', key[index])
         for item in db[key[index]]:
             # find path values:
-            # print('pathStr:', pathStr)
             pathStr = item["path"]
             if key[index] == "apps":
                 # subprocess.Popen(pathStr)
                 print('opening apps placeholder...')
-
             elif key[index] == "folders":
                 webbrowser.open('file:///' + pathStr)
             elif key[index] == "sites":
@@ -134,29 +132,27 @@ def createMainWindow():
 
 def main():
     # this window object right now should have no user value
+    # is the fxn being called now?
     window = createMainWindow()
     # Needs access to window obj
     def render():
         # gets data from DB, puts into a long string, then displays to GUI
         db = loadDB()
+        # will end up as a long string:
         appsStr = ""
         foldersStr = ""
         sitesStr = ""
         for index in range(0,3):
             try:
-                print('current index:', index)
-                appsStr = appsStr + db["apps"][index]["path"] + '\n\n'
-                # print('temp', db["apps"][index]["path"])
+                appsStr += db["apps"][index]["path"] + '\n\n'
 
                 foldersStr += db["folders"][index]["path"] + '\n\n'
-                # print('foldersStr @ index :', index, foldersStr)
-
+                print('str @ index :', index, foldersStr)
                 sitesStr += db["sites"][index]["path"] + '\n\n'
             except IndexError:
                 pass
             continue
-        print('appsStr final :', appsStr)
-        # print('final:', foldersStr)
+        # print('appsStr final :', appsStr)
         window['-APPS TEXTBOX-'].update(appsStr)
         window['-FOLDERS TEXTBOX-'].update(foldersStr)
         window['-SITES TEXTBOX-'].update(sitesStr)
@@ -183,13 +179,13 @@ def main():
                 openX()
                 print('test')
         checkEvent()
-main()
 
 # TEMPORARY FUNCTION CALLERS 123
 def functionHandlers():
     openSites()
     openFolders(requestedFolders)
 # functionHandlers()
+main()
 
 
 ########################### TEMP FXN ###########################

@@ -1,13 +1,13 @@
 {
   "apps": [
     {
-      "path": "C:\\Program"
+      "path": "C:\\Program Files\\Mozilla Firefox"
     },
     {
-      "path": "Files\\Mozilla"
+      "path": "test.exe"
     },
     {
-      "path": "Firefox"
+      "path": "chrome.exe"
     }
   ],
   "folders": [
