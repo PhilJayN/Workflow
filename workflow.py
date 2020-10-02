@@ -7,6 +7,13 @@ import json
 import PySimpleGUI as sg
 
 ########################### MISC ###########################
+
+def loadDB():
+    with open('db.json', 'r') as f:
+        data = json.load(f)
+        # Return db.json to use in other fxns
+    return data
+
 def rmNewlines(string):
     # removes newline at middle of string, as .strip() does not do that
     return string.replace('\n',' ')
@@ -68,19 +75,17 @@ def openX():
                 # webbrowser.open('file:///' + "C:\Program Files\Mozilla Firefox")
                 #if a drive (D:\ E:\) is invalid, webbrowser opens IE!
 
-                webbrowser.open(pathStr)
+                print('strrr', pathStr)
+                # webbrowser.open(pathStr)
                 # print('placeholder...')
             elif key[index] == "sites":
-                print(pathStr)
+                print('sites opening...', pathStr)
+                # webbrowser.open(pathStr)
                 webbrowser.get('windows-default').open(pathStr, new=1)
+                time.sleep(.5)
         time.sleep(.4)
+openX()
 ########################### Load / Save / Parse ###########################
-def loadDB():
-    with open('db.json', 'r') as f:
-        data = json.load(f)
-        # Return db.json to use in other fxns
-    return data
-
 # cleans (put str into array) user input, puts into DB, and in future, verifying it
 def parseUserInput(values):
     with open('db.json', 'r+') as f:
