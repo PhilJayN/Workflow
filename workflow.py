@@ -13,7 +13,8 @@ def rmNewlines(string):
 ########################### ACTIONS / EVENTS  ###########################
 # Cross platform open folders
 def openDirXPlatform():
-    path = r'C:\Users\asus270\Evernote'
+    # if there's two slashes, then IE will open!
+    path = r'C:\Program Files\Mozilla Firefox'
     webbrowser.open('file:///' + path)
 
 def closeTabs():
@@ -69,7 +70,7 @@ def loadDB():
     return data
 
 # cleans (put str into array) user input, puts into DB, and in future, verifying it
-def parseUserInput(input):
+def parseUserInput(values):
     with open('db.json', 'r+') as f:
         db = json.load(f)
         def count():
@@ -90,13 +91,12 @@ def parseUserInput(input):
 
         def getParam():
             count = c # [3,3,2]
-            # print('tak', count)
             key = ["apps", "folders", "sites"]
-            appsArr = input['-APPS TEXTBOX-'].split()
-            foldersArr = input['-FOLDERS TEXTBOX-'].split()
-            # print('apps input:', input['-APPS TEXTBOX-'], 'folders input: ', input['-FOLDERS TEXTBOX-'])
-            print(' data:', appsArr)
-            sitesArr = input['-SITES TEXTBOX-'].split()
+            # get values from GUI boxes:
+            appsArr = rmNewlines(values['-APPS TEXTBOX-']).split("  ")
+            foldersArr = rmNewlines(values['-FOLDERS TEXTBOX-']).split("  ")
+            # print('apps values:', values['-APPS TEXTBOX-'], 'folders values: ', values['-FOLDERS TEXTBOX-'])
+            sitesArr = rmNewlines(values['-SITES TEXTBOX-']).split("  ")
             dataArr = [appsArr, foldersArr, sitesArr]
 
             # Run modifyData 3x there are 3 keys, which won't change
@@ -147,7 +147,7 @@ def main():
                 appsStr += db["apps"][index]["path"] + '\n\n'
 
                 foldersStr += db["folders"][index]["path"] + '\n\n'
-                print('str @ index :', index, foldersStr)
+                # print('str @ index :', index, foldersStr)
                 sitesStr += db["sites"][index]["path"] + '\n\n'
             except IndexError:
                 pass
@@ -160,6 +160,7 @@ def main():
 
     while True:
         # reads the user input that you see in the GUI
+        #values is a dict
         event, values = window.read()
 
         parseUserInput(values)
@@ -170,7 +171,7 @@ def main():
 
         ########## EVENTS #########
         def checkEvent():
-            print('event clicked:', event)
+            # print('event clicked:', event)
             if event == 'Open Apps':
                 print('open apps~!')
             # elif event == 'Open Folders':
