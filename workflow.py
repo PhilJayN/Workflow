@@ -10,12 +10,22 @@ import PySimpleGUI as sg
 def rmNewlines(string):
     # removes newline at middle of string, as .strip() does not do that
     return string.replace('\n',' ')
+
+def rm(string):
+    # removes newline at middle of string, as .strip() does not do that
+    return string.replace('\\','')
 ########################### ACTIONS / EVENTS  ###########################
 # Cross platform open folders
 def openDirXPlatform():
+    # # if there's two slashes, then IE will open!
+    # path = 'C:\Program Files\Mozilla Firefox'
+    # # print('TEDDDYYY', path)
+    # webbrowser.open('file:///' + path)
     # if there's two slashes, then IE will open!
-    path = r'C:\Program Files\Mozilla Firefox'
-    webbrowser.open('file:///' + path)
+    path = 'C:\\Program Files\\Mozilla Firefox'
+    print('openinmg')
+    webbrowser.open(path)
+# openDirXPlatform()
 
 def closeTabs():
     # temp close tabs
@@ -47,9 +57,7 @@ def openFolders(folders):
 def openX():
     db = loadDB()
     key = ["apps", "folders", "sites"]
-    # newData = ["one", "two", "three"]
     for index in range(0,3):
-        # print('current key: ', key[index])
         for item in db[key[index]]:
             # find path values:
             pathStr = item["path"]
@@ -57,11 +65,15 @@ def openX():
                 # subprocess.Popen(pathStr)
                 print('opening apps placeholder...')
             elif key[index] == "folders":
-                webbrowser.open('file:///' + pathStr)
-            elif key[index] == "sites":
+                # webbrowser.open('file:///' + "C:\Program Files\Mozilla Firefox")
+                #if a drive (D:\ E:\) is invalid, webbrowser opens IE!
+
                 webbrowser.open(pathStr)
-                # webbrowser.get('windows-default').open(url, new=1)
-        time.sleep(.7)
+                # print('placeholder...')
+            elif key[index] == "sites":
+                print(pathStr)
+                webbrowser.get('windows-default').open(pathStr, new=1)
+        time.sleep(.4)
 ########################### Load / Save / Parse ###########################
 def loadDB():
     with open('db.json', 'r') as f:
@@ -178,7 +190,6 @@ def main():
             # elif event == 'Open Sites':
             elif event == 'Open All':
                 openX()
-                print('test')
         checkEvent()
 
 # TEMPORARY FUNCTION CALLERS 123
