@@ -6,6 +6,14 @@ import subprocess
 import json
 import PySimpleGUI as sg
 
+########################### TEMPORARY FXN ###########################
+def closeTabs():
+    # temp close tabs
+    for i in range(0,7):
+        pyautogui.hotkey('ctrl', 'w')
+        time.sleep(.5)
+
+
 ########################### MISC ###########################
 def loadDB():
     with open('db.json', 'r') as f:
@@ -17,16 +25,7 @@ def rmNewlines(string):
     # removes newline at middle of string, as .strip() does not do that
     return string.replace('\n',' ')
 
-def rm(string):
-    # removes newline at middle of string, as .strip() does not do that
-    return string.replace('\\','')
 ########################### ACTIONS / EVENTS  ###########################
-def closeTabs():
-    # temp close tabs
-    for i in range(0,7):
-        pyautogui.hotkey('ctrl', 'w')
-        time.sleep(.5)
-
 # X can be apps, folders, or sites
 def openX():
     db = loadDB()
@@ -68,7 +67,6 @@ def parseUserInput(values):
             # Run loop depending on number of items in db list
             # print('foldersArr:', foldersArr)
             for ii in range(0,count):
-                # print('data assigned:', data[ii])
                 # data[ii] will run into "index out of range", if GUI value is empty!!
                 db[key][ii]["path"] = data[ii]
 
@@ -99,11 +97,11 @@ def createMainWindow():
 
     layout = [
     [sg.Text('Apps')],
-    [sg.Multiline(size=(40, 5), key='-APPS TEXTBOX-', font='Any 14')],
+    [sg.Multiline(size=(40, 10), key='-APPS TEXTBOX-', font='Any 14')],
     [sg.Text('Folders')],
-    [sg.Multiline(size=(40, 5), key='-FOLDERS TEXTBOX-', font='Any 14')],
+    [sg.Multiline(size=(40, 10), key='-FOLDERS TEXTBOX-', font='Any 14')],
     [sg.Text('Sites')],
-    [sg.Multiline(size=(40, 5), key='-SITES TEXTBOX-', font='Any 20')],
+    [sg.Multiline(size=(40, 10), key='-SITES TEXTBOX-', font='Any 14')],
     [sg.Button('Open Apps')],
     [sg.Button('Open Folders')],
     [sg.Button('Open Sites')],
@@ -115,7 +113,6 @@ def createMainWindow():
 
 def main():
     # this window object right now should have no user value
-    # is the fxn being called now?
     window = createMainWindow()
     # Needs access to window obj
     def render():
@@ -153,7 +150,7 @@ def main():
             window.close()
 
         ########## EVENTS #########
-        def checkEvent():
+        def checkEventBtn():
             # print('event clicked:', event)
             if event == 'Open Apps':
                 print('open apps~!')
@@ -161,7 +158,7 @@ def main():
             # elif event == 'Open Sites':
             elif event == 'Open All':
                 openX()
-        checkEvent()
+        checkEventBtn()
 
 # TEMPORARY FUNCTION CALLERS 123
 def functionHandlers():
