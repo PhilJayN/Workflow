@@ -32,7 +32,7 @@ def minWindow():
     window = gw.getActiveWindow()
     window.minimize()
 
-########################### MISC ###########################
+########################### HELPER FXNS ###########################
 def loadDB():
     with open('db.json', 'r') as f:
         data = json.load(f)
@@ -43,6 +43,8 @@ def rmNewlines(string):
     # removes newline at middle of string, as .strip() does not do that
     return string.replace('\n',' ')
 
+def mrClean():
+    print('Done cleaning string!')
 ########################### ACTIONS / EVENTS  ###########################
 # X can be apps, folders, or sites
 def openX():
@@ -75,7 +77,6 @@ def openX():
                 sleep(1.8)
                 closeTabs(2)
         sleep(1)
-openX()
 ########################### Load / Save / Parse ###########################
 # cleans (put str into array) user input, puts into DB, and in future, verifying it
 def parseUserInput(values):
@@ -128,9 +129,9 @@ def createMainWindow():
     [sg.Multiline(size=(40, 10), key='-FOLDERS TEXTBOX-', font='Any 14')],
     [sg.Text('Sites')],
     [sg.Multiline(size=(40, 10), key='-SITES TEXTBOX-', font='Any 14')],
-    [sg.Button('Open Apps')],
-    [sg.Button('Open Folders')],
-    [sg.Button('Open Sites')],
+    # [sg.Button('Open Apps')],
+    # [sg.Button('Open Folders')],
+    # [sg.Button('Open Sites')],
     [sg.Button('Open All')],
     [sg.Button('Save'), sg.Button('Exit')]
     ]
@@ -144,17 +145,15 @@ def main():
     def render():
         # gets data from DB, puts into a long string, then displays to GUI
         db = loadDB()
-        # will end up as a long string:
         appsStr = ""
         foldersStr = ""
         sitesStr = ""
         for index in range(0,3):
             try:
                 appsStr += db["apps"][index]["path"] + '\n\n'
-
                 foldersStr += db["folders"][index]["path"] + '\n\n'
-                # print('str @ index :', index, foldersStr)
                 sitesStr += db["sites"][index]["path"] + '\n\n'
+                # print('str @ index :', index, foldersStr)
             except IndexError:
                 pass
             continue
