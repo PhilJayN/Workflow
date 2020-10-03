@@ -7,7 +7,6 @@ import json
 import PySimpleGUI as sg
 
 ########################### MISC ###########################
-
 def loadDB():
     with open('db.json', 'r') as f:
         data = json.load(f)
@@ -22,43 +21,11 @@ def rm(string):
     # removes newline at middle of string, as .strip() does not do that
     return string.replace('\\','')
 ########################### ACTIONS / EVENTS  ###########################
-# Cross platform open folders
-def openDirXPlatform():
-    # # if there's two slashes, then IE will open!
-    # path = 'C:\Program Files\Mozilla Firefox'
-    # # print('TEDDDYYY', path)
-    # webbrowser.open('file:///' + path)
-    # if there's two slashes, then IE will open!
-    path = 'C:\\Program Files\\Mozilla Firefox'
-    print('openinmg')
-    webbrowser.open(path)
-# openDirXPlatform()
-
 def closeTabs():
     # temp close tabs
     for i in range(0,7):
         pyautogui.hotkey('ctrl', 'w')
         time.sleep(.5)
-
-requestedSites = ['https://www.udemy.com/course/automate/learn/lecture/3465864#questions/11019006',
-                'https://automatetheboringstuff.com/2e/'
-                ]
-
-def openSites():
-    for i in range(len(requestedSites)):
-        print(i)
-        webbrowser.open(requestedSites[i], new=1)
-        time.sleep(.3)
-        maxWindow()
-        time.sleep(1)
-    closeTabs()
-
-requestedFolders = ['D:\\tcg', 'C:\\Users\\asus270', 'C:\\Dropbox\\~Programming\\projects']
-
-def openFolders(folders):
-    for i in range(len(requestedFolders)):
-        subprocess.Popen(r'explorer ' + requestedFolders[i])
-        print('req. folders:', requestedFolders[i])
 
 # X can be apps, folders, or sites
 def openX():
@@ -72,20 +39,18 @@ def openX():
             # find path values:
             pathStr = item["path"]
             if key[index] == "apps":
-                print('running apps placeholder...')
+                print('running apps placeholder...', pathStr)
+                subprocess.Popen(pathStr)
             elif key[index] == "folders":
-                # webbrowser.open('file:///' + "C:\Program Files\Mozilla Firefox")
                 #if a drive (D:\ E:\) is invalid, webbrowser opens IE!
                 print('running folders placeholder...')
-                # webbrowser.open(pathStr)
+                webbrowser.open(pathStr)
             elif key[index] == "sites":
-                # webbrowser.open(pathStr)
-                webbrowser.open('www.reddit.com')
-
+                # if there's two \\ slashes, then IE will open!
+                webbrowser.open(pathStr)
                 print('running webbrowser cmd to...', pathStr)
                 # webbrowser.get('windows-default').open(pathStr, new=1)
         # time.sleep(.4)
-openX()
 ########################### Load / Save / Parse ###########################
 # cleans (put str into array) user input, puts into DB, and in future, verifying it
 def parseUserInput(values):
@@ -202,6 +167,7 @@ def main():
 def functionHandlers():
     openSites()
     openFolders(requestedFolders)
+
 # functionHandlers()
 main()
 
@@ -289,3 +255,24 @@ def closePrograms():
 #     print('count array is:', count)
 #     return count
 # count()
+
+#
+# requestedSites = ['https://www.udemy.com/course/automate/learn/lecture/3465864#questions/11019006',
+#                 'https://automatetheboringstuff.com/2e/'
+#                 ]
+#
+# def openSites():
+#     for i in range(len(requestedSites)):
+#         print(i)
+#         webbrowser.open(requestedSites[i], new=1)
+#         time.sleep(.3)
+#         maxWindow()
+#         time.sleep(1)
+#     closeTabs()
+#
+# requestedFolders = ['D:\\tcg', 'C:\\Users\\asus270', 'C:\\Dropbox\\~Programming\\projects']
+#
+# def openFolders(folders):
+#     for i in range(len(requestedFolders)):
+#         subprocess.Popen(r'explorer ' + requestedFolders[i])
+#         print('req. folders:', requestedFolders[i])
