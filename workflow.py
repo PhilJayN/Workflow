@@ -65,25 +65,26 @@ def openX():
     db = loadDB()
     key = ["apps", "folders", "sites"]
     for index in range(0,3):
-        for item in db[key[index]]:
+        for item in db[key[index]]: #db[key[index]] is db["apps"]
+            #loop will go thru one item at a time, run to if/else and eval that
+            #then go back and do second item, till all items are done.
+            #ea. item is one dict in list {'path': 'C:\\Program Files\\Mozilla'}
             # find path values:
             pathStr = item["path"]
             if key[index] == "apps":
-                # subprocess.Popen(pathStr)
-                print('opening apps placeholder...')
+                print('running apps placeholder...')
             elif key[index] == "folders":
                 # webbrowser.open('file:///' + "C:\Program Files\Mozilla Firefox")
                 #if a drive (D:\ E:\) is invalid, webbrowser opens IE!
-
-                print('strrr', pathStr)
+                print('running folders placeholder...')
                 # webbrowser.open(pathStr)
-                # print('placeholder...')
             elif key[index] == "sites":
-                print('sites opening...', pathStr)
                 # webbrowser.open(pathStr)
-                webbrowser.get('windows-default').open(pathStr, new=1)
-                time.sleep(.5)
-        time.sleep(.4)
+                webbrowser.open('www.reddit.com')
+
+                print('running webbrowser cmd to...', pathStr)
+                # webbrowser.get('windows-default').open(pathStr, new=1)
+        # time.sleep(.4)
 openX()
 ########################### Load / Save / Parse ###########################
 # cleans (put str into array) user input, puts into DB, and in future, verifying it
