@@ -7,12 +7,30 @@ import json
 import PySimpleGUI as sg
 
 ########################### TEMPORARY FXN ###########################
-def closeTabs():
-    # temp close tabs
-    for i in range(0,7):
+def closeTabs(x):
+    for i in range(0,x):
         pyautogui.hotkey('ctrl', 'w')
-        time.sleep(.5)
+        # sleep a bit or else ctrl+w pressed too fast in sucession!
+        time.sleep(.4)
 
+def altF4(x):
+    for i in range(0,x):
+        pyautogui.hotkey('alt', 'f4')
+        # sleep a bit or else pressed too fast in sucession!
+        time.sleep(.4)
+
+def sleep(sec):
+    print('sleep started')
+    time.sleep(sec)
+    print('sleep done')
+
+def maxWindow():
+    window = gw.getActiveWindow()
+    window.maximize()
+
+def minWindow():
+    window = gw.getActiveWindow()
+    window.minimize()
 
 ########################### MISC ###########################
 def loadDB():
@@ -40,16 +58,24 @@ def openX():
             if key[index] == "apps":
                 print('running apps placeholder...', pathStr)
                 subprocess.Popen(pathStr)
+                # testing purposes
+                sleep(1.8)
+                altF4(1)
             elif key[index] == "folders":
                 #if a drive (D:\ E:\) is invalid, webbrowser opens IE!
                 print('running folders placeholder...')
                 webbrowser.open(pathStr)
+                sleep(1.8)
+                altF4(1)
             elif key[index] == "sites":
                 # if there's two \\ slashes, then IE will open!
                 webbrowser.open(pathStr)
                 print('running webbrowser cmd to...', pathStr)
                 # webbrowser.get('windows-default').open(pathStr, new=1)
-        # time.sleep(.4)
+                sleep(1.8)
+                closeTabs(2)
+        sleep(1)
+openX()
 ########################### Load / Save / Parse ###########################
 # cleans (put str into array) user input, puts into DB, and in future, verifying it
 def parseUserInput(values):
@@ -170,13 +196,6 @@ main()
 
 
 ########################### TEMP FXN ###########################
-def maxWindow():
-    window = gw.getActiveWindow()
-    window.maximize()
-
-def minWindow():
-    window = gw.getActiveWindow()
-    window.minimize()
 
 def exitPrompt():
     askToExit = input('Type x and press ENTER key to exit and CLOSE all programs and folders you opened: ')
