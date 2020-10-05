@@ -124,6 +124,8 @@ def createMainWindow():
     sg.theme('DarkAmber')
 
     layout = [
+    [sg.Text('Workflow Title')],
+    [sg.Multiline(size=(40, 3), key='-TITLE TEXTBOX-', font='Any 14')],
     [sg.Text('Apps')],
     [sg.Multiline(size=(40, 10), key='-APPS TEXTBOX-', font='Any 14')],
     [sg.Text('Folders')],
