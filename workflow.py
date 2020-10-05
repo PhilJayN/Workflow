@@ -119,6 +119,7 @@ def parseUserInput(values):
         writeToDB()
 
 ########################### GUI ###########################
+comboList = ['Python', 'JavaScript', 'Jobs']
 def createMainWindow():
     sg.theme('DarkAmber')
 
@@ -129,14 +130,13 @@ def createMainWindow():
     [sg.Multiline(size=(40, 10), key='-FOLDERS TEXTBOX-', font='Any 14')],
     [sg.Text('Sites')],
     [sg.Multiline(size=(40, 10), key='-SITES TEXTBOX-', font='Any 14')],
-    # [sg.Button('Open Apps')],
-    # [sg.Button('Open Folders')],
-    # [sg.Button('Open Sites')],
+    [sg.Text('Select Workflow'), sg.Combo(comboList, size=(40, 30), key='-COMBO LIST-'), sg.Button('Load'), sg.Button('Launch!')],
     [sg.Button('Open All')],
     [sg.Button('Save'), sg.Button('Exit')]
     ]
 
     return sg.Window('App Title', layout, finalize=True)
+# print('combo', type(sg.theme_list()), len(sg.theme_list()) )
 
 def main():
     # this window object right now should have no user value
