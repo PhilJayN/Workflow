@@ -1,32 +1,21 @@
 {
-  "apps": [
-    {
-      "path": "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
-    },
-    {
-      "path": "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
-    },
-    {
-      "path": "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
-    }
-  ],
-  "folders": [
-    {
-      "path": "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32"
-    },
-    {
-      "path": "D:\\Archive\\acr"
-    },
-    {
-      "path": "C:\\Dropbox\\~Programming\\projects"
-    }
-  ],
-  "sites": [
-    {
-      "path": "www.reddit.com/r/all"
-    },
-    {
-      "path": "www.google.commmmm"
-    }
-  ]
+
+	"python": {
+		"apps": ["one", "two"],
+		"folders": ["one", "two"],
+		"sites": ["one", "two"]
+	},
+	"javascript": {
+		"apps": ["one", "two"],
+		"folders": ["one", "two"],
+		"sites": ["one", "two"]
+	},
+
+	"jobs": {
+		"apps": ["one", "two"],
+		"folders": ["one", "two"],
+		"sites": ["one", "two"]
+
+	}
+
 }

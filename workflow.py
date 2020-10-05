@@ -39,6 +39,27 @@ def loadDB():
         # Return db.json to use in other fxns
     return data
 
+    # for key in db:
+    #     print('key', key)
+    #     print(db)
+
+def delete(itemToDel):
+    with open('db.json', 'r+') as f:
+        db = json.load(f)
+
+        del db[itemToDel]
+
+        def writeToDB():
+            f.seek(0)        # <--- should reset file position to the beginning.
+            json.dump(db, f, indent=4)
+            f.truncate()     # remove remaining part
+        writeToDB()
+
+    print('after del, db:', db)
+# delete("python")
+
+
+
 def rmNewlines(string):
     # removes newline at middle of string, as .strip() does not do that
     return string.replace('\n',' ')
@@ -119,8 +140,16 @@ def parseUserInput(values):
         writeToDB()
 
 ########################### GUI ###########################
-comboList = ['Python', 'JavaScript', 'Jobs']
+# to be used in layout sg.Combo()
+def getComboList():
+    db = loadDB()
+    comboList = []
+    for key in db:
+        comboList.append(key)
+    return comboList
+
 def createMainWindow():
+    comboList = getComboList()
     sg.theme('DarkAmber')
 
     layout = [
@@ -132,7 +161,7 @@ def createMainWindow():
     [sg.Multiline(size=(40, 10), key='-FOLDERS TEXTBOX-', font='Any 14')],
     [sg.Text('Sites')],
     [sg.Multiline(size=(40, 10), key='-SITES TEXTBOX-', font='Any 14')],
-    [sg.Text('Select Workflow'), sg.Combo(comboList, size=(40, 30), key='-COMBO LIST-'), sg.Button('Load'), sg.Button('Launch!')],
+    [sg.Text('Select Workflow'), sg.Combo(comboList, size=(40, 30), key='-COMBO LIST-'), sg.Button('DELETE'), sg.Button('Load'), sg.Button('Launch!')],
     [sg.Button('Open All')],
     [sg.Button('Save'), sg.Button('Exit')]
     ]
@@ -163,14 +192,14 @@ def main():
         window['-APPS TEXTBOX-'].update(appsStr)
         window['-FOLDERS TEXTBOX-'].update(foldersStr)
         window['-SITES TEXTBOX-'].update(sitesStr)
-    render()
+    # render()
 
     while True:
         # reads the user input that you see in the GUI
         #values is a dict
         event, values = window.read()
 
-        parseUserInput(values)
+        # parseUserInput(values)
 
         if event == sg.WIN_CLOSED or event == 'Exit':
             break
@@ -184,7 +213,12 @@ def main():
             # elif event == 'Open Folders':
             # elif event == 'Open Sites':
             elif event == 'Open All':
-                openX()
+                # openX()
+                print('test')
+            elif event == 'DELETE':
+                print('values')
+                # the value is the currently selected item from the dropdown menu
+                delete(values["-COMBO LIST-"])
         checkEventBtn()
 
 # TEMPORARY FUNCTION CALLERS 123
