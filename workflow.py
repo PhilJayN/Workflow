@@ -6,11 +6,6 @@ import subprocess
 import json
 import PySimpleGUI as sg
 
-        # window['-COMBO LIST-'].update(TITLETEST)
-        # window['-APPS TEXTBOX-'].update(appsStr)
-        # window['-FOLDERS TEXTBOX-'].update(foldersStr)
-        # window['-SITES TEXTBOX-'].update(sitesStr)
-
 ########################### TEMPORARY FXN ###########################
 def closeTabs(x):
     for i in range(0,x):
@@ -44,10 +39,6 @@ def loadDB():
         # Return db.json to use in other fxns
     return data
 
-    # for key in db:
-    #     print('key', key)
-    #     print(db)
-
 def delete(itemToDel):
     with open('db.json', 'r+') as f:
         db = json.load(f)
@@ -61,9 +52,6 @@ def delete(itemToDel):
         writeToDB()
 
     print('after del, db:', db)
-# delete("python")
-
-
 
 def rmNewlines(string):
     # removes newline at middle of string, as .strip() does not do that
@@ -173,42 +161,42 @@ def createMainWindow():
 
     return sg.Window('App Title', layout, finalize=True)
 # print('combo', type(sg.theme_list()), len(sg.theme_list()) )
+
+def getDataForRender():
+    db = loadDB()
+    titleStr = ""
+    appsStr = ""
+    foldersStr = ""
+    sitesStr = ""
+    # outer loop responsible for key
+    for key in db["template"]:
+        print('key: ', key)
+        # inner loop responsible for going through array w/ dynamic num. of items
+        for item in db["template"][key]:
+            print('iteemmm', item)
+            if key == "apps":
+                appsStr += item + '\n\n'
+            elif key == "folders":
+                foldersStr += item + '\n\n'
+            elif key == "sites":
+                sitesStr += item + '\n\n'
+                print('appppstrrr', appsStr)
+                print('.................................')
+    # needs to return a dictionary:
+    return {'combo_list': titleStr, 'apps_textbox': appsStr, 'folders_textbox': foldersStr, 'sites_textbox': sitesStr}
+
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
-    # values = window.read()
+
     # Needs access to window obj
     # gets data from DB, puts into a long string, then displays to GUI
     def render():
+        # window['-SITES TEXTBOX-'].update(sitesStr)
+        # window['-APPS TEXTBOX-'].update(appsStr)
+        # window['-FOLDERS TEXTBOX-'].update(foldersStr)
+        # window['-SITES TEXTBOX-'].update(sitesStr)
         # print('test values', values["-COMBO LIST-"])
-        db = loadDB()
-
-        def getDataForRender():
-            db = loadDB()
-            titleStr = ""
-            appsStr = ""
-            foldersStr = ""
-            sitesStr = ""
-
-            # outer loop responsible for key
-            for key in db["template"]:
-                print('key: ', key)
-                # inner loop responsible for going through array w/ dynamic num. of items
-                for item in db["template"][key]:
-                    print('iteemmm', item)
-                    if key == "apps":
-                        appsStr += item + '\n\n'
-                    elif key == "folders":
-                        foldersStr += item + '\n\n'
-                        if key == "sites":
-                            sitesStr += item + '\n\n'
-                            print('appppstrrr', appsStr)
-                            print('.................................')
-            # needs to return a dictionary:
-            return {'combo_list': titleStr, 'apps_textbox': appsStr, 'folders_textbox': foldersStr, 'sites_textbox': sitesStr}
-        getDataForRender()
-        # print(getDataForRender('test'))
-
         def updateGUI(dict):
             KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
             print('SETTINGS_KEYS_TO_ELEMENT_KEYS dict', KEYS_TO_ELEMENT_KEYS)
@@ -217,24 +205,70 @@ def main():
             for key in KEYS_TO_ELEMENT_KEYS:
                 window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
         updateGUI(getDataForRender())
+    render()
+
+    while True:
+        # reads the user input that you see in the GUI
+        #values is a dict
+        event, values = window.read()
+
+        # don't delete yet:
+        # parseUserInput(values)
+
+        if event == sg.WIN_CLOSED or event == 'Exit':
+            break
+            window.close()
+
+        ########## EVENTS #########
+        def checkEventBtn():
+            # print('event clicked:', event)
+            if event == 'Open Apps':
+                print('open apps~!')
+            # elif event == 'Open Folders':
+            # elif event == 'Open Sites':
+            elif event == 'Open All':
+                # openX()
+                print('test')
+            elif event == 'DELETE':
+                print('values', values["-COMBO LIST-"])
+                # the value is the currently selected item from the dropdown menu
+                delete(values["-COMBO LIST-"])
+        checkEventBtn()
+
+# TEMPORARY FUNCTION CALLERS 123
+def functionHandlers():
+    openSites()
+    openFolders(requestedFolders)
+
+# functionHandlers()
+main()
+########################### TEMP FXN ###########################
+
+def exitPrompt():
+    askToExit = input('Type x and press ENTER key to exit and CLOSE all programs and folders you opened: ')
+
+    if askToExit == 'x':
+        subprocess.call(["taskkill","/F","/IM","firefox.exe"])
+
+        print('Exiting')
+        time.sleep(.5)
+
+def closePrograms():
+    subprocess.call([r'C:\Program Files\Mozilla Firefox\\firefox.exe'])
+    time.sleep(1)
+
+    # how to make sure all programs data saved, and not lose work? (ex word doc)
+    askToExit = input('Type x and press ENTER key to exit and CLOSE all programs and folders you opened: ')
+
+    if askToExit == 'x':
+        subprocess.call(["taskkill","/F","/IM","firefox.exe"])
+
+        print('Exiting')
+        time.sleep(.5)
 
 
-    # for key in SETTINGS_KEYS_TO_ELEMENT_KEYS:   # update window with the values read from settings file
-    #     try:
-    #         print(settings[key])
-    #         # print('window:', window[SETTINGS_KEYS_TO_ELEMENT_KEYS[key]])
-    #         # SETTINGS_KEYS_TO_ELEMENT_KEYS = {'max_users': '-MAX USERS-', 'user_data_folder': '-USER FOLDER-' , 'theme': '-THEME-', 'zipcode' : '-ZIPCODE-'}
-    #         window[SETTINGS_KEYS_TO_ELEMENT_KEYS[key]].update(value=settings[key])
-    #     except Exception as e:
-    #         print(f'Problem updating PySimpleGUI window from settings. Key = {key}')
 
 
-
-
-        # window['-SITES TEXTBOX-'].update(sitesStr)
-        # window['-APPS TEXTBOX-'].update(appsStr)
-        # window['-FOLDERS TEXTBOX-'].update(foldersStr)
-        # window['-SITES TEXTBOX-'].update(sitesStr)
 
         # for index in range(0, 3):
         #     for key in db["python"]:
@@ -290,69 +324,6 @@ def main():
         #         pass
         #     continue
 
-
-    render()
-
-    while True:
-        # reads the user input that you see in the GUI
-        #values is a dict
-        event, values = window.read()
-
-        # parseUserInput(values)
-
-        if event == sg.WIN_CLOSED or event == 'Exit':
-            break
-            window.close()
-
-        ########## EVENTS #########
-        def checkEventBtn():
-            # print('event clicked:', event)
-            if event == 'Open Apps':
-                print('open apps~!')
-            # elif event == 'Open Folders':
-            # elif event == 'Open Sites':
-            elif event == 'Open All':
-                # openX()
-                print('test')
-            elif event == 'DELETE':
-                print('values', values["-COMBO LIST-"])
-                # the value is the currently selected item from the dropdown menu
-                delete(values["-COMBO LIST-"])
-        checkEventBtn()
-
-
-# TEMPORARY FUNCTION CALLERS 123
-def functionHandlers():
-    openSites()
-    openFolders(requestedFolders)
-
-# functionHandlers()
-main()
-
-
-########################### TEMP FXN ###########################
-
-def exitPrompt():
-    askToExit = input('Type x and press ENTER key to exit and CLOSE all programs and folders you opened: ')
-
-    if askToExit == 'x':
-        subprocess.call(["taskkill","/F","/IM","firefox.exe"])
-
-        print('Exiting')
-        time.sleep(.5)
-
-def closePrograms():
-    subprocess.call([r'C:\Program Files\Mozilla Firefox\\firefox.exe'])
-    time.sleep(1)
-
-    # how to make sure all programs data saved, and not lose work? (ex word doc)
-    askToExit = input('Type x and press ENTER key to exit and CLOSE all programs and folders you opened: ')
-
-    if askToExit == 'x':
-        subprocess.call(["taskkill","/F","/IM","firefox.exe"])
-
-        print('Exiting')
-        time.sleep(.5)
 
 
 # requestedSites = ['https://www.udemy.com/course/automate/learn/lecture/3465864#questions/11019006',
