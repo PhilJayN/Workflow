@@ -188,66 +188,92 @@ def createMainWindow():
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
+    # values = window.read()
     # Needs access to window obj
     # gets data from DB, puts into a long string, then displays to GUI
     def render():
-        # working:
-        # db = loadDB()
-        # print(db["python"]["apps"][0])
+        # print('test values', values["-COMBO LIST-"])
         db = loadDB()
         # title = db.keys() # an array of title keys
-        # print('title', title)
         title = ""
         appsStr = ""
         foldersStr = ""
         sitesStr = ""
 
-        for title in db:
-            # print('TITLESDFASDF:', title)
-            # db[title] is db["python"], eval to dict, of 3 keys: apps, folders, sites
-            for index, key in enumerate(db[title]["apps"]):
-                # print('testd', db[title][key][index])
-                print('keeeey', key)
+        # outer loop responsible for key
+        for key in db["python"]:
+            print('key: ', key)
+            # inner loop responsible for going through array w/ dynamic num. of items
+            for item in db["python"][key]:
+                print('iteemmm', item)
+                if key == "apps":
+                    appsStr += item + '\n\n'
+                elif key == "folders":
+                    foldersStr += item + '\n\n'
+                if key == "sites":
+                    sitesStr += item + '\n\n'
+            print('appppstrrr', appsStr)
+            print('.................................')
 
-
-                # for key in db[title][key]:
-                #     print('keeeey', key)
-
-                    # print('db[title][key]', db[title][key][index])
-                # print('index: ', index, 'key: ', key)
-                # print('bbbbb', db[title][key][index] )
-                # appsStr += db[title][key][index] + '\n\n'
-                # foldersStr += db["folders"][index]["path"] + '\n\n'
-                # sitesStr += db["sites"][index]["path"] + '\n\n'
-                # print('appsStr FINAL:', appsStr)
-
-
-                # db["python"]["apps", "sites"...][0]
-                #     db[title[index]][key[index]]
-                # for key in db[key][title[index]]:
-                # title += db[]
-                # print('str @ index :', index, foldersStr)
-        # print('db[index]', db["python"])
-        # db has 3 dict. items, access using db["python"]
-        # outer loop goes through all titles ("python", "jobs", etc..) of db
-        for index in range(0,len(db)):
-
-            # print('ted', db[ title[index] ] )
-            try:
-                #first iter. db[index] is "python", 2 is "javascript"...
-                for key in db[index]:
-                    # db[index][key][index]
-                    print('asdfasdf', db[index][key][index])
-
-            except IndexError:
-                pass
-            continue
-
-
-        print('appsStr final :', appsStr)
         window['-APPS TEXTBOX-'].update(appsStr)
         window['-FOLDERS TEXTBOX-'].update(foldersStr)
         window['-SITES TEXTBOX-'].update(sitesStr)
+
+        # for index in range(0, 3):
+        #     for key in db["python"]:
+        #         # iterates thru 3 keys: apps, then folders, then sites
+        #         # print("db python:", db["python"])
+        #         # print('deeper', key[index])
+        #         print("current key: ", key)
+        #         print('an array:', db["python"][key]) #gives an array
+        #         print('item in array:', db["python"][key][index]) #gives 1 item in array
+        #         # db["python"][key][index] = "teddd"
+        #         # appsStr += db["python"][key][index] + '\n\n'
+        #         # print('appsStr final :', appsStr)
+
+
+        # for title in db:
+        #     # print('TITLESDFASDF:', title)
+        #     # db[title] is db["python"], eval to dict, of 3 keys: apps, folders, sites
+        #     for index, key in enumerate(db[title]["apps"]):
+        #         # print('testd', db[title][key][index])
+        #         print('keeeey', key)
+        #
+        #
+        #         # for key in db[title][key]:
+        #         #     print('keeeey', key)
+        #
+        #             # print('db[title][key]', db[title][key][index])
+        #         # print('index: ', index, 'key: ', key)
+        #         # print('bbbbb', db[title][key][index] )
+        #         # appsStr += db[title][key][index] + '\n\n'
+        #         # foldersStr += db["folders"][index]["path"] + '\n\n'
+        #         # sitesStr += db["sites"][index]["path"] + '\n\n'
+        #         # print('appsStr FINAL:', appsStr)
+        #
+        #
+        #         # db["python"]["apps", "sites"...][0]
+        #         #     db[title[index]][key[index]]
+        #         # for key in db[key][title[index]]:
+        #         # title += db[]
+        #         # print('str @ index :', index, foldersStr)
+        # # print('db[index]', db["python"])
+        # # db has 3 dict. items, access using db["python"]
+        # # outer loop goes through all titles ("python", "jobs", etc..) of db
+        # for index in range(0,len(db)):
+        #
+        #     # print('ted', db[ title[index] ] )
+        #     try:
+        #         #first iter. db[index] is "python", 2 is "javascript"...
+        #         for key in db[index]:
+        #             # db[index][key][index]
+        #             print('asdfasdf', db[index][key][index])
+        #
+        #     except IndexError:
+        #         pass
+        #     continue
+
+
     render()
 
     while True:
@@ -272,10 +298,11 @@ def main():
                 # openX()
                 print('test')
             elif event == 'DELETE':
-                print('values')
+                print('values', values["-COMBO LIST-"])
                 # the value is the currently selected item from the dropdown menu
                 delete(values["-COMBO LIST-"])
         checkEventBtn()
+
 
 # TEMPORARY FUNCTION CALLERS 123
 def functionHandlers():
