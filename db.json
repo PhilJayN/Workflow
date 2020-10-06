@@ -1,9 +1,9 @@
 {
 
 	"python": {
-		"apps": ["one", "two"],
-		"folders": ["one", "two"],
-		"sites": ["one", "two"]
+		"apps": ["apple", "nuts" ],
+		"folders": ["C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32", "D:\\Archive\\acr"],
+		"sites": ["www.reddit.com/r/all", "www.google.com"]
 	},
 	"javascript": {
 		"apps": ["one", "two"],

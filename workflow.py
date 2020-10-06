@@ -140,7 +140,7 @@ def parseUserInput(values):
         writeToDB()
 
 ########################### GUI ###########################
-# to be used in layout sg.Combo()
+# to be used in layout sg.Combo(), or as keys
 def getComboList():
     db = loadDB()
     comboList = []
@@ -169,30 +169,86 @@ def createMainWindow():
     return sg.Window('App Title', layout, finalize=True)
 # print('combo', type(sg.theme_list()), len(sg.theme_list()) )
 
+
+# def getDataForRender():
+#     db = loadDB()
+#     dbLen = len(db)
+#     str = []
+#     for index in range(0,dbLen):
+#
+#
+#
+#     if len(db) == dbLen:
+#         return ['one', 'two']
+# print(getDataForRender())
+
+
+
+
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
     # Needs access to window obj
+    # gets data from DB, puts into a long string, then displays to GUI
     def render():
-        # gets data from DB, puts into a long string, then displays to GUI
+        # working:
+        # db = loadDB()
+        # print(db["python"]["apps"][0])
         db = loadDB()
+        # title = db.keys() # an array of title keys
+        # print('title', title)
+        title = ""
         appsStr = ""
         foldersStr = ""
         sitesStr = ""
-        for index in range(0,3):
-            try:
-                appsStr += db["apps"][index]["path"] + '\n\n'
-                foldersStr += db["folders"][index]["path"] + '\n\n'
-                sitesStr += db["sites"][index]["path"] + '\n\n'
+
+        for title in db:
+            # print('TITLESDFASDF:', title)
+            # db[title] is db["python"], eval to dict, of 3 keys: apps, folders, sites
+            for index, key in enumerate(db[title]["apps"]):
+                # print('testd', db[title][key][index])
+                print('keeeey', key)
+
+
+                # for key in db[title][key]:
+                #     print('keeeey', key)
+
+                    # print('db[title][key]', db[title][key][index])
+                # print('index: ', index, 'key: ', key)
+                # print('bbbbb', db[title][key][index] )
+                # appsStr += db[title][key][index] + '\n\n'
+                # foldersStr += db["folders"][index]["path"] + '\n\n'
+                # sitesStr += db["sites"][index]["path"] + '\n\n'
+                # print('appsStr FINAL:', appsStr)
+
+
+                # db["python"]["apps", "sites"...][0]
+                #     db[title[index]][key[index]]
+                # for key in db[key][title[index]]:
+                # title += db[]
                 # print('str @ index :', index, foldersStr)
+        # print('db[index]', db["python"])
+        # db has 3 dict. items, access using db["python"]
+        # outer loop goes through all titles ("python", "jobs", etc..) of db
+        for index in range(0,len(db)):
+
+            # print('ted', db[ title[index] ] )
+            try:
+                #first iter. db[index] is "python", 2 is "javascript"...
+                for key in db[index]:
+                    # db[index][key][index]
+                    print('asdfasdf', db[index][key][index])
+
             except IndexError:
                 pass
             continue
-        # print('appsStr final :', appsStr)
+
+
+        print('appsStr final :', appsStr)
         window['-APPS TEXTBOX-'].update(appsStr)
         window['-FOLDERS TEXTBOX-'].update(foldersStr)
         window['-SITES TEXTBOX-'].update(sitesStr)
-    # render()
+    render()
 
     while True:
         # reads the user input that you see in the GUI
@@ -327,3 +383,25 @@ def closePrograms():
 #     for i in range(len(requestedFolders)):
 #         subprocess.Popen(r'explorer ' + requestedFolders[i])
 #         print('req. folders:', requestedFolders[i])
+
+
+    # def render():
+    #     # gets data from DB, puts into a long string, then displays to GUI
+    #     db = loadDB()
+    #     appsStr = ""
+    #     foldersStr = ""
+    #     sitesStr = ""
+    #     for index in range(0,3):
+    #         try:
+    #             appsStr += db["apps"][index]["path"] + '\n\n'
+    #             foldersStr += db["folders"][index]["path"] + '\n\n'
+    #             sitesStr += db["sites"][index]["path"] + '\n\n'
+    #             # print('str @ index :', index, foldersStr)
+    #         except IndexError:
+    #             pass
+    #         continue
+    #     # print('appsStr final :', appsStr)
+    #     window['-APPS TEXTBOX-'].update(appsStr)
+    #     window['-FOLDERS TEXTBOX-'].update(foldersStr)
+    #     window['-SITES TEXTBOX-'].update(sitesStr)
+    # # render()
