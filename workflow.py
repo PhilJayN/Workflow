@@ -6,6 +6,11 @@ import subprocess
 import json
 import PySimpleGUI as sg
 
+        # window['-COMBO LIST-'].update(TITLETEST)
+        # window['-APPS TEXTBOX-'].update(appsStr)
+        # window['-FOLDERS TEXTBOX-'].update(foldersStr)
+        # window['-SITES TEXTBOX-'].update(sitesStr)
+
 ########################### TEMPORARY FXN ###########################
 def closeTabs(x):
     for i in range(0,x):
@@ -168,23 +173,6 @@ def createMainWindow():
 
     return sg.Window('App Title', layout, finalize=True)
 # print('combo', type(sg.theme_list()), len(sg.theme_list()) )
-
-
-# def getDataForRender():
-#     db = loadDB()
-#     dbLen = len(db)
-#     str = []
-#     for index in range(0,dbLen):
-#
-#
-#
-#     if len(db) == dbLen:
-#         return ['one', 'two']
-# print(getDataForRender())
-
-
-
-
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
@@ -194,30 +182,59 @@ def main():
     def render():
         # print('test values', values["-COMBO LIST-"])
         db = loadDB()
-        # title = db.keys() # an array of title keys
-        title = ""
-        appsStr = ""
-        foldersStr = ""
-        sitesStr = ""
 
-        # outer loop responsible for key
-        for key in db["python"]:
-            print('key: ', key)
-            # inner loop responsible for going through array w/ dynamic num. of items
-            for item in db["python"][key]:
-                print('iteemmm', item)
-                if key == "apps":
-                    appsStr += item + '\n\n'
-                elif key == "folders":
-                    foldersStr += item + '\n\n'
-                if key == "sites":
-                    sitesStr += item + '\n\n'
-            print('appppstrrr', appsStr)
-            print('.................................')
+        def getDataForRender():
+            db = loadDB()
+            titleStr = ""
+            appsStr = ""
+            foldersStr = ""
+            sitesStr = ""
 
-        window['-APPS TEXTBOX-'].update(appsStr)
-        window['-FOLDERS TEXTBOX-'].update(foldersStr)
-        window['-SITES TEXTBOX-'].update(sitesStr)
+            # outer loop responsible for key
+            for key in db["template"]:
+                print('key: ', key)
+                # inner loop responsible for going through array w/ dynamic num. of items
+                for item in db["template"][key]:
+                    print('iteemmm', item)
+                    if key == "apps":
+                        appsStr += item + '\n\n'
+                    elif key == "folders":
+                        foldersStr += item + '\n\n'
+                        if key == "sites":
+                            sitesStr += item + '\n\n'
+                            print('appppstrrr', appsStr)
+                            print('.................................')
+            # needs to return a dictionary:
+            return {'combo_list': titleStr, 'apps_textbox': appsStr, 'folders_textbox': foldersStr, 'sites_textbox': sitesStr}
+        getDataForRender()
+        # print(getDataForRender('test'))
+
+        def updateGUI(dict):
+            KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
+            print('SETTINGS_KEYS_TO_ELEMENT_KEYS dict', KEYS_TO_ELEMENT_KEYS)
+
+            dict = getDataForRender()
+            for key in KEYS_TO_ELEMENT_KEYS:
+                window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
+        updateGUI(getDataForRender())
+
+
+    # for key in SETTINGS_KEYS_TO_ELEMENT_KEYS:   # update window with the values read from settings file
+    #     try:
+    #         print(settings[key])
+    #         # print('window:', window[SETTINGS_KEYS_TO_ELEMENT_KEYS[key]])
+    #         # SETTINGS_KEYS_TO_ELEMENT_KEYS = {'max_users': '-MAX USERS-', 'user_data_folder': '-USER FOLDER-' , 'theme': '-THEME-', 'zipcode' : '-ZIPCODE-'}
+    #         window[SETTINGS_KEYS_TO_ELEMENT_KEYS[key]].update(value=settings[key])
+    #     except Exception as e:
+    #         print(f'Problem updating PySimpleGUI window from settings. Key = {key}')
+
+
+
+
+        # window['-SITES TEXTBOX-'].update(sitesStr)
+        # window['-APPS TEXTBOX-'].update(appsStr)
+        # window['-FOLDERS TEXTBOX-'].update(foldersStr)
+        # window['-SITES TEXTBOX-'].update(sitesStr)
 
         # for index in range(0, 3):
         #     for key in db["python"]:
