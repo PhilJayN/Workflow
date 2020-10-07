@@ -228,23 +228,6 @@ def main():
             with open('db.json', 'r+') as f:
                 db = json.load(f)
 
-                addToDb = {
-                            "apps": [
-                              "path\\to\\Chrome.exe",
-                              "path\\to\\Firefox.exe",
-                              "path\\to\\Atom.exe"
-                            ],
-                            "folders": [
-                              "C:\\path\\to\\your folder",
-                              "D:\\anotherFolder"
-                            ],
-                            "sites": [
-                              "www.favoritesite.com/r/all",
-                              "www.bing.com",
-                              "www.new.com"
-                            ]
-                          }
-
                 dbTemplate = { "temp": {
                                             "apps": [
 
@@ -265,33 +248,41 @@ def main():
                 def getParam():
                     index = 0
 
-                    hardKey = ["apps", "folders", "sites"]
+                    hardKey = ["title", "apps", "folders", "sites"]
                     title = getTitle()
                     print('title:', title)
                     # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
-                    for key in KEYS_TO_ELEMENT_KEYS:
+                    for ind, key in enumerate(KEYS_TO_ELEMENT_KEYS):
                         # try:
-                            # print('test values', values[KEYS_TO_ELEMENT_KEYS[key]])
+                        # print('test values', values[KEYS_TO_ELEMENT_KEYS[key]])
+                        # print('test key', key)
                         if key == 'combo_list':
                             print('key is combo_list', key)
                             dbTemplate[title] = dbTemplate.pop("temp")
                             continue
-                        #is now an array: ['apple', 'nuts', 'orange']
-                        print('KEYS_TO_ELEMENT_KEYS:', key)
+                        # print('KEYS_TO_ELEMENT_KEYS:', key)
+                        #key is now apps_textbox
                         newArr = rmNewlines( values[KEYS_TO_ELEMENT_KEYS[key]] ).split("  ")
-                        print('newArr', newArr)
+                        #is now an array: ['apple', 'nuts', 'orange']
+                        print('newArr', newArr, 'indxxxxx. curr:', ind)
                         # for index, item in enumerate(newArr):
                         for index, item in enumerate(newArr):
                             print('current item', item)
-                            # print('hardKey[index]', hardKey[index], 'newArr[index]', newArr[index] )
-                            if hardKey[index] == "apps":
-                                dbTemplate[title]["apps"].append(item)
+                            dbTemplate[title][hardKey[ind]].append(item)
+                getParam()
+                print('loop done:', dbTemplate)
+                db[getTitle()] = dbTemplate
 
-                            elif hardKey[index] == "folders":
-                                dbTemplate[title]["folders"].append(item)
-                                
-                            elif hardKey[index] == "sites":
-                                dbTemplate[title]["sites"].append(item)
+
+                            # print('hardKey[index]', hardKey[index], 'newArr[index]', newArr[index] )
+                            # if hardKey[index] == "apps":
+                            #     dbTemplate[title]["apps"].append(item)
+                            #
+                            # elif hardKey[index] == "folders":
+                            #     dbTemplate[title]["folders"].append(item)
+                            #
+                            # elif hardKey[index] == "sites":
+                            #     dbTemplate[title]["sites"].append(item)
 
                         # index += 1
                             # print('appended', dbTemplate)
@@ -301,8 +292,6 @@ def main():
                         #     pass
                         # continue
 
-                getParam()
-                print('loop done:', dbTemplate)
 
                 def writeToDB():
                     f.seek(0)        # <--- should reset file position to the beginning.
