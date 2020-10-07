@@ -6,6 +6,11 @@ import subprocess
 import json
 import PySimpleGUI as sg
 
+# DEFAULT_SETTINGS = {}
+KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
+print('SETTINGS_KEYS_TO_ELEMENT_KEYS dict', KEYS_TO_ELEMENT_KEYS)
+
+
 ########################### TEMPORARY FXN ###########################
 def closeTabs(x):
     for i in range(0,x):
@@ -62,7 +67,7 @@ def delete(itemToDel):
 
 def rmNewlines(string):
     # removes newline at middle of string, as .strip() does not do that
-    return string.replace('\n',' ')
+    return string.replace('\n',' ').strip()
 
 def mrClean():
     print('Done cleaning string!')
@@ -175,7 +180,7 @@ def getDataForRender():
     # can't do this now, requires writing to json.
     # if db["metadata"]["newuser"] == "yes":
     #     db["metadata"]["newuser"] = "no"
-    titleStr = "example"
+    titleStr = "python"
     appsStr = ""
     foldersStr = ""
     sitesStr = ""
@@ -203,11 +208,8 @@ def main():
 
     # Needs access to window obj
     def render(dict):
-        # DEFAULT_SETTINGS = {}
-        KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
-        print('SETTINGS_KEYS_TO_ELEMENT_KEYS dict', KEYS_TO_ELEMENT_KEYS)
-
         dict = getDataForRender()
+        # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
         for key in KEYS_TO_ELEMENT_KEYS:
             window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
     render(getDataForRender())
@@ -217,9 +219,67 @@ def main():
         # reads the user input that you see in the GUI
         #values is a dict
         event, values = window.read()
+        # values dict: {'-COMBO LIST-': 'python', '-APPS TEXTBOX-': 'apple\n\nnuts\n\norange\n\n\n', '-FOLDERS TEXTBOX-': 'C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\n\nD:\\Archive\\acr\n\n\n', '-SITES TEXTBOX-': 'www.reddit.com/r/all\n\nwww.google.com\n\n\n'}
 
         # don't remove yet:
         # parseUserInput(values)
+
+        def getUserData():
+            with open('db.json', 'r+') as f:
+                db = json.load(f)
+                finalArr = []
+
+                def getParam():
+                    for key in KEYS_TO_ELEMENT_KEYS:
+                        try:
+                            # print('test values', values[KEYS_TO_ELEMENT_KEYS[key]])
+                            #is now an array: ['apple', 'nuts', 'orange']
+                            newArr = rmNewlines( values[KEYS_TO_ELEMENT_KEYS[key]] ).split("  ")
+                            print('newArr', newArr)
+                            # print('window key stuff', window[KEYS_TO_ELEMENT_KEYS[key]].split(" ") )
+                        except AttributeError:
+                            pass
+                        continue
+                getParam()
+
+
+                        # appsArr = rmNewlines(values['-APPS TEXTBOX-']).split("  ")
+                        # foldersArr = rmNewlines(values['-FOLDERS TEXTBOX-']).split("  ")
+                        # # print('apps values:', values['-APPS TEXTBOX-'], 'folders values: ', values['-FOLDERS TEXTBOX-'])
+                        # sitesArr = rmNewlines(values['-SITES TEXTBOX-']).split("  ")
+                        # dataArr = [appsArr, foldersArr, sitesArr]
+
+                    # count = c # [3,3,2]
+                    # key = ["apps", "folders", "sites"]
+                    # get values from GUI boxes:
+
+                            # for index in range(0,len(db)):
+                            #
+                            #     # print('ted', db[ title[index] ] )
+                            #     try:
+                            #         #first iter. db[index] is "python", 2 is "javascript"...
+                            #         for key in db[index]:
+                            #             # db[index][key][index]
+                            #             print('asdfasdf', db[index][key][index])
+                            #
+                            #     except IndexError:
+                            #         pass
+                            #     continue
+
+
+
+                    # Run modifyData 3x there are 3 keys, which won't change
+                #     for x in range(0,3):
+                #         modifyData(count[x], key[x], dataArr[x])
+
+                def writeToDB():
+                    f.seek(0)        # <--- should reset file position to the beginning.
+                    json.dump(db, f, indent=2)
+                    f.truncate()     # remove remaining part
+                writeToDB()
+
+
+
 
         if event == sg.WIN_CLOSED or event == 'Exit':
             break
@@ -228,8 +288,9 @@ def main():
         ########## EVENTS #########
         def checkEventBtn():
             # print('event clicked:', event)
-            if event == 'Open Apps':
-                print('open apps~!')
+            if event == 'Save':
+                print('saving!!')
+                getUserData()
             # elif event == 'Open Folders':
             # elif event == 'Open Sites':
             elif event == 'Open All':

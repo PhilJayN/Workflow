@@ -1,24 +1,61 @@
 {
-	"example": {
-		"apps": ["path\\to\\Chrome.exe", "path\\to\\Firefox.exe", "path\\to\\Atom.exe" ],
-		"folders": ["C:\\path\\to\\your folder", "D:\\anotherFolder"],
-		"sites": ["www.favoritesite.com/r/all", "www.bing.com", "www.new.com"]
-	},
-	"python": {
-		"apps": ["apple", "nuts", "orange" ],
-		"folders": ["C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32", "D:\\Archive\\acr"],
-		"sites": ["www.reddit.com/r/all", "www.google.com"]
-	},
-	"javascript": {
-		"apps": ["one", "two"],
-		"folders": ["one", "two"],
-		"sites": ["one", "two"]
-	},
-	"jobs": {
-		"apps": ["one", "two"],
-		"folders": ["one", "two"],
-		"sites": ["one", "two"]
-
-	}
-
+  "example": {
+    "apps": [
+      "path\\to\\Chrome.exe",
+      "path\\to\\Firefox.exe",
+      "path\\to\\Atom.exe"
+    ],
+    "folders": [
+      "C:\\path\\to\\your folder",
+      "D:\\anotherFolder"
+    ],
+    "sites": [
+      "www.favoritesite.com/r/all",
+      "www.bing.com",
+      "www.new.com"
+    ]
+  },
+  "python": {
+    "apps": [
+      "apple",
+      "nuts",
+      "orange"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\Archive\\acr"
+    ],
+    "sites": [
+      "www.reddit.com/r/all",
+      "www.google.com"
+    ]
+  },
+  "javascript": {
+    "apps": [
+      "one",
+      "two"
+    ],
+    "folders": [
+      "one",
+      "two"
+    ],
+    "sites": [
+      "one",
+      "two"
+    ]
+  },
+  "jobs": {
+    "apps": [
+      "one",
+      "two"
+    ],
+    "folders": [
+      "one",
+      "two"
+    ],
+    "sites": [
+      "one",
+      "two"
+    ]
+  }
 }
