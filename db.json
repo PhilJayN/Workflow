@@ -57,5 +57,21 @@
       "one",
       "two"
     ]
+  },
+  "newstuff": {
+    "apps": [
+      "path\\to\\Chrome.exe",
+      "path\\to\\Firefox.exe",
+      "path\\to\\Atom.exe"
+    ],
+    "folders": [
+      "C:\\path\\to\\your folder",
+      "D:\\anotherFolder"
+    ],
+    "sites": [
+      "www.favoritesite.com/r/all",
+      "www.bing.com",
+      "www.new.com"
+    ]
   }
 }

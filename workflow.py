@@ -185,7 +185,7 @@ def getDataForRender():
     foldersStr = ""
     sitesStr = ""
     # outer loop responsible for key
-    print('adslkjf', db[titleStr])
+    # print('adslkjf', db[titleStr])
     for key in db[titleStr]:
         print('key: ', key)
         # inner loop responsible for going through array w/ dynamic num. of items
@@ -227,20 +227,88 @@ def main():
         def getUserData():
             with open('db.json', 'r+') as f:
                 db = json.load(f)
-                finalArr = []
+
+                addToDb = {
+                            "apps": [
+                              "path\\to\\Chrome.exe",
+                              "path\\to\\Firefox.exe",
+                              "path\\to\\Atom.exe"
+                            ],
+                            "folders": [
+                              "C:\\path\\to\\your folder",
+                              "D:\\anotherFolder"
+                            ],
+                            "sites": [
+                              "www.favoritesite.com/r/all",
+                              "www.bing.com",
+                              "www.new.com"
+                            ]
+                          }
+
+                dbTemplate = { "temp": {
+                                            "apps": [
+
+                                            ],
+                                            "folders": [
+
+                                            ],
+                                            "sites": [
+
+                                            ]
+                }
+                }
+
+                def getTitle():
+                    title = values['-COMBO LIST-']
+                    return title
 
                 def getParam():
+                    index = 0
+
+                    hardKey = ["apps", "folders", "sites"]
+                    title = getTitle()
+                    print('title:', title)
+                    # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
                     for key in KEYS_TO_ELEMENT_KEYS:
-                        try:
+                        # try:
                             # print('test values', values[KEYS_TO_ELEMENT_KEYS[key]])
-                            #is now an array: ['apple', 'nuts', 'orange']
-                            newArr = rmNewlines( values[KEYS_TO_ELEMENT_KEYS[key]] ).split("  ")
-                            print('newArr', newArr)
+                        if key == 'combo_list':
+                            print('key is combo_list', key)
+                            dbTemplate[title] = dbTemplate.pop("temp")
+                            continue
+                        #is now an array: ['apple', 'nuts', 'orange']
+                        print('KEYS_TO_ELEMENT_KEYS:', key)
+                        newArr = rmNewlines( values[KEYS_TO_ELEMENT_KEYS[key]] ).split("  ")
+                        print('newArr', newArr)
+                        # for index, item in enumerate(newArr):
+                        for index, item in enumerate(newArr):
+                            print('current item', item)
+                            # print('hardKey[index]', hardKey[index], 'newArr[index]', newArr[index] )
+                            if hardKey[index] == "apps":
+                                dbTemplate[title]["apps"].append(item)
+
+                            elif hardKey[index] == "folders":
+                                dbTemplate[title]["folders"].append(item)
+                                
+                            elif hardKey[index] == "sites":
+                                dbTemplate[title]["sites"].append(item)
+
+                        # index += 1
+                            # print('appended', dbTemplate)
+
                             # print('window key stuff', window[KEYS_TO_ELEMENT_KEYS[key]].split(" ") )
-                        except AttributeError:
-                            pass
-                        continue
+                        # except AttributeError:
+                        #     pass
+                        # continue
+
                 getParam()
+                print('loop done:', dbTemplate)
+
+                def writeToDB():
+                    f.seek(0)        # <--- should reset file position to the beginning.
+                    json.dump(db, f, indent=2)
+                    f.truncate()     # remove remaining part
+                writeToDB()
 
 
                         # appsArr = rmNewlines(values['-APPS TEXTBOX-']).split("  ")
@@ -271,14 +339,6 @@ def main():
                     # Run modifyData 3x there are 3 keys, which won't change
                 #     for x in range(0,3):
                 #         modifyData(count[x], key[x], dataArr[x])
-
-                def writeToDB():
-                    f.seek(0)        # <--- should reset file position to the beginning.
-                    json.dump(db, f, indent=2)
-                    f.truncate()     # remove remaining part
-                writeToDB()
-
-
 
 
         if event == sg.WIN_CLOSED or event == 'Exit':
