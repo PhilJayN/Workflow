@@ -40,6 +40,8 @@ def loadDB():
     return data
 
 def delete(itemToDel):
+    title = itemToDel
+    print('Title', title)
     with open('db.json', 'r+') as f:
         db = json.load(f)
 
@@ -47,11 +49,16 @@ def delete(itemToDel):
 
         def writeToDB():
             f.seek(0)        # <--- should reset file position to the beginning.
-            json.dump(db, f, indent=4)
+            json.dump(db, f, indent=2)
             f.truncate()     # remove remaining part
         writeToDB()
 
-    print('after del, db:', db)
+    # calling this fxn will clear GUI data
+    # needs to be called at end of delete() fxn, or else title will NOT be removed from dropdown
+    # because createMainWindow will pull data from DB. in other words: remove data from DB first,
+    # then call for a new window.
+    window = createMainWindow()
+    # print('after del, db:', db)
 
 def rmNewlines(string):
     # removes newline at middle of string, as .strip() does not do that
@@ -146,42 +153,47 @@ def createMainWindow():
     sg.theme('DarkAmber')
 
     layout = [
-    [sg.Text('Workflow Title')],
-    [sg.Multiline(size=(40, 3), key='-TITLE TEXTBOX-', font='Any 14')],
+    # [sg.Text('Workflow Title')],
+    [sg.Text('Select Workflow'), sg.Combo(comboList, size=(40, 30), key='-COMBO LIST-')],
+    [sg.Button('Open All'), sg.Button('Load'), sg.Button('Save'), sg.Button('DELETE')],
+    [sg.Button('Exit')],
+    # [sg.Multiline(size=(40, 3), key='-TITLE TEXTBOX-', font='Any 14')],
     [sg.Text('Apps')],
     [sg.Multiline(size=(40, 10), key='-APPS TEXTBOX-', font='Any 14')],
     [sg.Text('Folders')],
     [sg.Multiline(size=(40, 10), key='-FOLDERS TEXTBOX-', font='Any 14')],
     [sg.Text('Sites')],
-    [sg.Multiline(size=(40, 10), key='-SITES TEXTBOX-', font='Any 14')],
-    [sg.Text('Select Workflow'), sg.Combo(comboList, size=(40, 30), key='-COMBO LIST-'), sg.Button('DELETE'), sg.Button('Load'), sg.Button('Launch!')],
-    [sg.Button('Open All')],
-    [sg.Button('Save'), sg.Button('Exit')]
+    [sg.Multiline(size=(40, 10), key='-SITES TEXTBOX-', font='Any 14')]
     ]
 
     return sg.Window('App Title', layout, finalize=True)
 # print('combo', type(sg.theme_list()), len(sg.theme_list()) )
 
+# gets data from DB, puts into a long string, then displays to GUI
 def getDataForRender():
     db = loadDB()
-    titleStr = ""
+    # can't do this now, requires writing to json.
+    # if db["metadata"]["newuser"] == "yes":
+    #     db["metadata"]["newuser"] = "no"
+    titleStr = "example"
     appsStr = ""
     foldersStr = ""
     sitesStr = ""
     # outer loop responsible for key
-    for key in db["template"]:
+    print('adslkjf', db[titleStr])
+    for key in db[titleStr]:
         print('key: ', key)
         # inner loop responsible for going through array w/ dynamic num. of items
-        for item in db["template"][key]:
-            print('iteemmm', item)
+        for item in db[titleStr][key]:
+            # print('iteemmm', item)
             if key == "apps":
                 appsStr += item + '\n\n'
             elif key == "folders":
                 foldersStr += item + '\n\n'
             elif key == "sites":
                 sitesStr += item + '\n\n'
-                print('appppstrrr', appsStr)
-                print('.................................')
+                # print('appppstrrr', appsStr)
+                # print('.................................')
     # needs to return a dictionary:
     return {'combo_list': titleStr, 'apps_textbox': appsStr, 'folders_textbox': foldersStr, 'sites_textbox': sitesStr}
 
@@ -190,29 +202,23 @@ def main():
     window = createMainWindow()
 
     # Needs access to window obj
-    # gets data from DB, puts into a long string, then displays to GUI
-    def render():
-        # window['-SITES TEXTBOX-'].update(sitesStr)
-        # window['-APPS TEXTBOX-'].update(appsStr)
-        # window['-FOLDERS TEXTBOX-'].update(foldersStr)
-        # window['-SITES TEXTBOX-'].update(sitesStr)
-        # print('test values', values["-COMBO LIST-"])
-        def updateGUI(dict):
-            KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
-            print('SETTINGS_KEYS_TO_ELEMENT_KEYS dict', KEYS_TO_ELEMENT_KEYS)
+    def render(dict):
+        # DEFAULT_SETTINGS = {}
+        KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
+        print('SETTINGS_KEYS_TO_ELEMENT_KEYS dict', KEYS_TO_ELEMENT_KEYS)
 
-            dict = getDataForRender()
-            for key in KEYS_TO_ELEMENT_KEYS:
-                window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
-        updateGUI(getDataForRender())
-    render()
+        dict = getDataForRender()
+        for key in KEYS_TO_ELEMENT_KEYS:
+            window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
+    render(getDataForRender())
+
 
     while True:
         # reads the user input that you see in the GUI
         #values is a dict
         event, values = window.read()
 
-        # don't delete yet:
+        # don't remove yet:
         # parseUserInput(values)
 
         if event == sg.WIN_CLOSED or event == 'Exit':
@@ -233,6 +239,7 @@ def main():
                 print('values', values["-COMBO LIST-"])
                 # the value is the currently selected item from the dropdown menu
                 delete(values["-COMBO LIST-"])
+                window['-COMBO LIST-'].update('fffff')
         checkEventBtn()
 
 # TEMPORARY FUNCTION CALLERS 123
@@ -420,3 +427,10 @@ def closePrograms():
     #     window['-FOLDERS TEXTBOX-'].update(foldersStr)
     #     window['-SITES TEXTBOX-'].update(sitesStr)
     # # render()
+
+
+        # window['-SITES TEXTBOX-'].update(sitesStr)
+        # window['-APPS TEXTBOX-'].update(appsStr)
+        # window['-FOLDERS TEXTBOX-'].update(foldersStr)
+        # window['-SITES TEXTBOX-'].update(sitesStr)
+        # print('test values', values["-COMBO LIST-"])
