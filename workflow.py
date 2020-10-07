@@ -223,12 +223,10 @@ def main():
 
         # don't remove yet:
         # parseUserInput(values)
-
         def getUserData():
             with open('db.json', 'r+') as f:
                 db = json.load(f)
-
-                dbTemplate = { "temp": {
+                dbTemplate =  {
                                             "apps": [
 
                                             ],
@@ -239,18 +237,16 @@ def main():
 
                                             ]
                 }
-                }
+
 
                 def getTitle():
                     title = values['-COMBO LIST-']
                     return title
 
                 def getParam():
-                    index = 0
-
                     hardKey = ["title", "apps", "folders", "sites"]
                     title = getTitle()
-                    print('title:', title)
+                    # print('title:', title)
                     # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
                     for ind, key in enumerate(KEYS_TO_ELEMENT_KEYS):
                         # try:
@@ -258,17 +254,18 @@ def main():
                         # print('test key', key)
                         if key == 'combo_list':
                             print('key is combo_list', key)
-                            dbTemplate[title] = dbTemplate.pop("temp")
+                            # dbTemplate[title] = dbTemplate.pop("temp")
                             continue
                         # print('KEYS_TO_ELEMENT_KEYS:', key)
                         #key is now apps_textbox
                         newArr = rmNewlines( values[KEYS_TO_ELEMENT_KEYS[key]] ).split("  ")
                         #is now an array: ['apple', 'nuts', 'orange']
-                        print('newArr', newArr, 'indxxxxx. curr:', ind)
+                        print('newArrayy', newArr, 'indxxxxx. curr:', ind)
                         # for index, item in enumerate(newArr):
                         for index, item in enumerate(newArr):
                             print('current item', item)
-                            dbTemplate[title][hardKey[ind]].append(item)
+                            dbTemplate[hardKey[ind]].append(item)
+
                 getParam()
                 print('loop done:', dbTemplate)
                 db[getTitle()] = dbTemplate

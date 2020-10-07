@@ -43,38 +43,33 @@
       "two"
     ]
   },
-  "morrrrr": {
-    "morrrrr": {
-      "apps": [
-        "apple",
-        "nuts",
-        "orange"
-      ],
-      "folders": [
-        "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
-        "D:\\Archive\\acr"
-      ],
-      "sites": [
-        "www.reddit.com/r/all",
-        "www.google.com"
-      ]
-    }
+  "snow": {
+    "apps": [
+      "snowwwww",
+      "nuts",
+      "orange"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\Archive\\acr"
+    ],
+    "sites": [
+      "www.reddit.com/r/all",
+      "www.google.com"
+    ]
   },
-  "6666": {
-    "6666": {
-      "apps": [
-        "apple",
-        "nuts",
-        "orange"
-      ],
-      "folders": [
-        "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
-        "D:\\Archive\\acr"
-      ],
-      "sites": [
-        "www.reddit.com/r/all",
-        "www.google.com"
-      ]
-    }
+  "teddddd": {
+    "apps": [
+      "teddddd",
+      "nuts",
+      "teddddd"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "folder path"
+    ],
+    "sites": [
+      "www.reddit.com/r/all"
+    ]
   }
 }
