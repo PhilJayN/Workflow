@@ -181,7 +181,7 @@ def getDataForRender():
     # print('values tuple', values[1]['-COMBO LIST-'])
 # values['-COMBO LIST-']
 
-    titleStr = "python"
+    titleStr = "javascript"
     appsStr = ""
     foldersStr = ""
     sitesStr = ""
@@ -236,6 +236,7 @@ def main():
 
                 def getTitle():
                     title = values['-COMBO LIST-']
+                    print('got title:', title)
                     return title
 
                 def getParam():
@@ -260,13 +261,15 @@ def main():
                             print('current item', item)
                             dbTemplate[hardKey[ind]].append(item)
                 getParam()
+                print('TEMPppppppp:', dbTemplate)
+                db["asdfjklkldsfg"] = dbTemplate
                 db[getTitle()] = dbTemplate
 
                 def writeToDB():
                     f.seek(0)        # <--- should reset file position to the beginning.
                     json.dump(db, f, indent=2)
                     f.truncate()     # remove remaining part
-                    writeToDB()
+                writeToDB()
 
         if event == sg.WIN_CLOSED or event == 'Exit':
             break
