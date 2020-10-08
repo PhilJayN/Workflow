@@ -8,7 +8,7 @@ import PySimpleGUI as sg
 
 # DEFAULT_SETTINGS = {}
 KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
-print('SETTINGS_KEYS_TO_ELEMENT_KEYS dict', KEYS_TO_ELEMENT_KEYS)
+# print('SETTINGS_KEYS_TO_ELEMENT_KEYS dict', KEYS_TO_ELEMENT_KEYS)
 
 ########################### TEMPORARY FXN ###########################
 def closeTabs(x):
@@ -170,21 +170,28 @@ def createMainWindow():
     window = sg.Window('App Title', layout, finalize=True)
     return window
 
+def getTitle():
+    window = createMainWindow()
+    event, values = window.read()
+    title = values['-COMBO LIST-']
+    print('getTitle run...', event, values)
+    print('got title:', values['-COMBO LIST-'])
+    return title
+# getTitle()
+# print('testttt')
+
 # gets data from DB, puts into a long string, then displays to GUI
 def getDataForRender():
     db = loadDB()
-    # window = createMainWindow()
-    # values = window.read()
     # print('values.... in getDataForRender()', values, 'type:', type(values))
     # print('values tuple', values[1]['-COMBO LIST-'])
 # values['-COMBO LIST-']
-
     titleStr = "javascript"
+    print('getDataForRender titleL:', titleStr)
     appsStr = ""
     foldersStr = ""
     sitesStr = ""
     # outer loop responsible for key
-    # print('adslkjf', db[titleStr])
     for key in db[titleStr]:
         print('key: ', key)
         # inner loop responsible for going through array w/ dynamic num. of items
@@ -201,41 +208,47 @@ def getDataForRender():
     # needs to return a dictionary:
     return {'combo_list': titleStr, 'apps_textbox': appsStr, 'folders_textbox': foldersStr, 'sites_textbox': sitesStr}
 
+
+
+def fname(arg):
+    print('hiiii', arg )
+    # print('values testing', values)
+
 def main():
+    # print('render running with title:')
     # this window object right now should have no user value
     window = createMainWindow()
 
     # Needs access to window obj
     def render():
-        # print('render running with title:')
+        print('render window', 'adsf')
         dict = getDataForRender()
         # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
         for key in KEYS_TO_ELEMENT_KEYS:
             window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
     render()
 
-    def loadWorkflow():
-        print('workflow load...')
-        # render()
+    def loadWorkflow(values):
+        print('workflow load... title:', values['-COMBO LIST-'])
+        title = values['-COMBO LIST-']
+        render()
 
     while True:
-        # reads the user input that you see in the GUI
-        #values is a dict
+        # reads user input in GUI, values is {}
         event, values = window.read()
+        # fname(values)
+        # render(values)
+        loadWorkflow(values)
         print('values.... in whileTrue()', values, 'type:', type(values))
         # values dict: {'-COMBO LIST-': 'python', '-APPS TEXTBOX-': 'apple\n\nnuts\n\norange\n\n\n', '-FOLDERS TEXTBOX-': 'C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\n\nD:\\Archive\\acr\n\n\n', '-SITES TEXTBOX-': 'www.reddit.com/r/all\n\nwww.google.com\n\n\n'}
 
         # don't remove yet:
         # parseUserInput(values)
+
         def getUserData():
             with open('db.json', 'r+') as f:
                 db = json.load(f)
                 dbTemplate =  {"apps": [], "folders": [], "sites": []}
-
-                def getTitle():
-                    title = values['-COMBO LIST-']
-                    print('got title:', title)
-                    return title
 
                 def getParam():
                     hardKey = ["title", "apps", "folders", "sites"]
