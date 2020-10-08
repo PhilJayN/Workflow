@@ -156,16 +156,14 @@ def createMainWindow():
     sg.theme('DarkAmber')
 
     layout = [
-    # [sg.Text('Workflow Title')],
-    [sg.Text('Select Workflow'), sg.Combo(comboList, size=(40, 30), key='-COMBO LIST-')],
-    [sg.Button('Open All'), sg.Button('Load'), sg.Button('Save'), sg.Button('DELETE')],
-    [sg.Button('Exit')],
-    # [sg.Multiline(size=(40, 3), key='-TITLE TEXTBOX-', font='Any 14')],
-    [sg.Text('Apps')],
+    [sg.T('Select Workflow'), sg.Combo(comboList, size=(40, 30), key='-COMBO LIST-')],
+    [sg.B('Open All'), sg.B('Load'), sg.B('Save'), sg.B('DELETE')],
+    [sg.B('Exit')],
+    [sg.T('Apps')],
     [sg.Multiline(size=(40, 10), key='-APPS TEXTBOX-', font='Any 14')],
-    [sg.Text('Folders')],
+    [sg.T('Folders')],
     [sg.Multiline(size=(40, 10), key='-FOLDERS TEXTBOX-', font='Any 14')],
-    [sg.Text('Sites')],
+    [sg.T('Sites')],
     [sg.Multiline(size=(40, 10), key='-SITES TEXTBOX-', font='Any 14')]
     ]
 
