@@ -169,15 +169,14 @@ def createMainWindow():
     [sg.Multiline(size=(40, 10), key='-SITES TEXTBOX-', font='Any 14')]
     ]
 
-    return sg.Window('App Title', layout, finalize=True)
+    window = sg.Window('App Title', layout, finalize=True)
+    return window
 
 # gets data from DB, puts into a long string, then displays to GUI
 def getDataForRender():
     db = loadDB()
-    # can't do this now, requires writing to json.
-    # if db["metadata"]["newuser"] == "yes":
-    #     db["metadata"]["newuser"] = "no"
-    titleStr = "python"
+
+    titleStr = "javascript"
     appsStr = ""
     foldersStr = ""
     sitesStr = ""
@@ -204,12 +203,17 @@ def main():
     window = createMainWindow()
 
     # Needs access to window obj
-    def render(dict):
+    def render():
+        # print('render running with title:')
         dict = getDataForRender()
         # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
         for key in KEYS_TO_ELEMENT_KEYS:
             window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
-    render(getDataForRender())
+    render()
+
+    def loadWorkflow():
+        print('workflow load...')
+        render()
 
     while True:
         # reads the user input that you see in the GUI
@@ -250,7 +254,6 @@ def main():
                             print('current item', item)
                             dbTemplate[hardKey[ind]].append(item)
                 getParam()
-                print('loop done:', dbTemplate)
                 db[getTitle()] = dbTemplate
 
                 def writeToDB():
@@ -269,6 +272,9 @@ def main():
             if event == 'Save':
                 print('saving!!')
                 getUserData()
+            elif event == 'Load':
+                print('load')
+                loadWorkflow()
             elif event == 'Open All':
                 # openX()
                 print('test')
@@ -276,7 +282,7 @@ def main():
                 print('values', values["-COMBO LIST-"])
                 # the value is the currently selected item from the dropdown menu
                 delete(values["-COMBO LIST-"])
-                window['-COMBO LIST-'].update('fffff')
+                # window['-COMBO LIST-'].update('fffff')
         checkEventBtn()
 # TEMPORARY FUNCTION CALLERS 123
 def functionHandlers():
@@ -441,37 +447,6 @@ def closePrograms():
 #     for i in range(len(requestedFolders)):
 #         subprocess.Popen(r'explorer ' + requestedFolders[i])
 #         print('req. folders:', requestedFolders[i])
-
-
-    # def render():
-    #     # gets data from DB, puts into a long string, then displays to GUI
-    #     db = loadDB()
-    #     appsStr = ""
-    #     foldersStr = ""
-    #     sitesStr = ""
-    #     for index in range(0,3):
-    #         try:
-    #             appsStr += db["apps"][index]["path"] + '\n\n'
-    #             foldersStr += db["folders"][index]["path"] + '\n\n'
-    #             sitesStr += db["sites"][index]["path"] + '\n\n'
-    #             # print('str @ index :', index, foldersStr)
-    #         except IndexError:
-    #             pass
-    #         continue
-    #     # print('appsStr final :', appsStr)
-    #     window['-APPS TEXTBOX-'].update(appsStr)
-    #     window['-FOLDERS TEXTBOX-'].update(foldersStr)
-    #     window['-SITES TEXTBOX-'].update(sitesStr)
-    # # render()
-
-
-        # window['-SITES TEXTBOX-'].update(sitesStr)
-        # window['-APPS TEXTBOX-'].update(appsStr)
-        # window['-FOLDERS TEXTBOX-'].update(foldersStr)
-        # window['-SITES TEXTBOX-'].update(sitesStr)
-        # print('test values', values["-COMBO LIST-"])
-
-
 
                         # print('hardKey[index]', hardKey[index], 'newArr[index]', newArr[index] )
                         # if hardKey[index] == "apps":
