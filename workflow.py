@@ -10,7 +10,6 @@ import PySimpleGUI as sg
 KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
 print('SETTINGS_KEYS_TO_ELEMENT_KEYS dict', KEYS_TO_ELEMENT_KEYS)
 
-
 ########################### TEMPORARY FXN ###########################
 def closeTabs(x):
     for i in range(0,x):
@@ -63,7 +62,6 @@ def delete(itemToDel):
     # because createMainWindow will pull data from DB. in other words: remove data from DB first,
     # then call for a new window.
     window = createMainWindow()
-    # print('after del, db:', db)
 
 def rmNewlines(string):
     # removes newline at middle of string, as .strip() does not do that
@@ -172,7 +170,6 @@ def createMainWindow():
     ]
 
     return sg.Window('App Title', layout, finalize=True)
-# print('combo', type(sg.theme_list()), len(sg.theme_list()) )
 
 # gets data from DB, puts into a long string, then displays to GUI
 def getDataForRender():
@@ -214,7 +211,6 @@ def main():
             window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
     render(getDataForRender())
 
-
     while True:
         # reads the user input that you see in the GUI
         #values is a dict
@@ -226,18 +222,7 @@ def main():
         def getUserData():
             with open('db.json', 'r+') as f:
                 db = json.load(f)
-                dbTemplate =  {
-                                            "apps": [
-
-                                            ],
-                                            "folders": [
-
-                                            ],
-                                            "sites": [
-
-                                            ]
-                }
-
+                dbTemplate =  {"apps": [], "folders": [], "sites": []}
 
                 def getTitle():
                     title = values['-COMBO LIST-']
@@ -246,7 +231,6 @@ def main():
                 def getParam():
                     hardKey = ["title", "apps", "folders", "sites"]
                     title = getTitle()
-                    # print('title:', title)
                     # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
                     for ind, key in enumerate(KEYS_TO_ELEMENT_KEYS):
                         # try:
@@ -265,67 +249,15 @@ def main():
                         for index, item in enumerate(newArr):
                             print('current item', item)
                             dbTemplate[hardKey[ind]].append(item)
-
                 getParam()
                 print('loop done:', dbTemplate)
                 db[getTitle()] = dbTemplate
-
-
-                            # print('hardKey[index]', hardKey[index], 'newArr[index]', newArr[index] )
-                            # if hardKey[index] == "apps":
-                            #     dbTemplate[title]["apps"].append(item)
-                            #
-                            # elif hardKey[index] == "folders":
-                            #     dbTemplate[title]["folders"].append(item)
-                            #
-                            # elif hardKey[index] == "sites":
-                            #     dbTemplate[title]["sites"].append(item)
-
-                        # index += 1
-                            # print('appended', dbTemplate)
-
-                            # print('window key stuff', window[KEYS_TO_ELEMENT_KEYS[key]].split(" ") )
-                        # except AttributeError:
-                        #     pass
-                        # continue
-
 
                 def writeToDB():
                     f.seek(0)        # <--- should reset file position to the beginning.
                     json.dump(db, f, indent=2)
                     f.truncate()     # remove remaining part
-                writeToDB()
-
-
-                        # appsArr = rmNewlines(values['-APPS TEXTBOX-']).split("  ")
-                        # foldersArr = rmNewlines(values['-FOLDERS TEXTBOX-']).split("  ")
-                        # # print('apps values:', values['-APPS TEXTBOX-'], 'folders values: ', values['-FOLDERS TEXTBOX-'])
-                        # sitesArr = rmNewlines(values['-SITES TEXTBOX-']).split("  ")
-                        # dataArr = [appsArr, foldersArr, sitesArr]
-
-                    # count = c # [3,3,2]
-                    # key = ["apps", "folders", "sites"]
-                    # get values from GUI boxes:
-
-                            # for index in range(0,len(db)):
-                            #
-                            #     # print('ted', db[ title[index] ] )
-                            #     try:
-                            #         #first iter. db[index] is "python", 2 is "javascript"...
-                            #         for key in db[index]:
-                            #             # db[index][key][index]
-                            #             print('asdfasdf', db[index][key][index])
-                            #
-                            #     except IndexError:
-                            #         pass
-                            #     continue
-
-
-
-                    # Run modifyData 3x there are 3 keys, which won't change
-                #     for x in range(0,3):
-                #         modifyData(count[x], key[x], dataArr[x])
-
+                    writeToDB()
 
         if event == sg.WIN_CLOSED or event == 'Exit':
             break
@@ -337,8 +269,6 @@ def main():
             if event == 'Save':
                 print('saving!!')
                 getUserData()
-            # elif event == 'Open Folders':
-            # elif event == 'Open Sites':
             elif event == 'Open All':
                 # openX()
                 print('test')
@@ -348,7 +278,6 @@ def main():
                 delete(values["-COMBO LIST-"])
                 window['-COMBO LIST-'].update('fffff')
         checkEventBtn()
-
 # TEMPORARY FUNCTION CALLERS 123
 def functionHandlers():
     openSites()
@@ -541,3 +470,39 @@ def closePrograms():
         # window['-FOLDERS TEXTBOX-'].update(foldersStr)
         # window['-SITES TEXTBOX-'].update(sitesStr)
         # print('test values', values["-COMBO LIST-"])
+
+
+
+                        # print('hardKey[index]', hardKey[index], 'newArr[index]', newArr[index] )
+                        # if hardKey[index] == "apps":
+                        #     dbTemplate[title]["apps"].append(item)
+                        #
+                        # elif hardKey[index] == "folders":
+                        #     dbTemplate[title]["folders"].append(item)
+                        #
+                        # elif hardKey[index] == "sites":
+                        #     dbTemplate[title]["sites"].append(item)
+                        # print('window key stuff', window[KEYS_TO_ELEMENT_KEYS[key]].split(" ") )
+                    # except AttributeError:
+                    #     pass
+                    # continue
+
+
+                    # appsArr = rmNewlines(values['-APPS TEXTBOX-']).split("  ")
+                    # foldersArr = rmNewlines(values['-FOLDERS TEXTBOX-']).split("  ")
+                    # # print('apps values:', values['-APPS TEXTBOX-'], 'folders values: ', values['-FOLDERS TEXTBOX-'])
+                    # sitesArr = rmNewlines(values['-SITES TEXTBOX-']).split("  ")
+                    # dataArr = [appsArr, foldersArr, sitesArr]
+
+                        # for index in range(0,len(db)):
+                        #
+                        #     # print('ted', db[ title[index] ] )
+                        #     try:
+                        #         #first iter. db[index] is "python", 2 is "javascript"...
+                        #         for key in db[index]:
+                        #             # db[index][key][index]
+                        #             print('asdfasdf', db[index][key][index])
+                        #
+                        #     except IndexError:
+                        #         pass
+                        #     continue
