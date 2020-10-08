@@ -175,8 +175,13 @@ def createMainWindow():
 # gets data from DB, puts into a long string, then displays to GUI
 def getDataForRender():
     db = loadDB()
+    # window = createMainWindow()
+    # values = window.read()
+    # print('values.... in getDataForRender()', values, 'type:', type(values))
+    # print('values tuple', values[1]['-COMBO LIST-'])
+# values['-COMBO LIST-']
 
-    titleStr = "javascript"
+    titleStr = "python"
     appsStr = ""
     foldersStr = ""
     sitesStr = ""
@@ -213,12 +218,13 @@ def main():
 
     def loadWorkflow():
         print('workflow load...')
-        render()
+        # render()
 
     while True:
         # reads the user input that you see in the GUI
         #values is a dict
         event, values = window.read()
+        print('values.... in whileTrue()', values, 'type:', type(values))
         # values dict: {'-COMBO LIST-': 'python', '-APPS TEXTBOX-': 'apple\n\nnuts\n\norange\n\n\n', '-FOLDERS TEXTBOX-': 'C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\n\nD:\\Archive\\acr\n\n\n', '-SITES TEXTBOX-': 'www.reddit.com/r/all\n\nwww.google.com\n\n\n'}
 
         # don't remove yet:
@@ -274,7 +280,7 @@ def main():
                 getUserData()
             elif event == 'Load':
                 print('load')
-                loadWorkflow()
+                # loadWorkflow()
             elif event == 'Open All':
                 # openX()
                 print('test')
