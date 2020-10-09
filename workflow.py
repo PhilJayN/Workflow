@@ -178,37 +178,46 @@ def getTitle():
     print('got title:', values['-COMBO LIST-'])
     return title
 # getTitle()
-# print('testttt')
+
+
+
 
 # gets data from DB, puts into a long string, then displays to GUI
 def getDataForRender():
-    db = loadDB()
-    # print('values.... in getDataForRender()', values, 'type:', type(values))
-    # print('values tuple', values[1]['-COMBO LIST-'])
-# values['-COMBO LIST-']
-    titleStr = "javascript"
-    print('getDataForRender titleL:', titleStr)
-    appsStr = ""
-    foldersStr = ""
-    sitesStr = ""
-    # outer loop responsible for key
-    for key in db[titleStr]:
-        print('key: ', key)
-        # inner loop responsible for going through array w/ dynamic num. of items
-        for item in db[titleStr][key]:
-            # print('iteemmm', item)
-            if key == "apps":
-                appsStr += item + '\n\n'
-            elif key == "folders":
-                foldersStr += item + '\n\n'
-            elif key == "sites":
-                sitesStr += item + '\n\n'
-                # print('appppstrrr', appsStr)
-                # print('.................................')
-    # needs to return a dictionary:
-    return {'combo_list': titleStr, 'apps_textbox': appsStr, 'folders_textbox': foldersStr, 'sites_textbox': sitesStr}
 
-
+    with open('db.json', 'r+') as f:
+        db = json.load(f)
+        if db["metadata"] == "new":
+            print('first time user!')
+            db["metadata"] = "old"
+            def writeToDB():
+                f.seek(0)
+                json.dump(db, f, indent=2)
+                f.truncate()
+            writeToDB()
+            return {'combo_list': 'test title', 'apps_textbox': 'pathtoapps', 'folders_textbox': 'apthffff', 'sites_textbox': 'testsgd'}
+        else:
+            titleStr = "javascript"
+            print('getDataForRender titleL:', titleStr)
+            appsStr = ""
+            foldersStr = ""
+            sitesStr = ""
+            # outer loop responsible for key
+            for key in db[titleStr]:
+                print('key: ', key)
+                # inner loop responsible for going through array w/ dynamic num. of items
+                for item in db[titleStr][key]:
+                    # print('iteemmm', item)
+                    if key == "apps":
+                        appsStr += item + '\n\n'
+                    elif key == "folders":
+                        foldersStr += item + '\n\n'
+                    elif key == "sites":
+                        sitesStr += item + '\n\n'
+                        # print('appppstrrr', appsStr)
+                        # print('.................................')
+            # needs to return a dictionary:
+            return {'combo_list': titleStr, 'apps_textbox': appsStr, 'folders_textbox': foldersStr, 'sites_textbox': sitesStr}
 
 def fname(arg):
     print('hiiii', arg )

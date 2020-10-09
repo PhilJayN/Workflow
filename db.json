@@ -1,4 +1,20 @@
 {
+  "metadata": "new",
+  "example": {
+    "apps": [
+      "test",
+      "example",
+      "orange"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\Archive\\acr"
+    ],
+    "sites": [
+      "www.reddit.com/r/all",
+      "www.google.com"
+    ]
+  },
   "python": {
     "apps": [
       "apple",
