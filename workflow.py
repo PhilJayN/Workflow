@@ -209,23 +209,23 @@ def getDataForRender():
         # needs to return a dictionary:
         return {'combo_list': titleStr, 'apps_textbox': appsStr, 'folders_textbox': foldersStr, 'sites_textbox': sitesStr}
 
+def render(window): # Needs access to window obj
+    print('render')
+    dict = getDataForRender()
+    # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
+    for key in KEYS_TO_ELEMENT_KEYS:
+        window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
+
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
 
-    # Needs access to window obj
-    def render():
-        print('render window', 'adsf')
-        dict = getDataForRender()
-        # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
-        for key in KEYS_TO_ELEMENT_KEYS:
-            window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
-    render()
+    render(window)
 
     def loadWorkflow(values):
         print('workflow load... title:', values['-COMBO LIST-'])
         title = values['-COMBO LIST-']
-        render()
+        # render()
 
     while True:
         # reads user input in GUI, values is {}
@@ -251,6 +251,25 @@ def main():
             print('values', values["-COMBO LIST-"])
             # the value is the currently selected item from the dropdown menu
             delete(values["-COMBO LIST-"])
+main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # TEMPORARY FUNCTION CALLERS 123
@@ -259,7 +278,6 @@ def functionHandlers():
     openFolders(requestedFolders)
 
 # functionHandlers()
-main()
 
 ########################### TEMP FXN ###########################
 
