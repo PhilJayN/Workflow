@@ -135,6 +135,33 @@ def getTitle(values):
     print('got title:', values['-COMBO LIST-'])
     return title
 
+def getUserData(values):
+    dbTemplate =  {"apps": [], "folders": [], "sites": []}
+    hardKey = ["title", "apps", "folders", "sites"]
+    title = getTitle(values)
+    # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
+    for ind, key in enumerate(KEYS_TO_ELEMENT_KEYS):
+        # try:
+        # print('test values', values[KEYS_TO_ELEMENT_KEYS[key]])
+        if key == 'combo_list':
+            print('key is combo_list', key)
+            # dbTemplate[title] = dbTemplate.pop("temp")
+            continue
+            # print('KEYS_TO_ELEMENT_KEYS:', key)
+            #key is now apps_textbox
+            newArr = rmNewlines( values[KEYS_TO_ELEMENT_KEYS[key]] ).split("  ")
+            #is now an array: ['apple', 'nuts', 'orange']
+            print('newArrayy', newArr, 'indxxxxx. curr:', ind)
+            # for index, item in enumerate(newArr):
+            for index, item in enumerate(newArr):
+                print('current item', item)
+                dbTemplate[hardKey[ind]].append(item)
+    readWriteDB(title, dbTemplate)
+    # db["bears"] = dbTemplate
+    # print('final dbTemplate', dbTemplate)
+    # print('done w/ getUserData')
+
+
 def createMainWindow():
     comboList = getComboList()
     sg.theme('DarkAmber')
@@ -200,14 +227,6 @@ def main():
         title = values['-COMBO LIST-']
         render()
 
-    # def getTitle():
-    #     window = createMainWindow()
-    #     event, values = window.read()
-    #     title = values['-COMBO LIST-']
-    #     print('getTitle run...', event, values)
-    #     print('got title:', values['-COMBO LIST-'])
-    #     return title
-
     while True:
         # reads user input in GUI, values is {}
         event, values = window.read()
@@ -215,43 +234,13 @@ def main():
         print('values.... in whileTrue()', values, 'type:', type(values))
         # values dict: {'-COMBO LIST-': 'python', '-APPS TEXTBOX-': 'apple\n\nnuts\n\norange\n\n\n', '-FOLDERS TEXTBOX-': 'C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\n\nD:\\Archive\\acr\n\n\n', '-SITES TEXTBOX-': 'www.reddit.com/r/all\n\nwww.google.com\n\n\n'}
 
-        def getUserData():
-            dbTemplate =  {"apps": [], "folders": [], "sites": []}
-
-            def getParam():
-                hardKey = ["title", "apps", "folders", "sites"]
-                title = "python"
-                # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
-                for ind, key in enumerate(KEYS_TO_ELEMENT_KEYS):
-                    # try:
-                    # print('test values', values[KEYS_TO_ELEMENT_KEYS[key]])
-                    if key == 'combo_list':
-                        print('key is combo_list', key)
-                        # dbTemplate[title] = dbTemplate.pop("temp")
-                        continue
-                    # print('KEYS_TO_ELEMENT_KEYS:', key)
-                    #key is now apps_textbox
-                    newArr = rmNewlines( values[KEYS_TO_ELEMENT_KEYS[key]] ).split("  ")
-                    #is now an array: ['apple', 'nuts', 'orange']
-                    print('newArrayy', newArr, 'indxxxxx. curr:', ind)
-                    # for index, item in enumerate(newArr):
-                    for index, item in enumerate(newArr):
-                        print('current item', item)
-                        dbTemplate[hardKey[ind]].append(item)
-            getParam()
-
-            readWriteDB(getTitle(values), dbTemplate)
-            # db["bears"] = dbTemplate
-            # print('final dbTemplate', dbTemplate)
-            # print('done w/ getUserData')
-
         ########## EVENTS #########
         if event == sg.WIN_CLOSED or event == 'Exit':
             break
             window.close()
         if event == 'Save':
             print('saving!!')
-            getUserData()
+            getUserData(values)
         elif event == 'Load':
             print('load')
             # loadWorkflow()
@@ -262,7 +251,6 @@ def main():
             print('values', values["-COMBO LIST-"])
             # the value is the currently selected item from the dropdown menu
             delete(values["-COMBO LIST-"])
-
 
 
 # TEMPORARY FUNCTION CALLERS 123
