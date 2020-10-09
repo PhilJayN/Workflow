@@ -36,6 +36,9 @@ def minWindow():
     window = gw.getActiveWindow()
     window.minimize()
 
+def fname(arg):
+    print('hiiii', arg )
+
 ########################### HELPER FXNS ###########################
 def readWriteDB(key, value):
     # open file
@@ -114,46 +117,8 @@ def openX():
                 sleep(1.8)
                 closeTabs(2)
         sleep(1)
-########################### Load / Save / Parse ###########################
+########################### Load / Save ###########################
 # cleans (put str into array) user input, puts into DB, and in future, verifying it
-def parseUserInput(values):
-    with open('db.json', 'r+') as f:
-        db = json.load(f)
-        def count():
-            count = []
-            # item is "apps", or "folders", etc...
-            for item in db:
-                count.append(len(db[item]))
-            return count
-        c = count()
-
-        def modifyData(count, key, data):
-            # Run loop depending on number of items in db list
-            # print('foldersArr:', foldersArr)
-            for ii in range(0,count):
-                # data[ii] will run into "index out of range", if GUI value is empty!!
-                db[key][ii]["path"] = data[ii]
-
-        def getParam():
-            count = c # [3,3,2]
-            key = ["apps", "folders", "sites"]
-            # get values from GUI boxes:
-            appsArr = rmNewlines(values['-APPS TEXTBOX-']).split("  ")
-            foldersArr = rmNewlines(values['-FOLDERS TEXTBOX-']).split("  ")
-            # print('apps values:', values['-APPS TEXTBOX-'], 'folders values: ', values['-FOLDERS TEXTBOX-'])
-            sitesArr = rmNewlines(values['-SITES TEXTBOX-']).split("  ")
-            dataArr = [appsArr, foldersArr, sitesArr]
-
-            # Run modifyData 3x there are 3 keys, which won't change
-            for x in range(0,3):
-                modifyData(count[x], key[x], dataArr[x])
-        getParam()
-
-        def writeToDB():
-            f.seek(0)        # <--- should reset file position to the beginning.
-            json.dump(db, f, indent=2)
-            f.truncate()     # remove remaining part
-        writeToDB()
 
 ########################### GUI ###########################
 # to be used in layout sg.Combo(), or as keys
@@ -190,7 +155,6 @@ def getTitle():
     print('getTitle run...', event, values)
     print('got title:', values['-COMBO LIST-'])
     return title
-# getTitle()
 
 # gets data from DB, puts into a long string, then displays to GUI
 def getDataForRender():
@@ -220,9 +184,6 @@ def getDataForRender():
         # needs to return a dictionary:
         return {'combo_list': titleStr, 'apps_textbox': appsStr, 'folders_textbox': foldersStr, 'sites_textbox': sitesStr}
 
-def fname(arg):
-    print('hiiii', arg )
-
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
@@ -248,10 +209,8 @@ def main():
         print('values.... in whileTrue()', values, 'type:', type(values))
         # values dict: {'-COMBO LIST-': 'python', '-APPS TEXTBOX-': 'apple\n\nnuts\n\norange\n\n\n', '-FOLDERS TEXTBOX-': 'C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\n\nD:\\Archive\\acr\n\n\n', '-SITES TEXTBOX-': 'www.reddit.com/r/all\n\nwww.google.com\n\n\n'}
 
-        # don't remove yet:
-        # parseUserInput(values)
-
         def getUserData():
+            print('getUserDatarunnnnnn' )
             with open('db.json', 'r+') as f:
                 db = json.load(f)
                 dbTemplate =  {"apps": [], "folders": [], "sites": []}
@@ -263,7 +222,6 @@ def main():
                     for ind, key in enumerate(KEYS_TO_ELEMENT_KEYS):
                         # try:
                         # print('test values', values[KEYS_TO_ELEMENT_KEYS[key]])
-                        # print('test key', key)
                         if key == 'combo_list':
                             print('key is combo_list', key)
                             # dbTemplate[title] = dbTemplate.pop("temp")
@@ -278,37 +236,37 @@ def main():
                             print('current item', item)
                             dbTemplate[hardKey[ind]].append(item)
                 getParam()
-                db["asdfjklkldsfg"] = dbTemplate
+
                 db[getTitle()] = dbTemplate
+                print('final dbTemplate', dbTemplate, 'getTitle ', getTitle())
 
                 def writeToDB():
                     f.seek(0)        # <--- should reset file position to the beginning.
                     json.dump(db, f, indent=2)
                     f.truncate()     # remove remaining part
                 writeToDB()
+                print('done w/ getUserData')
 
+        ########## EVENTS #########
         if event == sg.WIN_CLOSED or event == 'Exit':
             break
             window.close()
+        if event == 'Save':
+            print('saving!!')
+            getUserData()
+        elif event == 'Load':
+            print('load')
+            # loadWorkflow()
+        elif event == 'Open All':
+            # openX()
+            print('test')
+        elif event == 'DELETE':
+            print('values', values["-COMBO LIST-"])
+            # the value is the currently selected item from the dropdown menu
+            delete(values["-COMBO LIST-"])
 
-        ########## EVENTS #########
-        def checkEventBtn():
-            # print('event clicked:', event)
-            if event == 'Save':
-                print('saving!!')
-                getUserData()
-            elif event == 'Load':
-                print('load')
-                # loadWorkflow()
-            elif event == 'Open All':
-                # openX()
-                print('test')
-            elif event == 'DELETE':
-                print('values', values["-COMBO LIST-"])
-                # the value is the currently selected item from the dropdown menu
-                delete(values["-COMBO LIST-"])
-                # window['-COMBO LIST-'].update('fffff')
-        checkEventBtn()
+
+
 # TEMPORARY FUNCTION CALLERS 123
 def functionHandlers():
     openSites()
@@ -316,9 +274,6 @@ def functionHandlers():
 
 # functionHandlers()
 main()
-
-
-
 
 ########################### TEMP FXN ###########################
 
@@ -348,17 +303,18 @@ def closePrograms():
 
 
 
-        # for index in range(0, 3):
-        #     for key in db["python"]:
-        #         # iterates thru 3 keys: apps, then folders, then sites
-        #         # print("db python:", db["python"])
-        #         # print('deeper', key[index])
-        #         print("current key: ", key)
-        #         print('an array:', db["python"][key]) #gives an array
-        #         print('item in array:', db["python"][key][index]) #gives 1 item in array
-        #         # db["python"][key][index] = "teddd"
-        #         # appsStr += db["python"][key][index] + '\n\n'
-        #         # print('appsStr final :', appsStr)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         # for title in db:
