@@ -68,9 +68,9 @@ def delete(itemToDel):
         del db[itemToDel]
 
         def writeToDB():
-            f.seek(0)        # <--- should reset file position to the beginning.
+            f.seek(0)
             json.dump(db, f, indent=2)
-            f.truncate()     # remove remaining part
+            f.truncate()
         writeToDB()
 
     # calling this fxn will clear GUI data
@@ -119,7 +119,6 @@ def openX():
         sleep(1)
 ########################### Load / Save ###########################
 # cleans (put str into array) user input, puts into DB, and in future, verifying it
-
 ########################### GUI ###########################
 # to be used in layout sg.Combo(), or as keys
 def getComboList():
@@ -131,7 +130,6 @@ def getComboList():
 
 def getTitle(values):
     title = values['-COMBO LIST-']
-    # print('getTitle run...', event, values)
     print('got title:', values['-COMBO LIST-'])
     return title
 
@@ -157,10 +155,6 @@ def getUserData(values):
                 print('current item', item)
                 dbTemplate[hardKey[ind]].append(item)
     readWriteDB(title, dbTemplate)
-    # db["bears"] = dbTemplate
-    # print('final dbTemplate', dbTemplate)
-    # print('done w/ getUserData')
-
 
 def createMainWindow():
     comboList = getComboList()
@@ -210,7 +204,6 @@ def getDataForRender(title):
         return {'combo_list': titleStr, 'apps_textbox': appsStr, 'folders_textbox': foldersStr, 'sites_textbox': sitesStr}
 
 def render(window, title): # Needs access to window obj
-    print('render')
     dict = getDataForRender(title)
     # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
     for key in KEYS_TO_ELEMENT_KEYS:
@@ -224,13 +217,10 @@ def loadWorkflow(window, values):
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
-
-    render(window, "test")
-
+    render(window, "example")
     while True:
-        # reads user input in GUI, values is {}
+        # reads user input in GUI
         event, values = window.read()
-        # print('values.... in whileTrue()', values, 'type:', type(values))
         # values dict: {'-COMBO LIST-': 'python', '-APPS TEXTBOX-': 'apple\n\nnuts\n\norange\n\n\n', '-FOLDERS TEXTBOX-': 'C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\n\nD:\\Archive\\acr\n\n\n', '-SITES TEXTBOX-': 'www.reddit.com/r/all\n\nwww.google.com\n\n\n'}
 
         ########## EVENTS #########
