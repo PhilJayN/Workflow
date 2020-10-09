@@ -148,13 +148,13 @@ def createMainWindow():
     window = sg.Window('App Title', layout, finalize=True)
     return window
 
-def getTitle():
-    window = createMainWindow()
-    event, values = window.read()
-    title = values['-COMBO LIST-']
-    print('getTitle run...', event, values)
-    print('got title:', values['-COMBO LIST-'])
-    return title
+# def getTitle():
+#     window = createMainWindow()
+#     event, values = window.read()
+#     title = values['-COMBO LIST-']
+#     print('getTitle run...', event, values)
+#     print('got title:', values['-COMBO LIST-'])
+#     return title
 
 # gets data from DB, puts into a long string, then displays to GUI
 def getDataForRender():
@@ -217,7 +217,7 @@ def main():
 
                 def getParam():
                     hardKey = ["title", "apps", "folders", "sites"]
-                    title = getTitle()
+                    title = "python"
                     # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
                     for ind, key in enumerate(KEYS_TO_ELEMENT_KEYS):
                         # try:
@@ -237,15 +237,15 @@ def main():
                             dbTemplate[hardKey[ind]].append(item)
                 getParam()
 
-                db[getTitle()] = dbTemplate
-                print('final dbTemplate', dbTemplate, 'getTitle ', getTitle())
+                db["bears"] = dbTemplate
+                print('final dbTemplate', dbTemplate)
+                print('done w/ getUserData')
 
                 def writeToDB():
                     f.seek(0)        # <--- should reset file position to the beginning.
                     json.dump(db, f, indent=2)
                     f.truncate()     # remove remaining part
                 writeToDB()
-                print('done w/ getUserData')
 
         ########## EVENTS #########
         if event == sg.WIN_CLOSED or event == 'Exit':

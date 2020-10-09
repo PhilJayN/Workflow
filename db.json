@@ -43,5 +43,19 @@
       "one",
       "two"
     ]
+  },
+  "bears": {
+    "apps": [
+      "asdfffffff",
+      "two"
+    ],
+    "folders": [
+      "one",
+      "two"
+    ],
+    "sites": [
+      "one",
+      "two"
+    ]
   }
 }
