@@ -48,9 +48,9 @@ def readWriteDB(key, value):
         db[key] = value
         # write
         def writeToDB():
-            f.seek(0)
+            f.seek(0)        # <--- should reset file position to the beginning.
             json.dump(db, f, indent=2)
-            f.truncate()
+            f.truncate()     # remove remaining part
         writeToDB()
 
 def loadDB():
@@ -129,6 +129,12 @@ def getComboList():
         comboList.append(key)
     return comboList
 
+def getTitle(values):
+    title = values['-COMBO LIST-']
+    # print('getTitle run...', event, values)
+    print('got title:', values['-COMBO LIST-'])
+    return title
+
 def createMainWindow():
     comboList = getComboList()
     sg.theme('DarkAmber')
@@ -147,14 +153,6 @@ def createMainWindow():
 
     window = sg.Window('App Title', layout, finalize=True)
     return window
-
-# def getTitle():
-#     window = createMainWindow()
-#     event, values = window.read()
-#     title = values['-COMBO LIST-']
-#     print('getTitle run...', event, values)
-#     print('got title:', values['-COMBO LIST-'])
-#     return title
 
 # gets data from DB, puts into a long string, then displays to GUI
 def getDataForRender():
@@ -202,6 +200,14 @@ def main():
         title = values['-COMBO LIST-']
         render()
 
+    # def getTitle():
+    #     window = createMainWindow()
+    #     event, values = window.read()
+    #     title = values['-COMBO LIST-']
+    #     print('getTitle run...', event, values)
+    #     print('got title:', values['-COMBO LIST-'])
+    #     return title
+
     while True:
         # reads user input in GUI, values is {}
         event, values = window.read()
@@ -210,42 +216,34 @@ def main():
         # values dict: {'-COMBO LIST-': 'python', '-APPS TEXTBOX-': 'apple\n\nnuts\n\norange\n\n\n', '-FOLDERS TEXTBOX-': 'C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\n\nD:\\Archive\\acr\n\n\n', '-SITES TEXTBOX-': 'www.reddit.com/r/all\n\nwww.google.com\n\n\n'}
 
         def getUserData():
-            print('getUserDatarunnnnnn' )
-            with open('db.json', 'r+') as f:
-                db = json.load(f)
-                dbTemplate =  {"apps": [], "folders": [], "sites": []}
+            dbTemplate =  {"apps": [], "folders": [], "sites": []}
 
-                def getParam():
-                    hardKey = ["title", "apps", "folders", "sites"]
-                    title = "python"
-                    # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
-                    for ind, key in enumerate(KEYS_TO_ELEMENT_KEYS):
-                        # try:
-                        # print('test values', values[KEYS_TO_ELEMENT_KEYS[key]])
-                        if key == 'combo_list':
-                            print('key is combo_list', key)
-                            # dbTemplate[title] = dbTemplate.pop("temp")
-                            continue
-                        # print('KEYS_TO_ELEMENT_KEYS:', key)
-                        #key is now apps_textbox
-                        newArr = rmNewlines( values[KEYS_TO_ELEMENT_KEYS[key]] ).split("  ")
-                        #is now an array: ['apple', 'nuts', 'orange']
-                        print('newArrayy', newArr, 'indxxxxx. curr:', ind)
-                        # for index, item in enumerate(newArr):
-                        for index, item in enumerate(newArr):
-                            print('current item', item)
-                            dbTemplate[hardKey[ind]].append(item)
-                getParam()
+            def getParam():
+                hardKey = ["title", "apps", "folders", "sites"]
+                title = "python"
+                # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
+                for ind, key in enumerate(KEYS_TO_ELEMENT_KEYS):
+                    # try:
+                    # print('test values', values[KEYS_TO_ELEMENT_KEYS[key]])
+                    if key == 'combo_list':
+                        print('key is combo_list', key)
+                        # dbTemplate[title] = dbTemplate.pop("temp")
+                        continue
+                    # print('KEYS_TO_ELEMENT_KEYS:', key)
+                    #key is now apps_textbox
+                    newArr = rmNewlines( values[KEYS_TO_ELEMENT_KEYS[key]] ).split("  ")
+                    #is now an array: ['apple', 'nuts', 'orange']
+                    print('newArrayy', newArr, 'indxxxxx. curr:', ind)
+                    # for index, item in enumerate(newArr):
+                    for index, item in enumerate(newArr):
+                        print('current item', item)
+                        dbTemplate[hardKey[ind]].append(item)
+            getParam()
 
-                db["bears"] = dbTemplate
-                print('final dbTemplate', dbTemplate)
-                print('done w/ getUserData')
-
-                def writeToDB():
-                    f.seek(0)        # <--- should reset file position to the beginning.
-                    json.dump(db, f, indent=2)
-                    f.truncate()     # remove remaining part
-                writeToDB()
+            readWriteDB(getTitle(values), dbTemplate)
+            # db["bears"] = dbTemplate
+            # print('final dbTemplate', dbTemplate)
+            # print('done w/ getUserData')
 
         ########## EVENTS #########
         if event == sg.WIN_CLOSED or event == 'Exit':
