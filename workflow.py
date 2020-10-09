@@ -37,6 +37,19 @@ def minWindow():
     window.minimize()
 
 ########################### HELPER FXNS ###########################
+def readWriteDB(key, value):
+    # open file
+    with open('db.json', 'r+') as f:
+        db = json.load(f)
+        # modify
+        db[key] = value
+        # write
+        def writeToDB():
+            f.seek(0)
+            json.dump(db, f, indent=2)
+            f.truncate()
+        writeToDB()
+
 def loadDB():
     with open('db.json', 'r') as f:
         data = json.load(f)
@@ -179,52 +192,38 @@ def getTitle():
     return title
 # getTitle()
 
-
-
-
 # gets data from DB, puts into a long string, then displays to GUI
 def getDataForRender():
-
-    with open('db.json', 'r+') as f:
-        db = json.load(f)
-        if db["metadata"] == "new":
-            print('first time user!')
-            db["metadata"] = "old"
-            def writeToDB():
-                f.seek(0)
-                json.dump(db, f, indent=2)
-                f.truncate()
-            writeToDB()
-            return {'combo_list': 'test title', 'apps_textbox': 'pathtoapps', 'folders_textbox': 'apthffff', 'sites_textbox': 'testsgd'}
-        else:
-            titleStr = "javascript"
-            print('getDataForRender titleL:', titleStr)
-            appsStr = ""
-            foldersStr = ""
-            sitesStr = ""
-            # outer loop responsible for key
-            for key in db[titleStr]:
-                print('key: ', key)
-                # inner loop responsible for going through array w/ dynamic num. of items
-                for item in db[titleStr][key]:
-                    # print('iteemmm', item)
-                    if key == "apps":
-                        appsStr += item + '\n\n'
-                    elif key == "folders":
-                        foldersStr += item + '\n\n'
-                    elif key == "sites":
-                        sitesStr += item + '\n\n'
-                        # print('appppstrrr', appsStr)
-                        # print('.................................')
-            # needs to return a dictionary:
-            return {'combo_list': titleStr, 'apps_textbox': appsStr, 'folders_textbox': foldersStr, 'sites_textbox': sitesStr}
+    db = loadDB()
+    if db["metadata"] == "new":
+        readWriteDB("metadata", "old")
+        return {'combo_list': 'test title', 'apps_textbox': 'pathtoapps', 'folders_textbox': 'apthffff', 'sites_textbox': 'testsgd'}
+    else:
+        titleStr = "javascript"
+        print('getDataForRender titleL:', titleStr)
+        appsStr = ""
+        foldersStr = ""
+        sitesStr = ""
+        # outer loop responsible for key
+        for key in db[titleStr]:
+            print('key: ', key)
+            # inner loop responsible for going through array w/ dynamic num. of items
+            for item in db[titleStr][key]:
+                # print('iteemmm', item)
+                if key == "apps":
+                    appsStr += item + '\n\n'
+                elif key == "folders":
+                    foldersStr += item + '\n\n'
+                elif key == "sites":
+                    sitesStr += item + '\n\n'
+                    # print('.................................')
+        # needs to return a dictionary:
+        return {'combo_list': titleStr, 'apps_textbox': appsStr, 'folders_textbox': foldersStr, 'sites_textbox': sitesStr}
 
 def fname(arg):
     print('hiiii', arg )
-    # print('values testing', values)
 
 def main():
-    # print('render running with title:')
     # this window object right now should have no user value
     window = createMainWindow()
 
@@ -245,8 +244,6 @@ def main():
     while True:
         # reads user input in GUI, values is {}
         event, values = window.read()
-        # fname(values)
-        # render(values)
         loadWorkflow(values)
         print('values.... in whileTrue()', values, 'type:', type(values))
         # values dict: {'-COMBO LIST-': 'python', '-APPS TEXTBOX-': 'apple\n\nnuts\n\norange\n\n\n', '-FOLDERS TEXTBOX-': 'C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\n\nD:\\Archive\\acr\n\n\n', '-SITES TEXTBOX-': 'www.reddit.com/r/all\n\nwww.google.com\n\n\n'}
@@ -281,7 +278,6 @@ def main():
                             print('current item', item)
                             dbTemplate[hardKey[ind]].append(item)
                 getParam()
-                print('TEMPppppppp:', dbTemplate)
                 db["asdfjklkldsfg"] = dbTemplate
                 db[getTitle()] = dbTemplate
 
@@ -320,6 +316,10 @@ def functionHandlers():
 
 # functionHandlers()
 main()
+
+
+
+
 ########################### TEMP FXN ###########################
 
 def exitPrompt():
