@@ -59,25 +59,30 @@ def loadDB():
         # Return db.json to use in other fxns
     return data
 
-def delete(itemToDel):
-    title = itemToDel
+def delete(window, values):
+    title = values["-COMBO LIST-"]
     print('Title', title)
     with open('db.json', 'r+') as f:
         db = json.load(f)
 
-        del db[itemToDel]
+        del db[title]
+        for key in db:
+            print('after del, keysssss left in db:', key)
+            newTitle = key
 
         def writeToDB():
             f.seek(0)
             json.dump(db, f, indent=2)
             f.truncate()
         writeToDB()
+    render(window, newTitle) #render needs to be called with a new title, or else error no title found
 
-    # calling this fxn will clear GUI data
+    # calling this fxn will clear GUI data, BUT creates a new window above old one!!
     # needs to be called at end of delete() fxn, or else title will NOT be removed from dropdown
     # because createMainWindow will pull data from DB. in other words: remove data from DB first,
     # then call for a new window.
-    window = createMainWindow()
+
+    # window = createMainWindow()
 
 def rmNewlines(string):
     # removes newline at middle of string, as .strip() does not do that
@@ -237,7 +242,8 @@ def main():
             print('test')
         elif event == 'DELETE':
             print('values', values["-COMBO LIST-"])
-            delete(values["-COMBO LIST-"])
+            # title = values["-COMBO LIST-"]
+            delete(window, values)
 main()
 
 
