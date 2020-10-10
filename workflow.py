@@ -181,7 +181,7 @@ def getDataForRender(title):
     db = loadDB()
     if db["metadata"] == "new":
         readWriteDB("metadata", "old")
-        return {'combo_list': 'test title', 'apps_textbox': 'pathtoapps', 'folders_textbox': 'apthffff', 'sites_textbox': 'testsgd'}
+        return {'combo_list': 'example', 'apps_textbox': 'pathtoapps', 'folders_textbox': 'apthffff', 'sites_textbox': 'testsgd'}
     else:
         titleStr = title
         appsStr = ""
@@ -210,19 +210,18 @@ def render(window, title): # Needs access to window obj
         window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
 
 def loadWorkflow(window, values):
-    print('loadWorkflow title: ', values['-COMBO LIST-'])
+    print('loadWorkflow got title: ', values['-COMBO LIST-'])
     title = values['-COMBO LIST-']
     render(window, title)
 
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
-    render(window, "example")
+    render(window, "python")
     while True:
         # reads user input in GUI
         event, values = window.read()
         # values dict: {'-COMBO LIST-': 'python', '-APPS TEXTBOX-': 'apple\n\nnuts\n\norange\n\n\n', '-FOLDERS TEXTBOX-': 'C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\n\nD:\\Archive\\acr\n\n\n', '-SITES TEXTBOX-': 'www.reddit.com/r/all\n\nwww.google.com\n\n\n'}
-
         ########## EVENTS #########
         if event == sg.WIN_CLOSED or event == 'Exit':
             break
@@ -238,7 +237,6 @@ def main():
             print('test')
         elif event == 'DELETE':
             print('values', values["-COMBO LIST-"])
-            # the value is the currently selected item from the dropdown menu
             delete(values["-COMBO LIST-"])
 main()
 

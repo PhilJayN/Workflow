@@ -2,7 +2,7 @@
   "metadata": "old",
   "example": {
     "apps": [
-      "test",
+      "exampleee",
       "example",
       "orange"
     ],
@@ -17,8 +17,8 @@
   },
   "python": {
     "apps": [
-      "apple",
-      "nuts",
+      "python stuff",
+      "sadf",
       "orange"
     ],
     "folders": [
@@ -45,20 +45,6 @@
     ]
   },
   "testtitle": {
-    "apps": [
-      "javascript suff",
-      "two"
-    ],
-    "folders": [
-      "one",
-      "two"
-    ],
-    "sites": [
-      "one",
-      "two"
-    ]
-  },
-  "test": {
     "apps": [
       "javascript suff",
       "two"
