@@ -17,18 +17,12 @@
   },
   "python": {
     "apps": [
-      "python stuff",
-      "sadf",
-      "orange"
+      "python stuff"
     ],
     "folders": [
-      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
-      "D:\\Archive\\acr"
+      "python folders"
     ],
-    "sites": [
-      "www.reddit.com/r/all",
-      "www.google.com"
-    ]
+    "sites": []
   },
   "javascript": {
     "apps": [

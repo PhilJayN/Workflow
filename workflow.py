@@ -132,27 +132,23 @@ def getTitle(values):
     print('got title:', values['-COMBO LIST-'])
     return title
 
-def getUserData(values):
+def getInput(values):
     dbTemplate =  {"apps": [], "folders": [], "sites": []}
     hardKey = ["title", "apps", "folders", "sites"]
     title = getTitle(values)
     # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
-    for ind, key in enumerate(KEYS_TO_ELEMENT_KEYS):
-        # try:
-        # print('test values', values[KEYS_TO_ELEMENT_KEYS[key]])
-        if key == 'combo_list':
-            print('key is combo_list', key)
-            # dbTemplate[title] = dbTemplate.pop("temp")
+    for ind, key in enumerate(KEYS_TO_ELEMENT_KEYS): #key: 'combo_list', KEYS_TO_ELEMENT_KEYS[key] eval to the GUI element key
+        print('TEMPPPPPPPP', values[KEYS_TO_ELEMENT_KEYS[key]])
+        if key == 'combo_list': # no need to put title name into array below
             continue
-            # print('KEYS_TO_ELEMENT_KEYS:', key)
-            #key is now apps_textbox
-            newArr = rmNewlines( values[KEYS_TO_ELEMENT_KEYS[key]] ).split("  ")
-            #is now an array: ['apple', 'nuts', 'orange']
-            print('newArrayy', newArr, 'indxxxxx. curr:', ind)
-            # for index, item in enumerate(newArr):
-            for index, item in enumerate(newArr):
-                print('current item', item)
-                dbTemplate[hardKey[ind]].append(item)
+            # dbTemplate[title] = dbTemplate.pop("temp")
+        newArr = rmNewlines( values[KEYS_TO_ELEMENT_KEYS[key]] ).split("  ") #is now an array: ['apple', 'nuts', 'orange']
+        # print('newArrayy', newArr, 'indxxxxx. curr:', ind)
+        # add every item from processed array into template
+        for index, item in enumerate(newArr):
+            print('current item', item)
+            dbTemplate[hardKey[ind]].append(item)
+    # print('dbTemplate', dbTemplate)
     getDB(None, title, dbTemplate)
 
 def createMainWindow():
@@ -230,8 +226,8 @@ def main():
             break
             window.close()
         if event == 'Save':
-            print('saving!!')
-            getUserData(values)
+            # print('saving!!')
+            getInput(values)
         elif event == 'Load':
             print('load')
             loadWorkflow(window, values)
