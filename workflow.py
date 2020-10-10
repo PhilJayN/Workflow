@@ -206,7 +206,11 @@ def render(window, title): # Needs access to window obj
     dict = getDataForRender(title)
     # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
     for key in KEYS_TO_ELEMENT_KEYS:
+        # if KEYS_TO_ELEMENT_KEYS[key] == '-COMBO LIST-':
+        #     window['-COMBO LIST-'].update(values=getComboList())
+        # else:
         window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
+        window['-COMBO LIST-'].update(values=getComboList())
 
 def loadWorkflow(window, values):
     print('loadWorkflow got title: ', values['-COMBO LIST-'])
