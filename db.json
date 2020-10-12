@@ -18,7 +18,7 @@
     "apps": [
       "C:\\Dropbox\\cmder_mini\\Cmder.exe",
       "C:\\\\Users\\\\asus270\\\\AppData\\\\Local\\\\atom\\\\atom.exe",
-      "C:\\\\Users\\\\asus270\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python36-32\\\\pythonw.exe"
+      ":\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\\pythonw.exe \"C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\\Lib\\idlelib\\idle.pyw"
     ],
     "folders": [
       "C:\\\\Users\\\\asus270\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python36-32",
@@ -48,7 +48,7 @@
   },
   "example": {
     "apps": [
-      "exampleee",
+      "%windir%\\system32\\notepad.exe",
       "example",
       "orange"
     ],

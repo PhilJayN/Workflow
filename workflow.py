@@ -115,34 +115,42 @@ def mrClean():
 # X can be apps, folders, or sites
 def openX():
     db = loadDB()
-    key = ["apps", "folders", "sites"]
-    for index in range(0,3):
-        for item in db[key[index]]: #db[key[index]] is db["apps"]
-            #loop will go thru one item at a time, run to if/else and eval that
-            #then go back and do second item, till all items are done.
-            #ea. item is one dict in list {'path': 'C:\\Program Files\\Mozilla'}
-            # find path values:
-            pathStr = item["path"]
-            if key[index] == "apps":
-                print('running apps placeholder...', pathStr)
-                subprocess.Popen(pathStr)
+    # keys = list(db)
+    tempTitle = "python"
+    keys = ["apps", "folders", "sites"]
+    for key in db["python"]: # dict of 3 items: "apps": [], "folders": [], "sites":[]
+        # print('db[tempTitle]: ', db[tempTitle], 'item: ', item)
+        print('key: ', key)
+        for index, item in enumerate(db["python"][key]):
+            print('INNER loop item at index ', index, ': ', item)
+
+        #     loop will go thru one item at a time, run to if/else and eval that
+        #     then go back and do second item, till all items are done.
+        #     ea. item is one dict in list {'path': 'C:\\Program Files\\Mozilla'}
+
+            if key == "apps":
+                print('running apps placeholder...', item)
+                subprocess.Popen(item)
                 # testing purposes
                 sleep(1.8)
                 altF4(1)
-            elif key[index] == "folders":
+            elif key == "folders":
                 #if a drive (D:\ E:\) is invalid, webbrowser opens IE!
                 print('running folders placeholder...')
-                webbrowser.open(pathStr)
+                webbrowser.open(item)
                 sleep(1.8)
                 altF4(1)
-            elif key[index] == "sites":
+            elif key == "sites":
                 # if there's two \\ slashes, then IE will open!
-                webbrowser.open(pathStr)
-                print('running webbrowser cmd to...', pathStr)
-                # webbrowser.get('windows-default').open(pathStr, new=1)
+                webbrowser.open(item)
+                print('running webbrowser cmd to...', item)
+                # webbrowser.get('windows-default').open(item, new=1)
                 sleep(1.8)
                 closeTabs(2)
         sleep(1)
+
+
+# openX()
 ########################### Load / Save ###########################
 # cleans (put str into array) user input, puts into DB, and in future, verifying it
 ########################### GUI ###########################
@@ -199,7 +207,7 @@ def createMainWindow():
 
 # gets data from DB, puts into a long string, then displays to GUI
 def getDataForRender(title):
-    print('getDataForRender titleL:', title)
+    # print('getDataForRender titleL:', title)
     db = loadDB()
     if db["metadata"] == "new":
         getDB("modify", "metadata", "old")
