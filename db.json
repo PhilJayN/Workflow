@@ -48,7 +48,7 @@
   },
   "example": {
     "apps": [
-      "%windir%\\system32\\notepad.exe",
+      "exampleee",
       "example",
       "orange"
     ],

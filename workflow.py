@@ -11,11 +11,11 @@ KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEX
 # print('SETTINGS_KEYS_TO_ELEMENT_KEYS dict', KEYS_TO_ELEMENT_KEYS)
 
 ########################### TEMPORARY FXN ###########################
-def closeTabs(x):
-    for i in range(0,x):
-        pyautogui.hotkey('ctrl', 'w')
-        # sleep a bit or else ctrl+w pressed too fast in sucession!
-        time.sleep(.4)
+def closeTabs():
+    # for i in range(0,x):
+    pyautogui.hotkey('ctrl', 'w')
+    # sleep a bit or else ctrl+w pressed too fast in sucession!
+    time.sleep(.8)
 
 def altF4(x):
     for i in range(0,x):
@@ -40,6 +40,19 @@ def fname(arg):
     print('hiiii', arg )
 
 ########################### HELPER FXNS ###########################
+# to be used in layout sg.Combo(), or as keys
+def getComboList():
+    db = loadDB()
+    comboList = []
+    for key in db:
+        comboList.append(key)
+    return comboList
+
+def getTitle(values):
+    title = values['-COMBO LIST-']
+    print('got title:', values['-COMBO LIST-'])
+    return title
+
 def getDB(task, key, value):
     # open file
     with open('db.json', 'r+') as f:
@@ -113,59 +126,41 @@ def mrClean():
     print('Done cleaning string!')
 ########################### ACTIONS / EVENTS  ###########################
 # X can be apps, folders, or sites
-def openX():
+def openX(values):
     db = loadDB()
-    # keys = list(db)
-    tempTitle = "python"
-    keys = ["apps", "folders", "sites"]
-    for key in db["python"]: # dict of 3 items: "apps": [], "folders": [], "sites":[]
-        # print('db[tempTitle]: ', db[tempTitle], 'item: ', item)
+    title = getTitle(values)
+    for key in db[title]: # dict of 3 items: "apps": [], "folders": [], "sites":[], key is apps, etc.
         print('key: ', key)
-        for index, item in enumerate(db["python"][key]):
+        for index, item in enumerate(db[title][key]): # go through each item in array
+            # loop goes through one item at a time, runs to if/else, stays in inner loop until done w every item,
+            # then goes back to outer loop, where key changes
+            # rinse and repeat
             print('INNER loop item at index ', index, ': ', item)
-
-        #     loop will go thru one item at a time, run to if/else and eval that
-        #     then go back and do second item, till all items are done.
-        #     ea. item is one dict in list {'path': 'C:\\Program Files\\Mozilla'}
-
             if key == "apps":
                 print('running apps placeholder...', item)
                 subprocess.Popen(item)
                 # testing purposes
-                sleep(1.8)
+                sleep(1.2)
                 altF4(1)
             elif key == "folders":
                 #if a drive (D:\ E:\) is invalid, webbrowser opens IE!
                 print('running folders placeholder...')
                 webbrowser.open(item)
-                sleep(1.8)
+                sleep(1.2)
                 altF4(1)
             elif key == "sites":
                 # if there's two \\ slashes, then IE will open!
                 webbrowser.open(item)
                 print('running webbrowser cmd to...', item)
                 # webbrowser.get('windows-default').open(item, new=1)
-                sleep(1.8)
-                closeTabs(2)
+                sleep(1.2)
+                closeTabs()
         sleep(1)
-
-
 # openX()
+
 ########################### Load / Save ###########################
 # cleans (put str into array) user input, puts into DB, and in future, verifying it
 ########################### GUI ###########################
-# to be used in layout sg.Combo(), or as keys
-def getComboList():
-    db = loadDB()
-    comboList = []
-    for key in db:
-        comboList.append(key)
-    return comboList
-
-def getTitle(values):
-    title = values['-COMBO LIST-']
-    print('got title:', values['-COMBO LIST-'])
-    return title
 
 def getInput(values):
     dbTemplate =  {"apps": [], "folders": [], "sites": []}
@@ -267,7 +262,7 @@ def main():
             print('load')
             loadWorkflow(window, values)
         elif event == 'Open All':
-            openX()
+            openX(values)
             print('test')
         elif event == 'DELETE':
             print('values', values["-COMBO LIST-"])
