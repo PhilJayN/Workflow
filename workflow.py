@@ -91,7 +91,7 @@ def delete(window, values):
     time.sleep(2)
     tempValue = {
     "apps": [
-      "exampleee",
+      "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
       "example",
       "orange"
     ],
@@ -122,8 +122,17 @@ def rmNewlines(string):
     # removes newline at middle of string, as .strip() only remove spaces at beginning and end
     return string.replace('\n',' ').strip()
 
-def mrClean():
-    print('Done cleaning string!')
+def cleanData(str):
+    newStr = ""
+    # ignore cleaning if http is present, such as when address is copied from Chrome address bar: https://pysimplegui.readthedocs.io
+    # fun fact for nerds like me: Chrome 69 update no longer shows www
+    if 'http' not in str:
+        if 'www.' not in str:
+            newStr = 'www.' + str
+            print('Done cleaning string!', newStr)
+            return newStr
+cleanData("https://pysimplegui.readthedocs.io/en/latest/#the-renaming-convention")
+# cleanData("reddit.com")
 ########################### ACTIONS / EVENTS  ###########################
 # X can be apps, folders, or sites
 def openX(values):
@@ -140,7 +149,7 @@ def openX(values):
                 print('running apps placeholder...', item)
                 subprocess.Popen(item)
                 # testing purposes
-                sleep(1.2)
+                sleep(1.7)
                 altF4(1)
             elif key == "folders":
                 #if a drive (D:\ E:\) is invalid, webbrowser opens IE!
@@ -153,7 +162,7 @@ def openX(values):
                 webbrowser.open(item)
                 print('running webbrowser cmd to...', item)
                 # webbrowser.get('windows-default').open(item, new=1)
-                sleep(1.2)
+                sleep(1.5)
                 closeTabs()
         sleep(1)
 # openX()
@@ -176,8 +185,13 @@ def getInput(values):
         # print('newArrayy', newArr, 'indxxxxx. curr:', ind)
         # add every item from processed array into template
         for index, item in enumerate(newArr):
-            print('current item', item)
-            dbTemplate[hardKey[ind]].append(item)
+            print('current item', item, 'hardKey[ind]:', hardKey[ind])
+            if hardKey[ind] == 'sites':
+                cleanedItem = cleanData(item)
+                print('hardKey[ind] is now sites!', hardKey[ind], 'cleanedItem:', cleanedItem)
+                dbTemplate[hardKey[ind]].append(cleanedItem)
+            else:
+                dbTemplate[hardKey[ind]].append(item)
     # print('dbTemplate', dbTemplate)
     getDB(None, title, dbTemplate)
 

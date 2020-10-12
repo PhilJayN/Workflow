@@ -34,16 +34,14 @@
   },
   "example": {
     "apps": [
-      "exampleee",
-      "example",
-      "orange"
+      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
     ],
     "folders": [
       "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
       "D:\\Archive\\acr"
     ],
     "sites": [
-      "www.reddit.com/r/all",
+      "reddit.com/r/all",
       "www.google.com"
     ]
   },
@@ -61,6 +59,109 @@
     "sites": [
       "www.reddit.com/r/all",
       "www.google.com"
+    ]
+  },
+  "newwww": {
+    "apps": [
+      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\Archive\\acr"
+    ],
+    "sites": [
+      "reddit.com"
+    ]
+  },
+  "exampleffff": {
+    "apps": [
+      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\Archive\\acr"
+    ],
+    "sites": [
+      "reddit.com/r/all",
+      "www.google.com"
+    ]
+  },
+  "examplefdsafadsfasd": {
+    "apps": [
+      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\Archive\\acr"
+    ],
+    "sites": [
+      "reddit.com/r/all",
+      "www.google.com"
+    ]
+  },
+  "hiiiiiiiii": {
+    "apps": [
+      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\Archive\\acr"
+    ],
+    "sites": [
+      "reddit.com/r/all",
+      "www.google.com"
+    ]
+  },
+  "newwwww": {
+    "apps": [
+      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\Archive\\acr"
+    ],
+    "sites": [
+      "reddit.com/r/all",
+      "google.com"
+    ]
+  },
+  "sdafsdaf": {
+    "apps": [
+      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\Archive\\acr"
+    ],
+    "sites": [
+      "reddit.com/r/all",
+      "www.google.com"
+    ]
+  },
+  "examplefffffff": {
+    "apps": [
+      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\Archive\\acr"
+    ],
+    "sites": [
+      "reddit.com/r/all",
+      "www.google.com"
+    ]
+  },
+  "exampledsfsadfsadf": {
+    "apps": [
+      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\Archive\\acr"
+    ],
+    "sites": [
+      "www.reddit.com/r/all",
+      null
     ]
   }
 }
