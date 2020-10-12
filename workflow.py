@@ -63,14 +63,41 @@ def loadDB():
     return data
 
 def delete(window, values):
+    print('del fxn run w values: ', values)
     title = values["-COMBO LIST-"]
     print('Title', title)
+
     db = loadDB()
-    for key in db:
-        print('after del, keysssss left in db:', key)
-        newTitle = key
+    print('keysssss in db BEFORE del:: ', list(db))
+
+    # for key in db:
+        # don't give render() new title from old DB, or else KeyError:
+        # newTitle = key
     getDB('del', title, None)
-    render(window, newTitle) #render needs to be called with a new title, or else error no title found
+########################### TEMP during testing###########################
+    time.sleep(2)
+    tempValue = {
+    "apps": [
+      "exampleee",
+      "example",
+      "orange"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\Archive\\acr"
+    ],
+    "sites": [
+      "www.reddit.com/r/all",
+      "www.google.com"
+    ]
+  }
+    getDB(None, "example", tempValue)
+########################### TEMP ###########################
+
+    newDb = loadDB()
+    print('keysssss in db after del: ', list(newDb))
+    # sg.popup('DELETED!')
+    render(window, "blank") #render needs to be called with a new title, or else error no title found
 
     # window = createMainWindow()
     # calling this fxn will clear GUI data, BUT creates a new window above old one!!
@@ -137,11 +164,11 @@ def getInput(values):
     hardKey = ["title", "apps", "folders", "sites"]
     title = getTitle(values)
     # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
+    # purpose: targets elements on GUI and gets user data from input boxes. skip title element
     for ind, key in enumerate(KEYS_TO_ELEMENT_KEYS): #key: 'combo_list', KEYS_TO_ELEMENT_KEYS[key] eval to the GUI element key
         print('TEMPPPPPPPP', values[KEYS_TO_ELEMENT_KEYS[key]])
         if key == 'combo_list': # no need to put title name into array below
             continue
-            # dbTemplate[title] = dbTemplate.pop("temp")
         newArr = rmNewlines( values[KEYS_TO_ELEMENT_KEYS[key]] ).split("  ") #is now an array: ['apple', 'nuts', 'orange']
         # print('newArrayy', newArr, 'indxxxxx. curr:', ind)
         # add every item from processed array into template
@@ -216,7 +243,7 @@ def loadWorkflow(window, values):
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
-    render(window, "python")
+    render(window, "example")
     while True:
         # reads user input in GUI
         event, values = window.read()
