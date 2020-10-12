@@ -259,7 +259,7 @@ def main():
             print('load')
             loadWorkflow(window, values)
         elif event == 'Open All':
-            # openX()
+            openX()
             print('test')
         elif event == 'DELETE':
             print('values', values["-COMBO LIST-"])
