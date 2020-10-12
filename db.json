@@ -32,20 +32,6 @@
       "https://automatetheboringstuff.com/2e/"
     ]
   },
-  "javascript": {
-    "apps": [
-      "javascript suff",
-      "two"
-    ],
-    "folders": [
-      "one",
-      "two"
-    ],
-    "sites": [
-      "one",
-      "two"
-    ]
-  },
   "example": {
     "apps": [
       "exampleee",
@@ -55,6 +41,22 @@
     "folders": [
       "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
       "D:\\Archive\\acr"
+    ],
+    "sites": [
+      "www.reddit.com/r/all",
+      "www.google.com"
+    ]
+  },
+  "example2": {
+    "apps": [
+      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+      "C:\\Program Files (x86)\\Google Application \\Chrome\\Application\\chrome.exe",
+      "C:\\\\Program Files\\\\Mozilla Firefox"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\Archive\\acr",
+      "D:\\"
     ],
     "sites": [
       "www.reddit.com/r/all",

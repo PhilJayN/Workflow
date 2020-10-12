@@ -1,10 +1,10 @@
+import json
 import pyautogui
+import PySimpleGUI as sg
 import pygetwindow as gw
+import subprocess
 import time
 import webbrowser
-import subprocess
-import json
-import PySimpleGUI as sg
 
 # DEFAULT_SETTINGS = {}
 KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
@@ -119,7 +119,7 @@ def delete(window, values):
     # then call for a new window.
 
 def rmNewlines(string):
-    # removes newline at middle of string, as .strip() does not do that
+    # removes newline at middle of string, as .strip() only remove spaces at beginning and end
     return string.replace('\n',' ').strip()
 
 def mrClean():
@@ -186,9 +186,12 @@ def createMainWindow():
     sg.theme('DarkAmber')
 
     layout = [
-    [sg.T('Select Workflow'), sg.Combo(comboList, size=(40, 30), key='-COMBO LIST-')],
-    [sg.B('Open All'), sg.B('Load'), sg.B('Save'), sg.B('DELETE')],
+    [sg.T('1. Select Workflow'), sg.Combo(comboList, size=(40, 30), key='-COMBO LIST-')],
+    [sg.T('2.'), sg.B('Load')],
+    [sg.T('3.'), sg.B('Open All'), sg.T('Apps, Folders, Sites')],
+    [sg.T('3.'), sg.B('Save'), sg.T('or'), sg.B('DELETE')],
     [sg.B('Exit')],
+    [sg.Text('_'*60)],
     [sg.T('Apps')],
     [sg.Multiline(size=(40, 10), key='-APPS TEXTBOX-', font='Any 14')],
     [sg.T('Folders')],
