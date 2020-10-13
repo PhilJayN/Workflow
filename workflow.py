@@ -9,6 +9,8 @@ import webbrowser
 # DEFAULT_SETTINGS = {}
 KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
 # print('SETTINGS_KEYS_TO_ELEMENT_KEYS dict', KEYS_TO_ELEMENT_KEYS)
+# This dict has no combo_list
+ELEMENTS_DICT = {'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
 
 ########################### TEMPORARY FXN ###########################
 def closeTabs():
@@ -173,26 +175,26 @@ def openX(values):
 
 def getInput(values):
     dbTemplate =  {"apps": [], "folders": [], "sites": []}
-    hardKey = ["title", "apps", "folders", "sites"]
+    templateKey = list(dbTemplate)
+    # hardKey = ["title", "apps", "folders", "sites"]
     title = getTitle(values)
-    # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
-    # purpose: targets elements on GUI and gets user data from input boxes. skip title element
-    for ind, key in enumerate(KEYS_TO_ELEMENT_KEYS): #key: 'combo_list', KEYS_TO_ELEMENT_KEYS[key] eval to the GUI element key
-        print('TEMPPPPPPPP', values[KEYS_TO_ELEMENT_KEYS[key]])
-        if key == 'combo_list': # no need to put title name into array below
-            continue
-        newArr = rmNewlines( values[KEYS_TO_ELEMENT_KEYS[key]] ).split("  ") #is now an array: ['apple', 'nuts', 'orange']
-        # print('newArrayy', newArr, 'indxxxxx. curr:', ind)
-        # add every item from processed array into template
+    # ELEMENTS_DICT = {'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
+    # purpose: targets elements on GUI and gets user data from input boxes
+    for ind, key in enumerate(ELEMENTS_DICT): #key: 'apps_textbox', ELEMENTS_DICT[key] eval. hardcoded keys specified in layout
+        # print('TEMPPPPPPPP', values[ELEMENTS_DICT[key]])
+        newArr = rmNewlines(values[ELEMENTS_DICT[key]]).split("  ") # is now an array: ['apple', 'nuts', 'orange']
+        # now add every item from processed array into template, one at a time
+        # print('keyyy: ', key)
+        print('newArrayyyyyyy', newArr, 'indxxxxx. curr:', ind)
         for index, item in enumerate(newArr):
-            print('current item', item, 'hardKey[ind]:', hardKey[ind])
-            if hardKey[ind] == 'sites':
-                cleanedItem = cleanData(item)
-                print('hardKey[ind] is now sites!', hardKey[ind], 'cleanedItem:', cleanedItem)
-                dbTemplate[hardKey[ind]].append(cleanedItem)
-            else:
-                dbTemplate[hardKey[ind]].append(item)
-    # print('dbTemplate', dbTemplate)
+            # print('current item', item, 'hardKey[ind]:', hardKey[ind])
+            # if hardKey[ind] == 'sites':
+            #     cleanedItem = cleanData(item)
+            #     print('hardKey[ind] is now sites!', hardKey[ind], 'cleanedItem:', cleanedItem)
+            #     dbTemplate[hardKey[ind]].append(cleanedItem)
+            # else:
+            dbTemplate[templateKey[ind]].append(item)
+    print('dbTemplate FINAL', dbTemplate)
     getDB(None, title, dbTemplate)
 
 def createMainWindow():
@@ -263,7 +265,7 @@ def loadWorkflow(window, values):
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
-    render(window, "example")
+    render(window, "example2")
     while True:
         # reads user input in GUI
         event, values = window.read()

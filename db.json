@@ -56,10 +56,7 @@
       "D:\\Archive\\acr",
       "D:\\"
     ],
-    "sites": [
-      "www.reddit.com/r/all",
-      "www.google.com"
-    ]
+    "sites": []
   },
   "newwww": {
     "apps": [
@@ -162,6 +159,22 @@
     "sites": [
       "www.reddit.com/r/all",
       null
+    ]
+  },
+  "mufff": {
+    "apps": [
+      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+      "C:\\Program Files (x86)\\Google Application \\Chrome\\Application\\chrome.exe",
+      "C:\\\\Program Files\\\\Mozilla Firefox"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\Archive\\acr",
+      "D:\\"
+    ],
+    "sites": [
+      "www.tedy.comffff",
+      "boeewww"
     ]
   }
 }
