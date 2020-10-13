@@ -52,7 +52,7 @@ def getComboList():
 
 def getTitle(values):
     title = values['-COMBO LIST-']
-    print('got title:', values['-COMBO LIST-'])
+    # print('got title:', values['-COMBO LIST-'])
     return title
 
 def getDB(task, key, value):
@@ -125,28 +125,37 @@ def rmNewlines(string):
     return string.replace('\n',' ').strip()
 
 def cleanData(str):
+    print('inside cleanData str: ', str)
     newStr = ""
     # ignore cleaning if http is present, such as when address is copied from Chrome address bar: https://pysimplegui.readthedocs.io
     # fun fact for nerds like me: Chrome 69 update no longer shows www
-    if 'http' not in str:
-        if 'www.' not in str:
+    # if 'http' not in str:
+    #     if 'www.' not in str:
+    #         newStr = 'www.' + str
+    #         print('BOTH cleaning conditions met, so result: ', newStr)
+    #         return newStr
+
+    if 'www' not in str:
+        if 'http' not in str:
             newStr = 'www.' + str
-            print('Done cleaning string!', newStr)
-            return newStr
-cleanData("https://pysimplegui.readthedocs.io/en/latest/#the-renaming-convention")
+            print('BOTH cleaning conditions met, so result: ', newStr)
+    # cleanData will either return edited newStr, or None. Becareful when returning None, will write to db "Null"
+    return newStr
+# cleanData("https://pysimplegui.readthedocs.io/en/latest/#the-renaming-convention")
 # cleanData("reddit.com")
+# cleanData("www.reddit.com")
 ########################### ACTIONS / EVENTS  ###########################
 # X can be apps, folders, or sites
 def openX(values):
     db = loadDB()
     title = getTitle(values)
     for key in db[title]: # dict of 3 items: "apps": [], "folders": [], "sites":[], key is apps, etc.
-        print('key: ', key)
+        # print('key: ', key)
         for index, item in enumerate(db[title][key]): # go through each item in array
             # loop goes through one item at a time, runs to if/else, stays in inner loop until done w every item,
             # then goes back to outer loop, where key changes
             # rinse and repeat
-            print('INNER loop item at index ', index, ': ', item)
+            # print('INNER loop item at index ', index, ': ', item)
             if key == "apps":
                 print('running apps placeholder...', item)
                 subprocess.Popen(item)
@@ -155,14 +164,14 @@ def openX(values):
                 altF4(1)
             elif key == "folders":
                 #if a drive (D:\ E:\) is invalid, webbrowser opens IE!
-                print('running folders placeholder...')
+                # print('running folders placeholder...')
                 webbrowser.open(item)
                 sleep(1.2)
                 altF4(1)
             elif key == "sites":
                 # if there's two \\ slashes, then IE will open!
                 webbrowser.open(item)
-                print('running webbrowser cmd to...', item)
+                # print('running webbrowser cmd to...', item)
                 # webbrowser.get('windows-default').open(item, new=1)
                 sleep(1.5)
                 closeTabs()
@@ -185,16 +194,22 @@ def getInput(values):
         newArr = rmNewlines(values[ELEMENTS_DICT[key]]).split("  ") # is now an array: ['apple', 'nuts', 'orange']
         # now add every item from processed array into template, one at a time
         # print('keyyy: ', key)
-        print('newArrayyyyyyy', newArr, 'indxxxxx. curr:', ind)
+        print('newArr', newArr, 'indxxxxx. curr:', ind)
         for index, item in enumerate(newArr):
             # print('current item', item, 'hardKey[ind]:', hardKey[ind])
-            # if hardKey[ind] == 'sites':
-            #     cleanedItem = cleanData(item)
-            #     print('hardKey[ind] is now sites!', hardKey[ind], 'cleanedItem:', cleanedItem)
-            #     dbTemplate[hardKey[ind]].append(cleanedItem)
-            # else:
-            dbTemplate[templateKey[ind]].append(item)
-    print('dbTemplate FINAL', dbTemplate)
+            if templateKey[ind] == 'sites':
+                cleanedItem = cleanData(item)
+                print('templateKey[ind] is now sites!', 'cleanedItem:', cleanedItem == "")
+                # cleanData() can return an empty string, if so, just put into template the unmodified item in array
+                # otherwise put in the cleanedItem
+                if cleanedItem == "":
+                    dbTemplate[templateKey[ind]].append(item)
+                else:
+                    dbTemplate[templateKey[ind]].append(cleanedItem)
+            # this else is for other keys ("apps", "folders") to use
+            else:
+                dbTemplate[templateKey[ind]].append(item)
+    # print('dbTemplate FINAL', dbTemplate)
     getDB(None, title, dbTemplate)
 
 def createMainWindow():
@@ -233,7 +248,7 @@ def getDataForRender(title):
         sitesStr = ""
         # outer loop responsible for key
         for key in db[titleStr]:
-            print('key: ', key)
+            # print('key: ', key)
             # inner loop responsible for going through array w/ dynamic num. of items
             for item in db[titleStr][key]:
                 # print('iteemmm', item)
@@ -265,7 +280,7 @@ def loadWorkflow(window, values):
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
-    render(window, "example2")
+    render(window, "mufff")
     while True:
         # reads user input in GUI
         event, values = window.read()

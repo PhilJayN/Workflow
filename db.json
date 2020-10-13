@@ -157,8 +157,7 @@
       "D:\\Archive\\acr"
     ],
     "sites": [
-      "www.reddit.com/r/all",
-      null
+      "www.reddit.com/r/all"
     ]
   },
   "mufff": {
@@ -170,11 +169,12 @@
     "folders": [
       "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
       "D:\\Archive\\acr",
-      "D:\\"
+      "E:\\"
     ],
     "sites": [
-      "www.tedy.comffff",
-      "boeewww"
+      "www.reddit.com",
+      "www.ted.com",
+      "https://pysimplegui.readthedocs.io"
     ]
   }
 }
