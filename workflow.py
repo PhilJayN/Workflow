@@ -129,12 +129,6 @@ def cleanData(str):
     newStr = ""
     # ignore cleaning if http is present, such as when address is copied from Chrome address bar: https://pysimplegui.readthedocs.io
     # fun fact for nerds like me: Chrome 69 update no longer shows www
-    # if 'http' not in str:
-    #     if 'www.' not in str:
-    #         newStr = 'www.' + str
-    #         print('BOTH cleaning conditions met, so result: ', newStr)
-    #         return newStr
-
     if 'www' not in str:
         if 'http' not in str:
             newStr = 'www.' + str
@@ -182,24 +176,21 @@ def openX(values):
 # cleans (put str into array) user input, puts into DB, and in future, verifying it
 ########################### GUI ###########################
 
-def getInput(values):
+def getInput(window, values):
     dbTemplate =  {"apps": [], "folders": [], "sites": []}
     templateKey = list(dbTemplate)
-    # hardKey = ["title", "apps", "folders", "sites"]
     title = getTitle(values)
     # ELEMENTS_DICT = {'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
     # purpose: targets elements on GUI and gets user data from input boxes
     for ind, key in enumerate(ELEMENTS_DICT): #key: 'apps_textbox', ELEMENTS_DICT[key] eval. hardcoded keys specified in layout
-        # print('TEMPPPPPPPP', values[ELEMENTS_DICT[key]])
         newArr = rmNewlines(values[ELEMENTS_DICT[key]]).split("  ") # is now an array: ['apple', 'nuts', 'orange']
         # now add every item from processed array into template, one at a time
-        # print('keyyy: ', key)
-        print('newArr', newArr, 'indxxxxx. curr:', ind)
+        # print('newArr', newArr, 'indxxxxx. curr:', ind)
         for index, item in enumerate(newArr):
             # print('current item', item, 'hardKey[ind]:', hardKey[ind])
             if templateKey[ind] == 'sites':
                 cleanedItem = cleanData(item)
-                print('templateKey[ind] is now sites!', 'cleanedItem:', cleanedItem == "")
+                # print('templateKey[ind] is now sites!', 'cleanedItem:', cleanedItem == "")
                 # cleanData() can return an empty string, if so, just put into template the unmodified item in array
                 # otherwise put in the cleanedItem
                 if cleanedItem == "":
@@ -211,6 +202,8 @@ def getInput(values):
                 dbTemplate[templateKey[ind]].append(item)
     # print('dbTemplate FINAL', dbTemplate)
     getDB(None, title, dbTemplate)
+    # render needs to run here to "refresh GUI" after calling cleanData, or else GUI won't updated
+    render(window, getTitle(values))
 
 def createMainWindow():
     comboList = getComboList()
@@ -236,7 +229,6 @@ def createMainWindow():
 
 # gets data from DB, puts into a long string, then displays to GUI
 def getDataForRender(title):
-    # print('getDataForRender titleL:', title)
     db = loadDB()
     if db["metadata"] == "new":
         getDB("modify", "metadata", "old")
@@ -248,7 +240,6 @@ def getDataForRender(title):
         sitesStr = ""
         # outer loop responsible for key
         for key in db[titleStr]:
-            # print('key: ', key)
             # inner loop responsible for going through array w/ dynamic num. of items
             for item in db[titleStr][key]:
                 # print('iteemmm', item)
@@ -266,9 +257,6 @@ def render(window, title): # Needs access to window obj
     dict = getDataForRender(title)
     # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
     for key in KEYS_TO_ELEMENT_KEYS:
-        # if KEYS_TO_ELEMENT_KEYS[key] == '-COMBO LIST-':
-        #     window['-COMBO LIST-'].update(values=getComboList())
-        # else:
         window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
         window['-COMBO LIST-'].update(values=getComboList())
 
@@ -291,7 +279,7 @@ def main():
             window.close()
         if event == 'Save':
             # print('saving!!')
-            getInput(values)
+            getInput(window, values)
         elif event == 'Load':
             print('load')
             loadWorkflow(window, values)
@@ -300,9 +288,16 @@ def main():
             print('test')
         elif event == 'DELETE':
             print('values', values["-COMBO LIST-"])
-            # title = values["-COMBO LIST-"]
             delete(window, values)
 main()
+
+
+
+
+
+
+
+
 
 
 
