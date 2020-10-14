@@ -6,6 +6,15 @@ import subprocess
 import time
 import webbrowser
 
+from sys import platform as pf
+
+if pf == "linux" or pf == "linux2":
+    print('On Linux!')
+elif pf == "darwin":
+    print('On OS x!')
+elif pf == "win32":
+    print('On Windows!')
+
 # DEFAULT_SETTINGS = {}
 KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
 # print('SETTINGS_KEYS_TO_ELEMENT_KEYS dict', KEYS_TO_ELEMENT_KEYS)
