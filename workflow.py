@@ -52,21 +52,17 @@ def getComboList():
 
 def getTitle(values):
     title = values['-COMBO LIST-']
-    # print('got title:', values['-COMBO LIST-'])
     return title
 
 def getDB(task, key, value):
-    # open file
     with open('db.json', 'r+') as f:
         db = json.load(f)
-        # modify
         if task == 'del':
             del db[key]
         else:
             db[key] = value
-        # write
         def writeToDB():
-            f.seek(0)        # <--- should reset file position to the beginning.
+            f.seek(0)        # reset file position to the beginning
             json.dump(db, f, indent=2)
             f.truncate()     # remove remaining part
         writeToDB()
@@ -74,7 +70,7 @@ def getDB(task, key, value):
 def loadDB():
     with open('db.json', 'r') as f:
         data = json.load(f)
-        # Return db.json to use in other fxns
+        # Return db.json file to use in other fxns
     return data
 
 def delete(window, values):
@@ -85,10 +81,10 @@ def delete(window, values):
     db = loadDB()
     print('keysssss in db BEFORE del:: ', list(db))
 
-    # for key in db:
-        # don't give render() new title from old DB, or else KeyError:
-        # newTitle = key
-    getDB('del', title, None)
+    try:
+        getDB('del', title, None)
+    except:
+        print('Deletion error!')
 ########################### TEMP during testing###########################
     time.sleep(2)
     tempValue = {
@@ -144,11 +140,9 @@ def openX(values):
     db = loadDB()
     title = getTitle(values)
     for key in db[title]: # dict of 3 items: "apps": [], "folders": [], "sites":[], key is apps, etc.
-        # print('key: ', key)
         for index, item in enumerate(db[title][key]): # go through each item in array
             # loop goes through one item at a time, runs to if/else, stays in inner loop until done w every item,
-            # then goes back to outer loop, where key changes
-            # rinse and repeat
+            # then goes back to outer loop, where key changes, rinse and repeat
             # print('INNER loop item at index ', index, ': ', item)
             if key == "apps":
                 print('running apps placeholder...', item)
@@ -256,9 +250,12 @@ def getDataForRender(title):
 def render(window, title): # Needs access to window obj
     dict = getDataForRender(title)
     # KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
-    for key in KEYS_TO_ELEMENT_KEYS:
-        window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
-        window['-COMBO LIST-'].update(values=getComboList())
+    try:
+        for key in KEYS_TO_ELEMENT_KEYS:
+            window[KEYS_TO_ELEMENT_KEYS[key]].update(dict[key])
+            window['-COMBO LIST-'].update(values=getComboList())
+    except:
+        print('key error!')
 
 def loadWorkflow(window, values):
     print('loadWorkflow got title: ', values['-COMBO LIST-'])

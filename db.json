@@ -34,14 +34,16 @@
   },
   "example": {
     "apps": [
-      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+      "example",
+      "orange"
     ],
     "folders": [
       "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
       "D:\\Archive\\acr"
     ],
     "sites": [
-      "reddit.com/r/all",
+      "www.reddit.com/r/all",
       "www.google.com"
     ]
   },
@@ -96,19 +98,6 @@
       "www.google.com"
     ]
   },
-  "hiiiiiiiii": {
-    "apps": [
-      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-    ],
-    "folders": [
-      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
-      "D:\\Archive\\acr"
-    ],
-    "sites": [
-      "reddit.com/r/all",
-      "www.google.com"
-    ]
-  },
   "newwwww": {
     "apps": [
       "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
@@ -123,19 +112,6 @@
     ]
   },
   "sdafsdaf": {
-    "apps": [
-      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-    ],
-    "folders": [
-      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
-      "D:\\Archive\\acr"
-    ],
-    "sites": [
-      "reddit.com/r/all",
-      "www.google.com"
-    ]
-  },
-  "examplefffffff": {
     "apps": [
       "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
     ],
