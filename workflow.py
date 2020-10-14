@@ -3,17 +3,11 @@ import pyautogui
 import PySimpleGUI as sg
 import pygetwindow as gw
 import subprocess
+import os
 import time
 import webbrowser
 
 from sys import platform as pf
-
-if pf == "linux" or pf == "linux2":
-    print('On Linux!')
-elif pf == "darwin":
-    print('On OS x!')
-elif pf == "win32":
-    print('On Windows!')
 
 # DEFAULT_SETTINGS = {}
 KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
@@ -144,6 +138,31 @@ def cleanData(str):
 # cleanData("reddit.com")
 # cleanData("www.reddit.com")
 ########################### ACTIONS / EVENTS  ###########################
+# open apps
+def openApps(item):
+    if pf == "linux" or pf == "linux2":
+        # xdg should work for both file and folders, on *nix
+        print('On Linux!')
+        # subprocess.Popen(["xdg-open", path])
+    elif pf == "darwin":
+        print('On OS x!')
+        # subprocess.Popen(["open", path])
+        os.system("open /Applications/Google\ Chrome.app")
+        os.system("open /Applications/TextEdit.app.app")
+        os.system("open /Applications/Safari.app")
+        print('using subprocess.run...')
+        subprocess.run('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+        print('using os.syst...')
+        os.system("""osascript -e 'tell app "Safari" to open'""")
+        print('using subprocess.call...')
+        subprocess.call(["/usr/bin/open", "-W", "-n", "-a", "/Applications/TextEdit.app"])
+        # CompletedProcess(args='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', returncode=0)
+
+    elif pf == "win32":
+        print('On Windows!')
+        subprocess.Popen(item)
+
+
 # X can be apps, folders, or sites
 def openX(values):
     db = loadDB()
@@ -155,8 +174,9 @@ def openX(values):
             # print('INNER loop item at index ', index, ': ', item)
             if key == "apps":
                 print('running apps placeholder...', item)
-                subprocess.Popen(item)
+                # subprocess.Popen(item)
                 # testing purposes
+                openApps(item)
                 sleep(1.9)
                 altF4(1)
             elif key == "folders":
