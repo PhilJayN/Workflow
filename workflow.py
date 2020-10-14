@@ -148,7 +148,7 @@ def openX(values):
                 print('running apps placeholder...', item)
                 subprocess.Popen(item)
                 # testing purposes
-                sleep(1.7)
+                sleep(1.9)
                 altF4(1)
             elif key == "folders":
                 #if a drive (D:\ E:\) is invalid, webbrowser opens IE!
@@ -161,7 +161,7 @@ def openX(values):
                 webbrowser.open(item)
                 # print('running webbrowser cmd to...', item)
                 # webbrowser.get('windows-default').open(item, new=1)
-                sleep(1.5)
+                sleep(1.7)
                 closeTabs()
         sleep(1)
 # openX()
@@ -265,7 +265,7 @@ def loadWorkflow(window, values):
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
-    render(window, "mufff")
+    render(window, "python")
     while True:
         # reads user input in GUI
         event, values = window.read()

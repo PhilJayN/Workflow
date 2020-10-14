@@ -17,13 +17,13 @@
   "python": {
     "apps": [
       "C:\\Dropbox\\cmder_mini\\Cmder.exe",
-      "C:\\\\Users\\\\asus270\\\\AppData\\\\Local\\\\atom\\\\atom.exe",
-      ":\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\\pythonw.exe \"C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\\Lib\\idlelib\\idle.pyw"
+      "C:\\Users\\asus270\\AppData\\Local\\atom\\atom.exe",
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\\Lib\\idlelib\\idle.pyw"
     ],
     "folders": [
-      "C:\\\\Users\\\\asus270\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python36-32",
-      "D:\\\\",
-      "C:\\\\Dropbox\\\\~Programming\\\\projects"
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\",
+      "C:\\Dropbox\\~Programming\\projects"
     ],
     "sites": [
       "https://pysimplegui.readthedocs.io/en/latest/call%20reference/#misc",
@@ -35,8 +35,7 @@
   "example": {
     "apps": [
       "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-      "example",
-      "orange"
+      "C:\\Program Files (x86)\\Notepad++\\notepad++.exe"
     ],
     "folders": [
       "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
@@ -60,18 +59,6 @@
     ],
     "sites": []
   },
-  "newwww": {
-    "apps": [
-      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-    ],
-    "folders": [
-      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
-      "D:\\Archive\\acr"
-    ],
-    "sites": [
-      "reddit.com"
-    ]
-  },
   "exampleffff": {
     "apps": [
       "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
@@ -83,74 +70,6 @@
     "sites": [
       "reddit.com/r/all",
       "www.google.com"
-    ]
-  },
-  "examplefdsafadsfasd": {
-    "apps": [
-      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-    ],
-    "folders": [
-      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
-      "D:\\Archive\\acr"
-    ],
-    "sites": [
-      "reddit.com/r/all",
-      "www.google.com"
-    ]
-  },
-  "newwwww": {
-    "apps": [
-      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-    ],
-    "folders": [
-      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
-      "D:\\Archive\\acr"
-    ],
-    "sites": [
-      "reddit.com/r/all",
-      "google.com"
-    ]
-  },
-  "sdafsdaf": {
-    "apps": [
-      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-    ],
-    "folders": [
-      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
-      "D:\\Archive\\acr"
-    ],
-    "sites": [
-      "reddit.com/r/all",
-      "www.google.com"
-    ]
-  },
-  "exampledsfsadfsadf": {
-    "apps": [
-      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-    ],
-    "folders": [
-      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
-      "D:\\Archive\\acr"
-    ],
-    "sites": [
-      "www.reddit.com/r/all"
-    ]
-  },
-  "mufff": {
-    "apps": [
-      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-      "C:\\Program Files (x86)\\Google Application \\Chrome\\Application\\chrome.exe",
-      "C:\\\\Program Files\\\\Mozilla Firefox"
-    ],
-    "folders": [
-      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
-      "D:\\Archive\\acr",
-      "E:\\"
-    ],
-    "sites": [
-      "www.reddit.com",
-      "www.ted.com",
-      "https://pysimplegui.readthedocs.io www.google.com"
     ]
   }
 }
