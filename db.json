@@ -46,32 +46,6 @@
       "www.google.com"
     ]
   },
-  "example2": {
-    "apps": [
-      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-      "C:\\Program Files (x86)\\Google Application \\Chrome\\Application\\chrome.exe",
-      "C:\\\\Program Files\\\\Mozilla Firefox"
-    ],
-    "folders": [
-      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
-      "D:\\Archive\\acr",
-      "D:\\"
-    ],
-    "sites": []
-  },
-  "exampleffff": {
-    "apps": [
-      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-    ],
-    "folders": [
-      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
-      "D:\\Archive\\acr"
-    ],
-    "sites": [
-      "reddit.com/r/all",
-      "www.google.com"
-    ]
-  },
   "MAc OS": {
     "apps": [
       "/Applications/TextEdit.app",

@@ -82,7 +82,8 @@ def delete(window, values):
 
     newDb = loadDB()
     print('keysssss in db after del: ', list(newDb))
-    # sg.popup('DELETED!')
+    # sg.popup('DELETE workflow ' + title + ' ?')
+    sg.popup('DELETED workflow ' + title + ' !')
     render(window, "blank") # render needs to be called with a new title, or else error no title found
 
     # window = createMainWindow()
