@@ -150,7 +150,7 @@ def checkOS(key, item):
             print('FileNotFoundError')
 
 # X can be apps, folders, or sites
-def openX(values):
+def openAll(values):
     db = loadDB()
     title = getTitle(values)
     for key in db[title]: # dict of 3 items: "apps": [], "folders": [], "sites":[], key is apps, etc.
@@ -163,22 +163,27 @@ def openX(values):
                 # subprocess.Popen(item)
                 # testing purposes
                 checkOS(key, item)
-                sleep(1.9)
-                altF4(1)
+                ##### TEMP #####
+                # sleep(1.9)
+                # altF4(1)
+                ##### TEMP #####
             elif key == "folders":
                 #if a drive (D:\ E:\) is invalid, webbrowser opens IE!
                 # print('running folders placeholder...')
                 checkOS(key, item)
-                # webbrowser.open(item)
-                sleep(1.2)
-                altF4(1)
+                ##### TEMP #####
+                # sleep(1.2)
+                # altF4(1)
+                ##### TEMP #####
             elif key == "sites":
                 # if there's two \\ slashes, then IE will open!
                 print('running webbrowser.open...', item)
                 webbrowser.get('windows-default').open(item, new=1)
                 # webbrowser.open(item)
-                sleep(2)
-                closeTabs()
+                ##### TEMP #####
+                # sleep(2)
+                # closeTabs()
+                ##### TEMP #####
         sleep(1)
 
 ########################### Load / Save ###########################
@@ -214,7 +219,7 @@ def getInput(window, values):
 
 def createMainWindow():
     comboList = getComboList()
-    sg.theme('DarkAmber')
+    sg.theme('DarkBlue2')
 
     layout = [
     [sg.T('1. Select Workflow'), sg.Combo(comboList, size=(40, 30), key='-COMBO LIST-')],
@@ -224,11 +229,11 @@ def createMainWindow():
     [sg.B('Exit')],
     [sg.Text('_'*60)],
     [sg.T('Apps')],
-    [sg.Multiline(size=(40, 10), key='-APPS TEXTBOX-', font='Any 14')],
+    [sg.Multiline(size=(65, 10), key='-APPS TEXTBOX-', font='Any 14')],
     [sg.T('Folders')],
-    [sg.Multiline(size=(40, 10), key='-FOLDERS TEXTBOX-', font='Any 14')],
+    [sg.Multiline(size=(65, 10), key='-FOLDERS TEXTBOX-', font='Any 14')],
     [sg.T('Sites')],
-    [sg.Multiline(size=(40, 10), key='-SITES TEXTBOX-', font='Any 14')]
+    [sg.Multiline(size=(65, 10), key='-SITES TEXTBOX-', font='Any 14')]
     ]
 
     window = sg.Window('App Title', layout, finalize=True)
@@ -294,7 +299,7 @@ def main():
             print('load')
             loadWorkflow(window, values)
         elif event == 'Open All':
-            openX(values)
+            openAll(values)
             print('test')
         elif event == 'DELETE':
             print('values', values["-COMBO LIST-"])
