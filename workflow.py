@@ -1,7 +1,9 @@
-import json
-import pyautogui
+###### Install using pip ##########
+# import pyautogui
 import PySimpleGUI as sg
-import pygetwindow as gw
+# import pygetwindow as gw
+######################################
+import json
 import subprocess
 import os
 import time
@@ -165,7 +167,7 @@ def openAll(values):
                 # testing purposes
                 checkOS(key, item)
                 ##### TEMP #####
-                # sleep(1.9)
+                sleep(1.1)
                 # altF4(1)
                 ##### TEMP #####
             elif key == "folders":
@@ -173,7 +175,7 @@ def openAll(values):
                 # print('running folders placeholder...')
                 checkOS(key, item)
                 ##### TEMP #####
-                # sleep(1.2)
+                sleep(1.1)
                 # altF4(1)
                 ##### TEMP #####
             elif key == "sites":
@@ -182,7 +184,7 @@ def openAll(values):
                 webbrowser.get('windows-default').open(item, new=1)
                 # webbrowser.open(item)
                 ##### TEMP #####
-                # sleep(2)
+                sleep(1.1)
                 # closeTabs()
                 ##### TEMP #####
         sleep(1)
@@ -217,13 +219,14 @@ def getInput(window, values):
     getDB(None, title, dbTemplate)
     # render needs to run here to "refresh GUI" after calling cleanData, or else GUI won't updated
     render(window, getTitle(values))
+    sg.popup('Saved workflow ' + title + ' !')
 
 def createMainWindow():
     comboList = getComboList()
     sg.theme('DarkBlue2')
 
     layout = [
-    [sg.T('1. Select Workflow'), sg.Combo(comboList, size=(40, 30), key='-COMBO LIST-')],
+    [sg.T('1. Select workflow or type directly in input box to create new'), sg.Combo(comboList, size=(40, 30), key='-COMBO LIST-')],
     [sg.T('2.'), sg.B('Load')],
     [sg.T('3.'), sg.B('Open All'), sg.T('Apps, Folders, Sites')],
     [sg.T('3.'), sg.B('Save'), sg.T('or'), sg.B('DELETE')],

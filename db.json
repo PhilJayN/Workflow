@@ -57,5 +57,23 @@
     "sites": [
       "www.apple.com"
     ]
+  },
+  "dsafasdfdsafs": {
+    "apps": [
+      "sdfasdfasdfa",
+      "C:\\Users\\asus270\\AppData\\Local\\atom\\atom.exe",
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\\Lib\\idlelib\\idle.pyw"
+    ],
+    "folders": [
+      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
+      "D:\\",
+      "C:\\Dropbox\\~Programming\\projects"
+    ],
+    "sites": [
+      "https://pysimplegui.readthedocs.io/en/latest/call%20reference/#misc",
+      "https://pysimplegui.trinket.io/demo-programs#/examples-for-reddit-posts/spectrophotometry-from-twitter",
+      "https://www.udemy.com/course/automate/learn/lecture/3465864#questions/11019006",
+      "https://automatetheboringstuff.com/2e/"
+    ]
   }
 }
