@@ -34,8 +34,7 @@
   },
   "example": {
     "apps": [
-      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-      "C:\\Program Files (x86)\\Notepad++\\notepad++.exe"
+      "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
     ],
     "folders": [
       "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
@@ -61,7 +60,7 @@
   "dsafasdfdsafs": {
     "apps": [
       "sdfasdfasdfa",
-      "C:\\Users\\asus270\\AppData\\Local\\atom\\atom.exe",
+      " C:\\Users\\asus270\\AppData\\Local\\atom\\atom.exe",
       "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32\\Lib\\idlelib\\idle.pyw"
     ],
     "folders": [
