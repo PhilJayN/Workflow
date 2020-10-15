@@ -172,10 +172,13 @@ def checkOS(key, item):
         # CompletedProcess(args='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', returncode=0)
     elif pf == "win32":
         print('On Windows!')
-        if key == "apps":
-            subprocess.Popen(item)
-        elif key == "folders":
-            webbrowser.open(item)
+        try:
+            if key == "apps":
+                subprocess.Popen(item)
+            elif key == "folders":
+                webbrowser.open(item)
+        except:
+            print('FileNotFoundError')
 
 # X can be apps, folders, or sites
 def openX(values):
@@ -202,9 +205,9 @@ def openX(values):
                 altF4(1)
             elif key == "sites":
                 # if there's two \\ slashes, then IE will open!
-                webbrowser.open(item)
-                # print('running webbrowser cmd to...', item)
-                # webbrowser.get('windows-default').open(item, new=1)
+                print('running webbrowser.open...', item)
+                webbrowser.get('windows-default').open(item, new=1)
+                # webbrowser.open(item)
                 sleep(2)
                 closeTabs()
         sleep(1)
