@@ -17,15 +17,13 @@ ELEMENTS_DICT = {'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS 
 
 ########################### TEMPORARY FXN ###########################
 def closeTabs():
-    # for i in range(0,x):
     pyautogui.hotkey('ctrl', 'w')
-    # sleep a bit or else ctrl+w pressed too fast in sucession!
+    # sleep a bit or ctrl+w pressed too fast in sucession!
     time.sleep(.8)
 
 def altF4(x):
     for i in range(0,x):
         pyautogui.hotkey('alt', 'f4')
-        # sleep a bit or else pressed too fast in sucession!
         time.sleep(.4)
 
 def sleep(sec):
@@ -40,9 +38,6 @@ def maxWindow():
 def minWindow():
     window = gw.getActiveWindow()
     window.minimize()
-
-def fname(arg):
-    print('hiiii', arg )
 
 ########################### HELPER FXNS ###########################
 # to be used in layout sg.Combo(), or as keys
@@ -73,40 +68,17 @@ def getDB(task, key, value):
 def loadDB():
     with open('db.json', 'r') as f:
         data = json.load(f)
-        # Return db.json file to use in other fxns
     return data
 
 def delete(window, values):
     print('del fxn run w values: ', values)
     title = values["-COMBO LIST-"]
-    print('Title', title)
-
     db = loadDB()
-    print('keysssss in db BEFORE del:: ', list(db))
-
+    print('keys in db BEFORE del:: ', list(db))
     try:
         getDB('del', title, None)
     except:
         print('Deletion error!')
-########################### TEMP during testing###########################
-    time.sleep(2)
-    tempValue = {
-    "apps": [
-      "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
-      "example",
-      "orange"
-    ],
-    "folders": [
-      "C:\\Users\\asus270\\AppData\\Local\\Programs\\Python\\Python36-32",
-      "D:\\Archive\\acr"
-    ],
-    "sites": [
-      "www.reddit.com/r/all",
-      "www.google.com"
-    ]
-  }
-    getDB(None, "example", tempValue)
-########################### TEMP ###########################
 
     newDb = loadDB()
     print('keysssss in db after del: ', list(newDb))
@@ -208,17 +180,15 @@ def openX(values):
                 sleep(2)
                 closeTabs()
         sleep(1)
-# openX()
 
 ########################### Load / Save ###########################
-# cleans (put str into array) user input, puts into DB, and in future, verifying it
+
 ########################### GUI ###########################
 
 def getInput(window, values):
     dbTemplate =  {"apps": [], "folders": [], "sites": []}
     templateKey = list(dbTemplate)
     title = getTitle(values)
-    # ELEMENTS_DICT = {'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
     # purpose: targets elements on GUI and gets user data from input boxes
     for ind, key in enumerate(ELEMENTS_DICT): #key: 'apps_textbox', ELEMENTS_DICT[key] eval. hardcoded keys specified in layout
         newArr = rmNewlines(values[ELEMENTS_DICT[key]]).split("  ") # is now an array: ['apple', 'nuts', 'orange']
@@ -238,7 +208,6 @@ def getInput(window, values):
             # this else is for other keys ("apps", "folders") to use
             else:
                 dbTemplate[templateKey[ind]].append(item)
-    # print('dbTemplate FINAL', dbTemplate)
     getDB(None, title, dbTemplate)
     # render needs to run here to "refresh GUI" after calling cleanData, or else GUI won't updated
     render(window, getTitle(values))
