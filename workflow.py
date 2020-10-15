@@ -143,7 +143,15 @@ def checkOS(key, item):
     if pf == "linux" or pf == "linux2":
         # xdg should work for both file and folders, on *nix
         print('On Linux!')
-        subprocess.Popen(["xdg-open", item])
+        if key == "apps":
+            os.system("open " + item) # opens an app on Mac
+        elif key == "folders":
+            try:
+                subprocess.Popen(["xdg-open", item])
+                print('opened folders using XDG on linux success!')
+            except:
+                print('error, using webbrowser...')
+                webbrowser.open('file:////' + item) # works for opening Mac directory
     elif pf == "darwin":
         print('On OS x!')
         if key == "apps":
