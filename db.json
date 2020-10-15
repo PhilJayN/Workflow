@@ -71,5 +71,17 @@
       "reddit.com/r/all",
       "www.google.com"
     ]
+  },
+  "MAc OS": {
+    "apps": [
+      "/Applications/TextEdit.app",
+      "/Applications/Automator.app"
+    ],
+    "folders": [
+      "Users/Phil/Desktop/Workflow-mac"
+    ],
+    "sites": [
+      "www.apple.com"
+    ]
   }
 }

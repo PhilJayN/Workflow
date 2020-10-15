@@ -139,29 +139,35 @@ def cleanData(str):
 # cleanData("www.reddit.com")
 ########################### ACTIONS / EVENTS  ###########################
 # open apps
-def openApps(item):
+def checkOS(key, item):
     if pf == "linux" or pf == "linux2":
         # xdg should work for both file and folders, on *nix
         print('On Linux!')
-        # subprocess.Popen(["xdg-open", path])
+        subprocess.Popen(["xdg-open", item])
     elif pf == "darwin":
         print('On OS x!')
-        # subprocess.Popen(["open", path])
-        os.system("open /Applications/Google\ Chrome.app")
-        os.system("open /Applications/TextEdit.app.app")
-        os.system("open /Applications/Safari.app")
-        print('using subprocess.run...')
-        subprocess.run('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
-        print('using os.syst...')
-        os.system("""osascript -e 'tell app "Safari" to open'""")
-        print('using subprocess.call...')
-        subprocess.call(["/usr/bin/open", "-W", "-n", "-a", "/Applications/TextEdit.app"])
+        if key == "apps":
+            os.system("open " + item) # opens an app on Mac
+        elif key == "folders":
+            webbrowser.open('file:////' + item) # works for opening Mac directory
+            # webbrowser.open('file:////Users/Phil/Desktop/Workflow-mac') #works for opening Mac directory
+        # subprocess.Popen(["open", item])
+        # os.system("open /Applications/Google\ Chrome.app")
+        # os.system("open /Applications/TextEdit.app")
+        # os.system("open /Applications/Automator.app")
+        # print('using subprocess.run...')
+        # print('using os.syst...')
+        # print('using subprocess.call...')
+        # subprocess.run('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome')
+        # os.system("""osascript -e 'tell app "Safari" to open'""")
+        # subprocess.call(["/usr/bin/open", "-W", "-n", "-a", "/Applications/TextEdit.app"])
         # CompletedProcess(args='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', returncode=0)
-
     elif pf == "win32":
         print('On Windows!')
-        subprocess.Popen(item)
-
+        if key == "apps":
+            subprocess.Popen(item)
+        elif key == "folders":
+            webbrowser.open(item)
 
 # X can be apps, folders, or sites
 def openX(values):
@@ -176,13 +182,14 @@ def openX(values):
                 print('running apps placeholder...', item)
                 # subprocess.Popen(item)
                 # testing purposes
-                openApps(item)
+                checkOS(key, item)
                 sleep(1.9)
                 altF4(1)
             elif key == "folders":
                 #if a drive (D:\ E:\) is invalid, webbrowser opens IE!
                 # print('running folders placeholder...')
-                webbrowser.open(item)
+                checkOS(key, item)
+                # webbrowser.open(item)
                 sleep(1.2)
                 altF4(1)
             elif key == "sites":
@@ -190,7 +197,7 @@ def openX(values):
                 webbrowser.open(item)
                 # print('running webbrowser cmd to...', item)
                 # webbrowser.get('windows-default').open(item, new=1)
-                sleep(1.7)
+                sleep(2)
                 closeTabs()
         sleep(1)
 # openX()
