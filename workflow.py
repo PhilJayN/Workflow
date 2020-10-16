@@ -11,6 +11,8 @@ import webbrowser
 
 from sys import platform as pf
 
+# webbrowser.get('MacOSX').open('http://www.reddit.com')
+
 # DEFAULT_SETTINGS = {}
 KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
 # print('SETTINGS_KEYS_TO_ELEMENT_KEYS dict', KEYS_TO_ELEMENT_KEYS)
@@ -129,7 +131,13 @@ def checkOS(key, item):
         if key == "apps":
             os.system("open " + item) # opens an app on Mac
         elif key == "folders":
+            # make sure to check if dir actually exist!!
             webbrowser.open('file:////' + item) # works for opening Mac directory
+            # webbrowser.open(item) # works for opening Mac directory
+            # webbrowser.open('file:///Users/test/test_folder')
+        elif key == "sites":
+            print('Mac os opening sites...')
+            webbrowser.get('MacOSX').open('http://www.reddit.com')
             # webbrowser.open('file:////Users/Phil/Desktop/Workflow-mac') #works for opening Mac directory
         # subprocess.Popen(["open", item])
         # os.system("open /Applications/Google\ Chrome.app")
@@ -149,6 +157,8 @@ def checkOS(key, item):
                 subprocess.Popen(item)
             elif key == "folders":
                 webbrowser.open(item)
+            elif key == "sites":
+                webbrowser.get('windows-default').open(item, new=1)
         except:
             print('FileNotFoundError')
 
@@ -179,9 +189,9 @@ def openAll(values):
                 # altF4(1)
                 ##### TEMP #####
             elif key == "sites":
+                checkOS(key, item)
                 # if there's two \\ slashes, then IE will open!
-                print('running webbrowser.open...', item)
-                webbrowser.get('windows-default').open(item, new=1)
+                # print('running webbrowser.open...', item)
                 # webbrowser.open(item)
                 ##### TEMP #####
                 sleep(1.1)
@@ -287,7 +297,7 @@ def loadWorkflow(window, values):
 def main():
     # this window object right now should have no user value
     window = createMainWindow()
-    render(window, "python")
+    render(window, "MAc OS")
     while True:
         # reads user input in GUI
         event, values = window.read()

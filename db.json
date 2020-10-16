@@ -47,11 +47,10 @@
   },
   "MAc OS": {
     "apps": [
-      "/Applications/TextEdit.app",
-      "/Applications/Automator.app"
+      "/Applications/TextEdit.app"
     ],
     "folders": [
-      "Users/Phil/Desktop/Workflow-mac"
+      "Users/Phil/Desktop"
     ],
     "sites": [
       "www.apple.com"
@@ -73,6 +72,17 @@
       "https://pysimplegui.trinket.io/demo-programs#/examples-for-reddit-posts/spectrophotometry-from-twitter",
       "https://www.udemy.com/course/automate/learn/lecture/3465864#questions/11019006",
       "https://automatetheboringstuff.com/2e/"
+    ]
+  },
+  "Mac OS Bak": {
+    "apps": [
+      "/Applications/TextEdit.app"
+    ],
+    "folders": [
+      "Users/Phil/Desktop/Workflow-mac"
+    ],
+    "sites": [
+      "www.apple.com"
     ]
   }
 }
