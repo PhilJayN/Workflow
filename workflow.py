@@ -11,7 +11,7 @@ import webbrowser
 
 from sys import platform as pf
 
-# webbrowser.get('MacOSX').open('http://www.reddit.com')
+# removed lonely webbrowser from Ryzen pc
 
 # DEFAULT_SETTINGS = {}
 KEYS_TO_ELEMENT_KEYS = {'combo_list': '-COMBO LIST-', 'apps_textbox': '-APPS TEXTBOX-', 'folders_textbox': '-FOLDERS TEXTBOX-', 'sites_textbox': '-SITES TEXTBOX-'}
